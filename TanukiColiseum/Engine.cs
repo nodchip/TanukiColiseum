@@ -25,7 +25,7 @@ namespace TanukiColiseum
             {
                 this.Process.StartInfo.WorkingDirectory = Path.GetDirectoryName(fileName);
             }
-            this.Process.StartInfo.Arguments = string.Format("/c start /B /WAIT /NODE {0} {1}", numaNode, fileName);
+            this.Process.StartInfo.Arguments = $"/c start /B /WAIT /NODE {numaNode} {fileName}";
             this.Process.StartInfo.UseShellExecute = false;
             this.Process.StartInfo.RedirectStandardInput = true;
             this.Process.StartInfo.RedirectStandardOutput = true;
@@ -69,7 +69,7 @@ namespace TanukiColiseum
         /// <param name="command"></param>
         public void Send(string command)
         {
-            //Debug.WriteLine("    > [{0}] {1}", ProcessIndex, command);
+            //Debug.WriteLine($"    > [{ProcessIndex}] {command}");
             Process.StandardInput.WriteLine(command);
             Process.StandardInput.Flush();
         }
@@ -86,7 +86,7 @@ namespace TanukiColiseum
                 return;
             }
 
-            //Debug.WriteLine("    < [{0}] {1}", ProcessIndex, e.Data);
+            //Debug.WriteLine($"    < [{ProcessIndex}] {e.Data}");
 
             List<string> command = Util.Split(e.Data);
             if (command.Contains("usiok"))
@@ -114,7 +114,7 @@ namespace TanukiColiseum
         /// <param name="e">思考エンジンの出力</param>
         private void HandleStderr(object sender, DataReceivedEventArgs e)
         {
-            Debug.WriteLine("    ! [{0}] {1}", ProcessIndex, e.Data);
+            Debug.WriteLine($"    ! [{ProcessIndex}] {e.Data}");
         }
 
         private void HandleUsiok(List<string> command)
@@ -137,7 +137,7 @@ namespace TanukiColiseum
             {
                 value = OverriddenOptions[name];
             }
-            Send(string.Format("setoption name {0} value {1}", name, value));
+            Send($"setoption name {name} value {value}");
         }
 
         private void HandleReadyok(List<string> command)

@@ -51,36 +51,17 @@ namespace TanukiColiseum
             }
 
             Console.WriteLine(
-                @"対局数{0} 先手勝ち{1}({2}%) 後手勝ち{3}({4}%) 引き分け{5}
-{6}
-勝ち{7}({8}% R{22:0.00}) 先手勝ち{9}({10}%) 後手勝ち{11}({12}%)
-宣言勝ち{20} 先手宣言勝ち{23} 後手宣言勝ち{24}
-先手引き分け{27} 後手引き分け{28}
-{13}
-勝ち{14}({15}%) 先手勝ち{16}({17}%) 後手勝ち{18}({19}%)
-宣言勝ち{21} 先手宣言勝ち{25} 後手宣言勝ち{26}
-先手引き分け{29} 後手引き分け{30}
-{7},{5},{14}
-",
-                // 0-5
-                numFinishedGames, blackWin, blackWinRatio, whiteWin, whiteWinRatio, numDraw,
-                // 6
-                engine1,
-                // 7-12
-                engine1Win, engine1WinRatio, engine1BlackWin, engine1BlackWinRatio, engine1WhiteWin, engine1WhiteWinRatio,
-                // 13
-                engine2,
-                // 14-19
-                engine2Win, engine2WinRatio, engine2BlackWin, engine2BlackWinRatio, engine2WhiteWin, engine2WhiteWinRatio,
-                // 20-21
-                engine1DeclarationWinBlack + engine1DeclarationWinWhite, engine2DeclarationWinBlack + engine2DeclarationWinWhite,
-                // 22
-                rating,
-                // 23-26
-                engine1DeclarationWinBlack, engine1DeclarationWinWhite, engine2DeclarationWinBlack, engine2DeclarationWinWhite,
-                // 27-30
-                engine1DrawBlack, engine2DrawBlack, engine2DrawBlack, engine1DrawBlack
-                );
+                $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio}%) 後手勝ち{whiteWin}({whiteWinRatio}%) 引き分け{numDraw}
+{engine1}
+勝ち{engine1Win}({engine1WinRatio}% R{rating:0.00}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio}%)
+宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite}
+先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
+{engine2}
+勝ち{engine2Win}({engine2WinRatio}%) 先手勝ち{engine2BlackWin}({engine2BlackWinRatio}%) 後手勝ち{engine2WhiteWin}({engine2WhiteWinRatio}%)
+宣言勝ち{engine2DeclarationWinBlack + engine2DeclarationWinWhite} 先手宣言勝ち{engine2DeclarationWinBlack} 後手宣言勝ち{engine2DeclarationWinWhite}
+先手引き分け{engine2DrawBlack} 後手引き分け{engine1DrawBlack}
+{engine1Win},{numDraw},{engine2Win}
+");
             Console.Out.Flush();
         }
 
