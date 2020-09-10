@@ -17,8 +17,30 @@ namespace TanukiColiseum
         public string BookFileName2 { get; set; }
         public int NumBookMoves { get; set; }
         public string SfenFilePath { get; set; }
+
+        /// <summary>
+        /// 思考エンジン1に渡す思考ノード数。
+        /// <para>0が渡された場合、ノード数を指定しない。</para>
+        /// </summary>
         public int Nodes1 { get; set; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す思考ノード数。
+        /// <para>0が渡された場合、ノード数を指定しない。</para>
+        /// </summary>
         public int Nodes2 { get; set; }
+
+        /// <summary>
+        /// 思考エンジン1に渡す思考時間。
+        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// </summary>
+        public int Time1 { get; set; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す思考時間。
+        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// </summary>
+        public int Time2 { get; set; }
         public int NumNumaNodes { get; set; }
         public int ProgressIntervalMs { get; set; }
         public int NumThreads1 { get; set; }

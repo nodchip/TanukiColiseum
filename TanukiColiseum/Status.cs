@@ -5,6 +5,7 @@
         public int NumGames { get; set; }
         public int NumThreads { get; set; }
         public int[] Nodes { get; set; }
+        public int[] Times { get; set; }
         // [エンジン][先手・後手]
         public int[,] Win { get; } = { { 0, 0 }, { 0, 0 }, };
         // [エンジン][先手・後手]
@@ -19,6 +20,7 @@
             NumGames = status.NumGames;
             NumThreads = status.NumThreads;
             Nodes = status.Nodes;
+            Times = status.Times;
             for (int engine = 0; engine < 2; ++engine)
             {
                 for (int blackWhite = 0; blackWhite < 2; ++blackWhite)

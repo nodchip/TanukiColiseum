@@ -13,13 +13,16 @@ namespace TanukiColiseum
         public List<Engine> Engines { get; } = new List<Engine>();
         private Random Random = new Random();
         private int[] Nodes;
+        private int[] Times;
         private string[] Openings;
         private bool ChangeOpening = true;
         private int OpeningIndex = 0;
 
-        public Game(int initialTurn, int nodes1, int nodes2, Engine engine1, Engine engine2, int numBookMoves, string[] openings)
+        public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, Engine engine1,
+            Engine engine2, int numBookMoves, string[] openings)
         {
             this.Nodes = new int[] { nodes1, nodes2 };
+            this.Times = new int[] { time1, time2 };
             this.Engines.Add(engine1);
             this.Engines.Add(engine2);
             this.NumBookMoves = numBookMoves;
@@ -68,7 +71,18 @@ namespace TanukiColiseum
                 command += move;
             }
             Engines[Turn].Send(command);
-            Engines[Turn].Send(string.Format("go nodes {0}", Nodes[Turn]));
+            if (Nodes[Turn] != 0)
+            {
+                Engines[Turn].Send($"go nodes {Nodes[Turn]}");
+            }
+            else if (Times[Turn] != 0)
+            {
+                Engines[Turn].Send($"go byoyomi {Nodes[Turn]}");
+            }
+            else
+            {
+                throw new Exception("nodesかtimeのいずれかを指定してください。");
+            }
         }
         public void OnMove(string move)
         {
