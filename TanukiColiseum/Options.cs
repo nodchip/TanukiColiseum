@@ -4,12 +4,6 @@ namespace TanukiColiseum
 {
     public class Options
     {
-        public enum UserInterface
-        {
-            Cli,
-            Gui,
-        }
-
         public string Engine1FilePath { get; set; } = null;
         public string Engine2FilePath { get; set; } = null;
         public string Eval1FolderPath { get; set; } = null;
@@ -26,7 +20,6 @@ namespace TanukiColiseum
         public int Nodes1 { get; set; } = 0;
         public int Nodes2 { get; set; } = 0;
         public int NumNumaNodes { get; set; } = 1;
-        public UserInterface Interface { get; set; } = UserInterface.Gui;
         public int ProgressIntervalMs { get; set; } = 60 * 1000;
         public int NumThreads1 { get; set; } = 1;
         public int NumThreads2 { get; set; } = 1;
@@ -92,9 +85,6 @@ namespace TanukiColiseum
                         break;
                     case "--sfen_file_name":
                         SfenFilePath = args[++i];
-                        break;
-                    case "--no_gui":
-                        Interface = UserInterface.Cli;
                         break;
                     case "--progress_interval_ms":
                         ProgressIntervalMs = int.Parse(args[++i]);
