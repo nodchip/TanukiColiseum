@@ -43,17 +43,22 @@ namespace TanukiColiseum
             int engine2DeclarationWinBlack = status.DeclarationWin[1, 0];
             int engine2DeclarationWinWhite = status.DeclarationWin[1, 1];
 
-            double winRate = engine1Win / (double)(engine1Win + engine2Win);
+            double winRate = (engine1Win + numDraw * 0.5) / numGames;
             double rating = 0.0;
+            double confidenceInterval = 0.0;
             if (1e-8 < winRate && winRate < 1.0 - 1e-8)
             {
                 rating = -400.0 * Math.Log10((1.0 - winRate) / winRate);
+                // 自己対戦及び連続対戦の誤差論　１：標準誤差と信頼区間 : コンピュータ将棋基礎情報研究所 http://lfics81.techblog.jp/archives/2982884.html
+                double s = Math.Sqrt(numGames / (numGames - 1.5) * winRate * (1.0 - winRate));
+                double S = s / Math.Sqrt(numGames);
+                confidenceInterval = 1.96 * 400.0 / Math.Log(10.0) * S / (winRate * (1.0 - winRate));
             }
 
             Console.WriteLine(
                 $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio}%) 後手勝ち{whiteWin}({whiteWinRatio}%) 引き分け{numDraw}
 {engine1}
-勝ち{engine1Win}({engine1WinRatio}% R{rating:0.00}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio}%)
+勝ち{engine1Win}({engine1WinRatio}% R{rating:0.00} +-{confidenceInterval:0.00}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio}%)
 宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite}
 先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
 {engine2}
