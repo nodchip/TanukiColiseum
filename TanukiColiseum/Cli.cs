@@ -43,15 +43,15 @@ namespace TanukiColiseum
             int engine2DeclarationWinBlack = status.DeclarationWin[1, 0];
             int engine2DeclarationWinWhite = status.DeclarationWin[1, 1];
 
-            double winRate = (engine1Win + numDraw * 0.5) / numGames;
+            double winRate = (engine1Win + numDraw * 0.5) / numFinishedGames;
             double rating = 0.0;
             double confidenceInterval = 0.0;
             if (1e-8 < winRate && winRate < 1.0 - 1e-8)
             {
                 rating = -400.0 * Math.Log10((1.0 - winRate) / winRate);
                 // 自己対戦及び連続対戦の誤差論　１：標準誤差と信頼区間 : コンピュータ将棋基礎情報研究所 http://lfics81.techblog.jp/archives/2982884.html
-                double s = Math.Sqrt(numGames / (numGames - 1.5) * winRate * (1.0 - winRate));
-                double S = s / Math.Sqrt(numGames);
+                double s = Math.Sqrt(numFinishedGames / (numFinishedGames - 1.5) * winRate * (1.0 - winRate));
+                double S = s / Math.Sqrt(numFinishedGames);
                 confidenceInterval = 1.96 * 400.0 / Math.Log(10.0) * S / (winRate * (1.0 - winRate));
             }
 
