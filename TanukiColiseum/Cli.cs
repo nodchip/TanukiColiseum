@@ -20,8 +20,8 @@ namespace TanukiColiseum
             int numGames = status.NumGames;
             int blackWin = status.Win[0, 0] + status.Win[1, 0];
             int whiteWin = status.Win[0, 1] + status.Win[1, 1];
-            int blackWinRatio = 100 * blackWin / (blackWin + whiteWin);
-            int whiteWinRatio = 100 * whiteWin / (blackWin + whiteWin);
+            double blackWinRatio = 100.0 * blackWin / (blackWin + whiteWin);
+            double whiteWinRatio = 100.0 * whiteWin / (blackWin + whiteWin);
             int engine1DrawBlack = status.NumDraw[0];
             int engine2DrawBlack = status.NumDraw[1];
             int numDraw = engine1DrawBlack + engine2DrawBlack;
@@ -31,12 +31,12 @@ namespace TanukiColiseum
             int engine2Win = status.Win[1, 0] + status.Win[1, 1];
             int engine2BlackWin = status.Win[1, 0];
             int engine2WhiteWin = status.Win[1, 1];
-            int engine1WinRatio = 100 * engine1Win / (engine1Win + engine2Win);
-            int engine2WinRatio = 100 * engine2Win / (engine1Win + engine2Win);
-            int engine1BlackWinRatio = 100 * engine1BlackWin / (engine1Win + engine2Win);
-            int engine1WhiteWinRatio = 100 * engine1WhiteWin / (engine1Win + engine2Win);
-            int engine2BlackWinRatio = 100 * engine2BlackWin / (engine1Win + engine2Win);
-            int engine2WhiteWinRatio = 100 * engine2WhiteWin / (engine1Win + engine2Win);
+            double engine1WinRatio = 100.0 * engine1Win / (engine1Win + engine2Win);
+            double engine2WinRatio = 100.0 * engine2Win / (engine1Win + engine2Win);
+            double engine1BlackWinRatio = 100.0 * engine1BlackWin / (engine1Win + engine2Win);
+            double engine1WhiteWinRatio = 100.0 * engine1WhiteWin / (engine1Win + engine2Win);
+            double engine2BlackWinRatio = 100.0 * engine2BlackWin / (engine1Win + engine2Win);
+            double engine2WhiteWinRatio = 100.0 * engine2WhiteWin / (engine1Win + engine2Win);
             int numFinishedGames = engine1Win + engine2Win + numDraw;
             int engine1DeclarationWinBlack = status.DeclarationWin[0, 0];
             int engine1DeclarationWinWhite = status.DeclarationWin[0, 1];
@@ -56,13 +56,13 @@ namespace TanukiColiseum
             }
 
             Console.WriteLine(
-                $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio}%) 後手勝ち{whiteWin}({whiteWinRatio}%) 引き分け{numDraw}
+                $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio:0.0}%) 後手勝ち{whiteWin}({whiteWinRatio:0.0}%) 引き分け{numDraw}
 {engine1}
-勝ち{engine1Win}({engine1WinRatio}% R{rating:0.00} +-{confidenceInterval:0.00}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio}%)
+勝ち{engine1Win}({engine1WinRatio:0.0}% R{rating:0.0} +-{confidenceInterval:0.0}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio:0.0}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio:0.0}%)
 宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite}
 先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
 {engine2}
-勝ち{engine2Win}({engine2WinRatio}%) 先手勝ち{engine2BlackWin}({engine2BlackWinRatio}%) 後手勝ち{engine2WhiteWin}({engine2WhiteWinRatio}%)
+勝ち{engine2Win}({engine2WinRatio:0.0}%) 先手勝ち{engine2BlackWin}({engine2BlackWinRatio:0.0}%) 後手勝ち{engine2WhiteWin}({engine2WhiteWinRatio:0.0}%)
 宣言勝ち{engine2DeclarationWinBlack + engine2DeclarationWinWhite} 先手宣言勝ち{engine2DeclarationWinBlack} 後手宣言勝ち{engine2DeclarationWinWhite}
 先手引き分け{engine2DrawBlack} 後手引き分け{engine1DrawBlack}
 {engine1Win},{numDraw},{engine2Win}
