@@ -75,7 +75,7 @@ namespace TanukiColiseum
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
                 };
-                Console.WriteLine("Starting the engine process " + (gameIndex * 2));
+                Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
                 var engine1 = new Engine(options.Engine1FilePath, this, gameIndex * 2, gameIndex, 0, numaNode, overriddenOptions1);
                 engine1.StartAsync().Wait(TimeSpan.FromMinutes(1));
@@ -107,7 +107,7 @@ namespace TanukiColiseum
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
                 };
-                Console.WriteLine("Starting the engine process " + (gameIndex * 2 + 1));
+                Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
                 var engine2 = new Engine(options.Engine2FilePath, this, gameIndex * 2 + 1, gameIndex, 1, numaNode, overriddenOptions2);
                 engine2.StartAsync().Wait(TimeSpan.FromMinutes(1));
