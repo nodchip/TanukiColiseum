@@ -10,5 +10,18 @@
     d:DesignHeight="720"
     d:DesignWidth="1280"
     mc:Ignorable="d">
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive!  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <!--  Theme setting  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Brown.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
     <Grid />
 </mah:MetroWindow>
