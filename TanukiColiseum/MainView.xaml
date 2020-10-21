@@ -357,7 +357,7 @@
                         Grid.Row="10"
                         Grid.Column="0"
                         VerticalAlignment="Center"
-                        Text="exe定跡の手数を無視する" />
+                        Text="定跡の手数を無視する" />
                     <TextBox
                         Grid.Row="10"
                         Grid.Column="1"
