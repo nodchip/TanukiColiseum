@@ -59,12 +59,10 @@ namespace TanukiColiseum
                 $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio:0.0}%) 後手勝ち{whiteWin}({whiteWinRatio:0.0}%) 引き分け{numDraw}
 {engine1}
 勝ち{engine1Win}({engine1WinRatio:0.0}% R{rating:0.0} +-{confidenceInterval:0.0}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio:0.0}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio:0.0}%)
-宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite}
-先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
+宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite} 先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
 {engine2}
 勝ち{engine2Win}({engine2WinRatio:0.0}%) 先手勝ち{engine2BlackWin}({engine2BlackWinRatio:0.0}%) 後手勝ち{engine2WhiteWin}({engine2WhiteWinRatio:0.0}%)
-宣言勝ち{engine2DeclarationWinBlack + engine2DeclarationWinWhite} 先手宣言勝ち{engine2DeclarationWinBlack} 後手宣言勝ち{engine2DeclarationWinWhite}
-先手引き分け{engine2DrawBlack} 後手引き分け{engine1DrawBlack}
+宣言勝ち{engine2DeclarationWinBlack + engine2DeclarationWinWhite} 先手宣言勝ち{engine2DeclarationWinBlack} 後手宣言勝ち{engine2DeclarationWinWhite} 先手引き分け{engine2DrawBlack} 後手引き分け{engine1DrawBlack}
 {engine1Win},{numDraw},{engine2Win}
 ");
             Console.Out.Flush();
