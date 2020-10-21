@@ -7,8 +7,10 @@
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TanukiColiseum"
-    d:DesignHeight="720"
-    d:DesignWidth="1280"
+    Width="640"
+    Height="480"
+    d:DesignHeight="480"
+    d:DesignWidth="640"
     mc:Ignorable="d">
 
     <mah:MetroWindow.Resources>
@@ -23,5 +25,382 @@
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
 
-    <Grid />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox
+                Grid.Column="0"
+                Margin="1"
+                Header="共通設定">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="128" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="対局数" />
+                    <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="1" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="同時対局数" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="1000" />
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="ハッシュサイズ(MB)" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="1024" />
+
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="開始手数" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="24" />
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="開始局面ファイルパス" />
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="records2016_10818.sfen" />
+                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                    </Grid>
+
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="NUMAノード数" />
+                    <TextBox
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="1" />
+
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="表示更新間隔(ms)" />
+                    <TextBox
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Text="1" />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox
+                Grid.Column="1"
+                Margin="1"
+                Header="思考エンジン設定">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="128" />
+                        <ColumnDefinition Width="128" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="思考エンジン1" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Text="思考エンジン2" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="exeファイルパス" />
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="" />
+                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="" />
+                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                    </Grid>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="評価関数フォルダパス" />
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="eval" />
+                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="eval" />
+                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                    </Grid>
+
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="定跡手数" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="256" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Text="256" />
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="定跡ファイル名" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="no_book" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        Text="no_book" />
+
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="思考ノード数" />
+                    <TextBox
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="0"
+                        ToolTip="0を指定した場合、思考ノード数を指定しません" />
+                    <TextBox
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        Text="0"
+                        ToolTip="0を指定した場合、思考ノード数を指定しません" />
+
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="思考時間(ms)" />
+                    <TextBox
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Text="1000"
+                        ToolTip="0を指定した場合、思考時間を指定しません" />
+                    <TextBox
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        Text="1000"
+                        ToolTip="0を指定した場合、思考時間を指定しません" />
+
+                    <TextBlock
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="スレッド数" />
+                    <TextBox
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Text="1" />
+                    <TextBox
+                        Grid.Row="7"
+                        Grid.Column="2"
+                        Text="1" />
+
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="BookEvalDiff" />
+                    <TextBox
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Text="30" />
+                    <TextBox
+                        Grid.Row="8"
+                        Grid.Column="2"
+                        Text="30" />
+
+                    <TextBlock
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="定跡の採択率を考慮する" />
+                    <TextBox
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        Text="false" />
+                    <TextBox
+                        Grid.Row="9"
+                        Grid.Column="2"
+                        Text="false" />
+
+                    <TextBlock
+                        Grid.Row="10"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="exe定跡の手数を無視する" />
+                    <TextBox
+                        Grid.Row="10"
+                        Grid.Column="1"
+                        Text="true" />
+                    <TextBox
+                        Grid.Row="10"
+                        Grid.Column="2"
+                        Text="true" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ProgressBar Grid.Row="0" />
+                <TextBox
+                    Grid.Row="1"
+                    VerticalContentAlignment="Top"
+                    AcceptsReturn="True" />
+            </Grid>
+
+            <Button
+                Grid.Column="1"
+                Width="32"
+                Height="32">
+                開始
+            </Button>
+        </Grid>
+    </Grid>
 </mah:MetroWindow>
