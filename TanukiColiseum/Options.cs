@@ -51,5 +51,6 @@ namespace TanukiColiseum
         public string ConsiderBookMoveCount2 { get; set; }
         public string IgnoreBookPly1 { get; set; }
         public string IgnoreBookPly2 { get; set; }
+        public bool Gui { get; set; }
     }
 }

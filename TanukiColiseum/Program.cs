@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace TanukiColiseum
 {
@@ -31,7 +34,8 @@ namespace TanukiColiseum
             string considerBookMoveCount1 = "false",
             string considerBookMoveCount2 = "false",
             string ignoreBookPly1 = "false",
-            string ignoreBookPly2 = "false")
+            string ignoreBookPly2 = "false",
+            bool gui = true)
         {
             var options = new Options
             {
@@ -61,11 +65,27 @@ namespace TanukiColiseum
                 ConsiderBookMoveCount1 = considerBookMoveCount1,
                 ConsiderBookMoveCount2 = considerBookMoveCount2,
                 IgnoreBookPly1 = ignoreBookPly1,
-                IgnoreBookPly2 = ignoreBookPly2
+                IgnoreBookPly2 = ignoreBookPly2,
+                Gui = gui,
             };
 
-            var cli = new Cli();
-            cli.Run(options);
+            if (gui)
+            {
+                var thread = new Thread(() =>
+                {
+                    var application = new Application();
+                    application.Run(new MainView());
+                });
+                thread.SetApartmentState(System.Threading.ApartmentState.STA);
+                thread.IsBackground = true; //メインスレッドが終了した場合に、動作中のスレッドも終了させる場合
+                thread.Start();
+                thread.Join();
+            }
+            else
+            {
+                var cli = new Cli();
+                cli.Run(options);
+            }
         }
     }
 }
