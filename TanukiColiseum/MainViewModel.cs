@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TanukiColiseum
 {
@@ -97,5 +98,44 @@ namespace TanukiColiseum
         public ReactiveProperty<string> IgnoreBookPly2 { get; private set; } = new ReactiveProperty<string>("false");
 
         public ReactiveProperty<string> State { get; private set; } = new ReactiveProperty<string>();
+
+        public ReactiveCommand OnSfenFilePathButton { get; private set; } = new ReactiveCommand();
+
+        public ReactiveCommand OnEngine1FilePathButton { get; private set; } = new ReactiveCommand();
+
+        public ReactiveCommand OnEngine2FilePathButton { get; private set; } = new ReactiveCommand();
+
+        public ReactiveCommand OnEval1FolderPathButton { get; private set; } = new ReactiveCommand();
+
+        public ReactiveCommand OnEval2FolderPathButton { get; private set; } = new ReactiveCommand();
+
+        public MainViewModel()
+        {
+            OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
+            OnEngine1FilePathButton.Subscribe(() => SelectFilePath(Engine1FilePath));
+            OnEngine2FilePathButton.Subscribe(() => SelectFilePath(Engine2FilePath));
+            OnEval1FolderPathButton.Subscribe(() => SelectFolderPath(Eval1FolderPath));
+            OnEval2FolderPathButton.Subscribe(() => SelectFolderPath(Eval2FolderPath));
+        }
+
+        private static void SelectFilePath(ReactiveProperty<string> property)
+        {
+            var dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            property.Value = dialog.FileName;
+        }
+
+        private static void SelectFolderPath(ReactiveProperty<string> property)
+        {
+            var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            property.Value = dialog.SelectedPath;
+        }
     }
 }

@@ -124,7 +124,12 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Text="{Binding SfenFilePath.Value}" />
-                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding OnSfenFilePathButton}">
+                            ...
+                        </Button>
                     </Grid>
 
                     <TextBlock
@@ -201,7 +206,12 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Text="{Binding Engine1FilePath.Value}" />
-                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding OnEngine1FilePathButton}">
+                            ...
+                        </Button>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="2">
                         <Grid.RowDefinitions>
@@ -216,7 +226,12 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Text="{Binding Engine2FilePath.Value}" />
-                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding OnEngine2FilePathButton}">
+                            ...
+                        </Button>
                     </Grid>
 
                     <TextBlock
@@ -237,7 +252,12 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Text="{Binding Eval1FolderPath.Value}" />
-                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding OnEval1FolderPathButton}">
+                            ...
+                        </Button>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="2">
                         <Grid.RowDefinitions>
@@ -252,7 +272,12 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Text="{Binding Eval2FolderPath.Value}" />
-                        <Button Grid.Row="0" Grid.Column="1">...</Button>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Command="{Binding OnEval2FolderPathButton}">
+                            ...
+                        </Button>
                     </Grid>
 
                     <TextBlock
