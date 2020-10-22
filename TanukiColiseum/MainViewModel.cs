@@ -11,9 +11,9 @@ namespace TanukiColiseum
 {
     public class MainViewModel
     {
-        public ReactiveProperty<string> Engine1FilePath { get; private set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> Engine1FilePath { get; private set; } = new ReactiveProperty<string>("");
 
-        public ReactiveProperty<string> Engine2FilePath { get; private set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> Engine2FilePath { get; private set; } = new ReactiveProperty<string>("");
 
         public ReactiveProperty<string> Eval1FolderPath { get; private set; } = new ReactiveProperty<string>("eval");
 
@@ -97,7 +97,15 @@ namespace TanukiColiseum
 
         public ReactiveProperty<string> IgnoreBookPly2 { get; private set; } = new ReactiveProperty<string>("false");
 
-        public ReactiveProperty<string> State { get; private set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<bool> StartButtonEnabled { get; private set; } = new ReactiveProperty<bool>(true);
+
+        public ReactiveProperty<string> State { get; private set; } = new ReactiveProperty<string>("");
+
+        public ReactiveProperty<int> ProgressBarValue { get; private set; } = new ReactiveProperty<int>();
+
+        public ReactiveProperty<int> ProgressBarMinimum { get; private set; } = new ReactiveProperty<int>();
+
+        public ReactiveProperty<int> ProgressBarMaximum { get; private set; } = new ReactiveProperty<int>();
 
         public ReactiveCommand OnSfenFilePathButton { get; private set; } = new ReactiveCommand();
 
@@ -109,6 +117,8 @@ namespace TanukiColiseum
 
         public ReactiveCommand OnEval2FolderPathButton { get; private set; } = new ReactiveCommand();
 
+        public ReactiveCommand OnStartButton { get; private set; } = new ReactiveCommand();
+
         public MainViewModel()
         {
             OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
@@ -116,6 +126,7 @@ namespace TanukiColiseum
             OnEngine2FilePathButton.Subscribe(() => SelectFilePath(Engine2FilePath));
             OnEval1FolderPathButton.Subscribe(() => SelectFolderPath(Eval1FolderPath));
             OnEval2FolderPathButton.Subscribe(() => SelectFolderPath(Eval2FolderPath));
+            OnStartButton.Subscribe(() => OnStart());
         }
 
         private static void SelectFilePath(ReactiveProperty<string> property)
@@ -136,6 +147,67 @@ namespace TanukiColiseum
                 return;
             }
             property.Value = dialog.SelectedPath;
+        }
+
+        private void OnStart()
+        {
+            var options = new Options
+            {
+                Engine1FilePath = Engine1FilePath.Value,
+                Engine2FilePath = Engine2FilePath.Value,
+                Eval1FolderPath = Eval1FolderPath.Value,
+                Eval2FolderPath = Eval2FolderPath.Value,
+                NumConcurrentGames = NumConcurrentGames.Value,
+                NumGames = NumGames.Value,
+                HashMb = HashMb.Value,
+                NumBookMoves1 = NumBookMoves1.Value,
+                NumBookMoves2 = NumBookMoves2.Value,
+                BookFileName1 = BookFileName1.Value,
+                BookFileName2 = BookFileName2.Value,
+                NumBookMoves = NumBookMoves.Value,
+                SfenFilePath = SfenFilePath.Value,
+                Nodes1 = Nodes1.Value,
+                Nodes2 = Nodes2.Value,
+                Time1 = Time1.Value,
+                Time2 = Time2.Value,
+                NumNumaNodes = NumNumaNodes.Value,
+                ProgressIntervalMs = ProgressIntervalMs.Value,
+                NumThreads1 = NumThreads1.Value,
+                NumThreads2 = NumThreads2.Value,
+                BookEvalDiff1 = BookEvalDiff1.Value,
+                BookEvalDiff2 = BookEvalDiff2.Value,
+                ConsiderBookMoveCount1 = ConsiderBookMoveCount1.Value,
+                ConsiderBookMoveCount2 = ConsiderBookMoveCount2.Value,
+                IgnoreBookPly1 = IgnoreBookPly1.Value,
+                IgnoreBookPly2 = IgnoreBookPly2.Value,
+                Gui = true,
+            };
+
+            ProgressBarValue.Value = 0;
+            ProgressBarMinimum.Value = 0;
+            ProgressBarMaximum.Value = NumGames.Value;
+
+            var coliseum = new Coliseum();
+            coliseum.OnStatusChanged += ShowResult;
+            coliseum.OnError += OnError;
+
+            Task.Run(() =>
+            {
+                StartButtonEnabled.Value = false;
+                coliseum.Run(options);
+                StartButtonEnabled.Value = true;
+            });
+        }
+
+        private void ShowResult(Status status)
+        {
+            State.Value = status.ToHumanReadableString();
+            ProgressBarValue.Value = status.NumFinishedGames;
+        }
+
+        public void OnError(string errorMessage)
+        {
+            State.Value = errorMessage;
         }
     }
 }

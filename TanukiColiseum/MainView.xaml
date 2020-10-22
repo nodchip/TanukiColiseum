@@ -417,18 +417,25 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ProgressBar Grid.Row="0" />
+                <ProgressBar
+                    Grid.Row="0"
+                    Maximum="{Binding ProgressBarMaximum.Value}"
+                    Minimum="{Binding ProgressBarMinimum.Value}"
+                    Value="{Binding ProgressBarValue.Value}" />
                 <TextBox
                     Grid.Row="1"
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
-                    Text="{Binding Status.Value}" />
+                    IsReadOnly="True"
+                    Text="{Binding State.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
             <Button
                 Grid.Column="1"
                 Width="32"
-                Height="32">
+                Height="32"
+                Command="{Binding OnStartButton}"
+                IsEnabled="{Binding StartButtonEnabled.Value}">
                 開始
             </Button>
         </Grid>

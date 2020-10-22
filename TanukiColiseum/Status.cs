@@ -15,6 +15,20 @@ namespace TanukiColiseum
         // NumDraw[i] = エンジンiが先手の時の引き分けの回数
         public int[] NumDraw { get; } = { 0, 0 };
 
+        public int NumFinishedGames
+        {
+            get
+            {
+                int engine1Win = Win[0, 0] + Win[0, 1];
+                int engine2Win = Win[1, 0] + Win[1, 1];
+                int engine1DrawBlack = NumDraw[0];
+                int engine2DrawBlack = NumDraw[1];
+                int numDraw = engine1DrawBlack + engine2DrawBlack;
+                int numFinishedGames = engine1Win + engine2Win + numDraw;
+                return numFinishedGames;
+            }
+        }
+
         public Status() { }
 
         public Status(Status status)
