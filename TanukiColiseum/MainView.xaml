@@ -25,6 +25,10 @@
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
 
+    <mah:MetroWindow.DataContext>
+        <local:MainViewModel />
+    </mah:MetroWindow.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -70,7 +74,7 @@
                     <TextBox
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="1" />
+                        Text="{Binding NumGames.Value}" />
 
                     <TextBlock
                         Grid.Row="1"
@@ -80,7 +84,7 @@
                     <TextBox
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="1000" />
+                        Text="{Binding NumConcurrentGames.Value}" />
 
                     <TextBlock
                         Grid.Row="2"
@@ -90,7 +94,7 @@
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="1024" />
+                        Text="{Binding HashMb.Value}" />
 
                     <TextBlock
                         Grid.Row="3"
@@ -100,7 +104,7 @@
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="24" />
+                        Text="{Binding NumBookMoves.Value}" />
 
                     <TextBlock
                         Grid.Row="4"
@@ -119,7 +123,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="records2016_10818.sfen" />
+                            Text="{Binding SfenFilePath.Value}" />
                         <Button Grid.Row="0" Grid.Column="1">...</Button>
                     </Grid>
 
@@ -131,7 +135,7 @@
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="1"
-                        Text="1" />
+                        Text="{Binding NumNumaNodes.Value}" />
 
                     <TextBlock
                         Grid.Row="6"
@@ -141,7 +145,7 @@
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="1"
-                        Text="1" />
+                        Text="{Binding ProgressIntervalMs.Value}" />
                 </Grid>
             </GroupBox>
 
@@ -196,7 +200,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="" />
+                            Text="{Binding Engine1FilePath.Value}" />
                         <Button Grid.Row="0" Grid.Column="1">...</Button>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="2">
@@ -211,7 +215,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="" />
+                            Text="{Binding Engine2FilePath.Value}" />
                         <Button Grid.Row="0" Grid.Column="1">...</Button>
                     </Grid>
 
@@ -232,7 +236,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="eval" />
+                            Text="{Binding Eval1FolderPath.Value}" />
                         <Button Grid.Row="0" Grid.Column="1">...</Button>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="2">
@@ -247,7 +251,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="eval" />
+                            Text="{Binding Eval2FolderPath.Value}" />
                         <Button Grid.Row="0" Grid.Column="1">...</Button>
                     </Grid>
 
@@ -259,11 +263,11 @@
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="256" />
+                        Text="{Binding NumBookMoves1.Value}" />
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="2"
-                        Text="256" />
+                        Text="{Binding NumBookMoves2.Value}" />
 
                     <TextBlock
                         Grid.Row="4"
@@ -273,11 +277,11 @@
                     <TextBox
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="no_book" />
+                        Text="{Binding BookFileName1.Value}" />
                     <TextBox
                         Grid.Row="4"
                         Grid.Column="2"
-                        Text="no_book" />
+                        Text="{Binding BookFileName2.Value}" />
 
                     <TextBlock
                         Grid.Row="5"
@@ -287,12 +291,12 @@
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="1"
-                        Text="0"
+                        Text="{Binding Nodes1.Value}"
                         ToolTip="0を指定した場合、思考ノード数を指定しません" />
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="2"
-                        Text="0"
+                        Text="{Binding Nodes2.Value}"
                         ToolTip="0を指定した場合、思考ノード数を指定しません" />
 
                     <TextBlock
@@ -303,12 +307,12 @@
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="1"
-                        Text="1000"
+                        Text="{Binding Time1.Value}"
                         ToolTip="0を指定した場合、思考時間を指定しません" />
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="2"
-                        Text="1000"
+                        Text="{Binding Time2.Value}"
                         ToolTip="0を指定した場合、思考時間を指定しません" />
 
                     <TextBlock
@@ -319,11 +323,11 @@
                     <TextBox
                         Grid.Row="7"
                         Grid.Column="1"
-                        Text="1" />
+                        Text="{Binding NumThreads1.Value}" />
                     <TextBox
                         Grid.Row="7"
                         Grid.Column="2"
-                        Text="1" />
+                        Text="{Binding NumThreads2.Value}" />
 
                     <TextBlock
                         Grid.Row="8"
@@ -333,11 +337,11 @@
                     <TextBox
                         Grid.Row="8"
                         Grid.Column="1"
-                        Text="30" />
+                        Text="{Binding BookEvalDiff1.Value}" />
                     <TextBox
                         Grid.Row="8"
                         Grid.Column="2"
-                        Text="30" />
+                        Text="{Binding BookEvalDiff2.Value}" />
 
                     <TextBlock
                         Grid.Row="9"
@@ -347,11 +351,11 @@
                     <TextBox
                         Grid.Row="9"
                         Grid.Column="1"
-                        Text="false" />
+                        Text="{Binding ConsiderBookMoveCount1.Value}" />
                     <TextBox
                         Grid.Row="9"
                         Grid.Column="2"
-                        Text="false" />
+                        Text="{Binding ConsiderBookMoveCount2.Value}" />
 
                     <TextBlock
                         Grid.Row="10"
@@ -361,11 +365,11 @@
                     <TextBox
                         Grid.Row="10"
                         Grid.Column="1"
-                        Text="true" />
+                        Text="{Binding IgnoreBookPly1.Value}" />
                     <TextBox
                         Grid.Row="10"
                         Grid.Column="2"
-                        Text="true" />
+                        Text="{Binding IgnoreBookPly2.Value}" />
                 </Grid>
             </GroupBox>
         </Grid>
@@ -392,7 +396,8 @@
                 <TextBox
                     Grid.Row="1"
                     VerticalContentAlignment="Top"
-                    AcceptsReturn="True" />
+                    AcceptsReturn="True"
+                    Text="{Binding Status.Value}" />
             </Grid>
 
             <Button
