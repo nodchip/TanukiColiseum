@@ -77,7 +77,7 @@ namespace TanukiColiseum
             }
             else if (Times[Turn] != 0)
             {
-                Engines[Turn].Send($"go byoyomi {Nodes[Turn]}");
+                Engines[Turn].Send($"go byoyomi {Times[Turn]}");
             }
             else
             {
