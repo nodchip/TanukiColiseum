@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TanukiColiseum
 {
@@ -17,9 +18,10 @@ namespace TanukiColiseum
         private string[] Openings;
         private bool ChangeOpening = true;
         private int OpeningIndex = 0;
+        private string sfenFilePath;
 
         public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, Engine engine1,
-            Engine engine2, int numBookMoves, string[] openings)
+            Engine engine2, int numBookMoves, string[] openings, string sfenFilePath)
         {
             this.Nodes = new int[] { nodes1, nodes2 };
             this.Times = new int[] { time1, time2 };
@@ -27,6 +29,7 @@ namespace TanukiColiseum
             this.Engines.Add(engine2);
             this.NumBookMoves = numBookMoves;
             this.Openings = openings;
+            this.sfenFilePath = sfenFilePath;
         }
 
         public void OnNewGame()
@@ -92,6 +95,9 @@ namespace TanukiColiseum
 
         public void OnGameFinished()
         {
+            var sfen = "startpos moves " + string.Join(" ", Moves) + "\n";
+            File.AppendAllText(sfenFilePath, sfen);
+
             InitialTurn ^= 1;
             Running = false;
         }

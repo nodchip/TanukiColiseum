@@ -249,6 +249,9 @@ namespace TanukiColiseum
 
         private void OnStart()
         {
+            // 測定開始前に設定を保存しておく
+            model.Save(SettingFileName);
+
             var options = new Options
             {
                 Engine1FilePath = Engine1FilePath.Value,
@@ -289,10 +292,22 @@ namespace TanukiColiseum
             coliseum.OnStatusChanged += ShowResult;
             coliseum.OnError += OnError;
 
+            // logフォルダを作成する。
+            if (!Directory.Exists(LogFolderName))
+            {
+                Directory.CreateDirectory(LogFolderName);
+            }
+
+            string logFolderPath = Path.Combine(LogFolderName, Util.GetDateString());
+            Directory.CreateDirectory(logFolderPath);
+
+            // ログフォルダに設定ファイルを保存する。
+            model.Save(Path.Combine(logFolderPath, "setting.xml"));
+
             Task.Run(() =>
             {
                 StartMenuItemEnabled.Value = false;
-                coliseum.Run(options);
+                coliseum.Run(options, logFolderPath);
                 StartMenuItemEnabled.Value = true;
             });
         }

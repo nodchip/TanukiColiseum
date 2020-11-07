@@ -20,7 +20,7 @@ namespace TanukiColiseum
         public event StatusHandler OnStatusChanged;
         public event ErrorHandler OnError;
 
-        public void Run(Options options)
+        public void Run(Options options, string logFolderPath)
         {
             // 評価関数フォルダと思考エンジンの存在確認を行う
             if (!File.Exists(options.Engine1FilePath))
@@ -53,6 +53,9 @@ namespace TanukiColiseum
 
             Console.WriteLine("Initializing engines...");
             Console.Out.Flush();
+
+            Directory.CreateDirectory(logFolderPath);
+            var sfenFilePath = Path.Combine(logFolderPath, "sfen.txt");
 
             for (int gameIndex = 0; gameIndex < options.NumConcurrentGames; ++gameIndex)
             {
@@ -120,7 +123,7 @@ namespace TanukiColiseum
                 // ゲーム初期化
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
                 Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
-                    options.Time2, engine1, engine2, options.NumBookMoves, openings));
+                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath));
             }
 
             Console.WriteLine("Initialized engines...");

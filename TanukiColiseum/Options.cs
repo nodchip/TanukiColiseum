@@ -52,5 +52,38 @@ namespace TanukiColiseum
         public string IgnoreBookPly1 { get; set; }
         public string IgnoreBookPly2 { get; set; }
         public bool Gui { get; set; }
+
+        public MainModel ToModel()
+        {
+            var model = new MainModel();
+            model.Engine1FilePath.Value = Engine1FilePath;
+            model.Engine2FilePath.Value = Engine2FilePath;
+            model.Eval1FolderPath.Value = Eval1FolderPath;
+            model.Eval2FolderPath.Value = Eval2FolderPath;
+            model.NumConcurrentGames.Value = NumConcurrentGames;
+            model.NumGames.Value = NumGames;
+            model.HashMb.Value = HashMb;
+            model.NumBookMoves1.Value = NumBookMoves1;
+            model.NumBookMoves2.Value = NumBookMoves2;
+            model.BookFileName1.Value = BookFileName1;
+            model.BookFileName2.Value = BookFileName2;
+            model.NumBookMoves.Value = NumBookMoves;
+            model.SfenFilePath.Value = SfenFilePath;
+            model.Nodes1.Value = Nodes1;
+            model.Nodes2.Value = Nodes2;
+            model.Time1.Value = Time1;
+            model.Time2.Value = Time2;
+            model.NumNumaNodes.Value = NumNumaNodes;
+            model.ProgressIntervalMs.Value = ProgressIntervalMs;
+            model.NumThreads1.Value = NumThreads1;
+            model.NumThreads2.Value = NumThreads2;
+            model.BookEvalDiff1.Value = BookEvalDiff1;
+            model.BookEvalDiff2.Value = BookEvalDiff2;
+            model.ConsiderBookMoveCount1.Value = ConsiderBookMoveCount1;
+            model.ConsiderBookMoveCount2.Value = ConsiderBookMoveCount2;
+            model.IgnoreBookPly1.Value = IgnoreBookPly1;
+            model.IgnoreBookPly2.Value = IgnoreBookPly2;
+            return model;
+        }
     }
 }
