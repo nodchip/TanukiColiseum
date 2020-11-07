@@ -127,6 +127,7 @@
     <Compile Include="Coliseum.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="MainModel.cs" />
     <Compile Include="MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
