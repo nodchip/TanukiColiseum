@@ -1,88 +1,160 @@
 ﻿using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
 
 namespace TanukiColiseum
 {
     /// <summary>
     /// 設定項目を保持するモデルクラス
     /// </summary>
+    [DataContract]
     public class MainModel : INotifyPropertyChanged
     {
-        public ReactiveProperty<string> Engine1FilePath { get; } = new ReactiveProperty<string>("");
+        [DataMember]
+        public ReactiveProperty<string> Engine1FilePath { get; set; } = new ReactiveProperty<string>("");
 
-        public ReactiveProperty<string> Engine2FilePath { get; } = new ReactiveProperty<string>("");
+        [DataMember]
+        public ReactiveProperty<string> Engine2FilePath { get; set; } = new ReactiveProperty<string>("");
 
-        public ReactiveProperty<string> Eval1FolderPath { get; } = new ReactiveProperty<string>("eval");
+        [DataMember]
+        public ReactiveProperty<string> Eval1FolderPath { get; set; } = new ReactiveProperty<string>("eval");
 
-        public ReactiveProperty<string> Eval2FolderPath { get; } = new ReactiveProperty<string>("eval");
+        [DataMember]
+        public ReactiveProperty<string> Eval2FolderPath { get; set; } = new ReactiveProperty<string>("eval");
 
-        public ReactiveProperty<int> NumConcurrentGames { get; } = new ReactiveProperty<int>(1);
+        [DataMember]
+        public ReactiveProperty<int> NumConcurrentGames { get; set; } = new ReactiveProperty<int>(1);
 
-        public ReactiveProperty<int> NumGames { get; } = new ReactiveProperty<int>(1000);
+        [DataMember]
+        public ReactiveProperty<int> NumGames { get; set; } = new ReactiveProperty<int>(1000);
 
-        public ReactiveProperty<int> HashMb { get; } = new ReactiveProperty<int>(16);
+        [DataMember]
+        public ReactiveProperty<int> HashMb { get; set; } = new ReactiveProperty<int>(16);
 
-        public ReactiveProperty<int> NumBookMoves1 { get; } = new ReactiveProperty<int>(16);
+        [DataMember]
+        public ReactiveProperty<int> NumBookMoves1 { get; set; } = new ReactiveProperty<int>(16);
 
-        public ReactiveProperty<int> NumBookMoves2 { get; } = new ReactiveProperty<int>(16);
+        [DataMember]
+        public ReactiveProperty<int> NumBookMoves2 { get; set; } = new ReactiveProperty<int>(16);
 
-        public ReactiveProperty<string> BookFileName1 { get; } = new ReactiveProperty<string>("standard_book.db");
+        [DataMember]
+        public ReactiveProperty<string> BookFileName1 { get; set; } = new ReactiveProperty<string>("standard_book.db");
 
-        public ReactiveProperty<string> BookFileName2 { get; } = new ReactiveProperty<string>("standard_book.db");
+        [DataMember]
+        public ReactiveProperty<string> BookFileName2 { get; set; } = new ReactiveProperty<string>("standard_book.db");
 
-        public ReactiveProperty<int> NumBookMoves { get; } = new ReactiveProperty<int>(24);
+        [DataMember]
+        public ReactiveProperty<int> NumBookMoves { get; set; } = new ReactiveProperty<int>(24);
 
-        public ReactiveProperty<string> SfenFilePath { get; } = new ReactiveProperty<string>("records2016_10818.sfen");
+        [DataMember]
+        public ReactiveProperty<string> SfenFilePath { get; set; } = new ReactiveProperty<string>("records2016_10818.sfen");
 
         /// <summary>
         /// 思考エンジン1に渡す思考ノード数。
         /// <para>0が渡された場合、ノード数を指定しない。</para>
         /// </summary>
-        public ReactiveProperty<int> Nodes1 { get; } = new ReactiveProperty<int>(0);
+        [DataMember]
+        public ReactiveProperty<int> Nodes1 { get; set; } = new ReactiveProperty<int>(0);
 
         /// <summary>
         /// 思考エンジン2に渡す思考ノード数。
         /// <para>0が渡された場合、ノード数を指定しない。</para>
         /// </summary>
-        public ReactiveProperty<int> Nodes2 { get; } = new ReactiveProperty<int>(0);
+        [DataMember]
+        public ReactiveProperty<int> Nodes2 { get; set; } = new ReactiveProperty<int>(0);
 
         /// <summary>
         /// 思考エンジン1に渡す思考時間。
         /// <para>0が渡された場合、思考時間を指定しない。</para>
         /// </summary>
-        public ReactiveProperty<int> Time1 { get; } = new ReactiveProperty<int>(1000);
+        [DataMember]
+        public ReactiveProperty<int> Time1 { get; set; } = new ReactiveProperty<int>(1000);
 
         /// <summary>
         /// 思考エンジン2に渡す思考時間。
         /// <para>0が渡された場合、思考時間を指定しない。</para>
         /// </summary>
-        public ReactiveProperty<int> Time2 { get; } = new ReactiveProperty<int>(1000);
+        [DataMember]
+        public ReactiveProperty<int> Time2 { get; set; } = new ReactiveProperty<int>(1000);
 
-        public ReactiveProperty<int> NumNumaNodes { get; } = new ReactiveProperty<int>(1);
+        [DataMember]
+        public ReactiveProperty<int> NumNumaNodes { get; set; } = new ReactiveProperty<int>(1);
 
-        public ReactiveProperty<int> ProgressIntervalMs { get; } = new ReactiveProperty<int>(1);
+        [DataMember]
+        public ReactiveProperty<int> ProgressIntervalMs { get; set; } = new ReactiveProperty<int>(1);
 
-        public ReactiveProperty<int> NumThreads1 { get; } = new ReactiveProperty<int>(1);
+        [DataMember]
+        public ReactiveProperty<int> NumThreads1 { get; set; } = new ReactiveProperty<int>(1);
 
-        public ReactiveProperty<int> NumThreads2 { get; } = new ReactiveProperty<int>(1);
+        [DataMember]
+        public ReactiveProperty<int> NumThreads2 { get; set; } = new ReactiveProperty<int>(1);
 
-        public ReactiveProperty<int> BookEvalDiff1 { get; } = new ReactiveProperty<int>(30);
+        [DataMember]
+        public ReactiveProperty<int> BookEvalDiff1 { get; set; } = new ReactiveProperty<int>(30);
 
-        public ReactiveProperty<int> BookEvalDiff2 { get; } = new ReactiveProperty<int>(30);
+        [DataMember]
+        public ReactiveProperty<int> BookEvalDiff2 { get; set; } = new ReactiveProperty<int>(30);
 
-        public ReactiveProperty<string> ConsiderBookMoveCount1 { get; } = new ReactiveProperty<string>("false");
+        [DataMember]
+        public ReactiveProperty<string> ConsiderBookMoveCount1 { get; set; } = new ReactiveProperty<string>("false");
 
-        public ReactiveProperty<string> ConsiderBookMoveCount2 { get; } = new ReactiveProperty<string>("false");
+        [DataMember]
+        public ReactiveProperty<string> ConsiderBookMoveCount2 { get; set; } = new ReactiveProperty<string>("false");
 
-        public ReactiveProperty<string> IgnoreBookPly1 { get; } = new ReactiveProperty<string>("false");
+        [DataMember]
+        public ReactiveProperty<string> IgnoreBookPly1 { get; set; } = new ReactiveProperty<string>("false");
 
-        public ReactiveProperty<string> IgnoreBookPly2 { get; } = new ReactiveProperty<string>("false");
+        [DataMember]
+        public ReactiveProperty<string> IgnoreBookPly2 { get; set; } = new ReactiveProperty<string>("false");
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Save(string filePath)
+        {
+            var serializer = new DataContractSerializer(typeof(MainModel));
+            using (var writer = new FileStream(filePath, FileMode.Create))
+            {
+                serializer.WriteObject(writer, this);
+            }
+        }
+
+        public void Load(string filePath)
+        {
+            MainModel model;
+            var serializer = new DataContractSerializer(typeof(MainModel));
+            using (var reader = new FileStream(filePath, FileMode.Open))
+            {
+                model = (MainModel)serializer.ReadObject(reader);
+            }
+
+            Engine1FilePath.Value = model.Engine1FilePath.Value;
+            Engine2FilePath.Value = model.Engine2FilePath.Value;
+            Eval1FolderPath.Value = model.Eval1FolderPath.Value;
+            Eval2FolderPath.Value = model.Eval2FolderPath.Value;
+            NumConcurrentGames.Value = model.NumConcurrentGames.Value;
+            NumGames.Value = model.NumGames.Value;
+            HashMb.Value = model.HashMb.Value;
+            NumBookMoves1.Value = model.NumBookMoves1.Value;
+            NumBookMoves2.Value = model.NumBookMoves2.Value;
+            BookFileName1.Value = model.BookFileName1.Value;
+            BookFileName2.Value = model.BookFileName2.Value;
+            NumBookMoves.Value = model.NumBookMoves.Value;
+            SfenFilePath.Value = model.SfenFilePath.Value;
+            Nodes1.Value = model.Nodes1.Value;
+            Nodes2.Value = model.Nodes2.Value;
+            Time1.Value = model.Time1.Value;
+            Time2.Value = model.Time2.Value;
+            NumNumaNodes.Value = model.NumNumaNodes.Value;
+            ProgressIntervalMs.Value = model.ProgressIntervalMs.Value;
+            NumThreads1.Value = model.NumThreads1.Value;
+            NumThreads2.Value = model.NumThreads2.Value;
+            BookEvalDiff1.Value = model.BookEvalDiff1.Value;
+            BookEvalDiff2.Value = model.BookEvalDiff2.Value;
+            ConsiderBookMoveCount1.Value = model.ConsiderBookMoveCount1.Value;
+            ConsiderBookMoveCount2.Value = model.ConsiderBookMoveCount2.Value;
+            IgnoreBookPly1.Value = model.IgnoreBookPly1.Value;
+            IgnoreBookPly2.Value = model.IgnoreBookPly2.Value;
+        }
     }
 }
