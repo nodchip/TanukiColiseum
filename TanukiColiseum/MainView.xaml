@@ -26,9 +26,6 @@
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
 
-    <mah:MetroWindow.DataContext>
-        <local:MainViewModel />
-    </mah:MetroWindow.DataContext>
     <bh:Interaction.Behaviors>
         <local:SaveSettingFileBehavior />
     </bh:Interaction.Behaviors>

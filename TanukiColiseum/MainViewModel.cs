@@ -1,5 +1,6 @@
 ﻿using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
@@ -130,6 +131,8 @@ namespace TanukiColiseum
 
         public ReactiveCommand OnStartMenuItem { get; } = new ReactiveCommand();
 
+        public Action CloseAction { get; set; }
+
         public MainModel model { get; } = new MainModel();
 
         private string filePath;
@@ -241,7 +244,7 @@ namespace TanukiColiseum
 
         public void OnExit()
         {
-
+            CloseAction();
         }
 
         private void OnStart()

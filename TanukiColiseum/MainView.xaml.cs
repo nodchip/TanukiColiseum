@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using System;
 
 namespace TanukiColiseum
 {
@@ -10,6 +11,10 @@ namespace TanukiColiseum
         public MainView()
         {
             InitializeComponent();
+            var vm = new MainViewModel();
+            DataContext = vm;
+            if (vm.CloseAction == null)
+                vm.CloseAction = new Action(this.Close);
         }
     }
 }
