@@ -1,10 +1,7 @@
 ﻿using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +9,8 @@ namespace TanukiColiseum
 {
     public class MainViewModel
     {
+        private const string SettingFileName = "TanukiColiseum.setting.xml";
+
         public ReactiveProperty<string> Engine1FilePath { get; }
 
         public ReactiveProperty<string> Engine2FilePath { get; }
@@ -124,6 +123,11 @@ namespace TanukiColiseum
 
         public MainViewModel()
         {
+            if (File.Exists(SettingFileName))
+            {
+                model.Load(SettingFileName);
+            }
+
             Engine1FilePath = model.Engine1FilePath.ToReactivePropertyAsSynchronized(x => x.Value);
             Engine2FilePath = model.Engine2FilePath.ToReactivePropertyAsSynchronized(x => x.Value);
             Eval1FolderPath = model.Eval1FolderPath.ToReactivePropertyAsSynchronized(x => x.Value);
@@ -239,6 +243,11 @@ namespace TanukiColiseum
         public void OnError(string errorMessage)
         {
             State.Value = errorMessage;
+        }
+
+        public void SaveSettingFile()
+        {
+            model.Save(SettingFileName);
         }
     }
 }
