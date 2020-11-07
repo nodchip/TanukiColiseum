@@ -10,6 +10,7 @@ namespace TanukiColiseum
     public class MainViewModel
     {
         private const string SettingFileName = "TanukiColiseum.setting.xml";
+        private const string LogFolderName = "log";
 
         public ReactiveProperty<string> Engine1FilePath { get; }
 
@@ -97,7 +98,7 @@ namespace TanukiColiseum
 
         public ReactiveProperty<string> IgnoreBookPly2 { get; }
 
-        public ReactiveProperty<bool> StartButtonEnabled { get; } = new ReactiveProperty<bool>(true);
+        public ReactiveProperty<bool> StartMenuItemEnabled { get; } = new ReactiveProperty<bool>(true);
 
         public ReactiveProperty<string> State { get; } = new ReactiveProperty<string>("");
 
@@ -117,9 +118,21 @@ namespace TanukiColiseum
 
         public ReactiveCommand OnEval2FolderPathButton { get; } = new ReactiveCommand();
 
-        public ReactiveCommand OnStartButton { get; } = new ReactiveCommand();
+        public ReactiveCommand OnNewMenuItem { get; } = new ReactiveCommand();
+
+        public ReactiveCommand OnOpenMenuItem { get; } = new ReactiveCommand();
+
+        public ReactiveCommand OnSaveMenuItem { get; } = new ReactiveCommand();
+
+        public ReactiveCommand OnSaveAsMenuItem { get; } = new ReactiveCommand();
+
+        public ReactiveCommand OnExitMenuItem { get; } = new ReactiveCommand();
+
+        public ReactiveCommand OnStartMenuItem { get; } = new ReactiveCommand();
 
         public MainModel model { get; } = new MainModel();
+
+        private string filePath;
 
         public MainViewModel()
         {
@@ -161,7 +174,12 @@ namespace TanukiColiseum
             OnEngine2FilePathButton.Subscribe(() => SelectFilePath(Engine2FilePath));
             OnEval1FolderPathButton.Subscribe(() => SelectFolderPath(Eval1FolderPath));
             OnEval2FolderPathButton.Subscribe(() => SelectFolderPath(Eval2FolderPath));
-            OnStartButton.Subscribe(() => OnStart());
+            OnNewMenuItem.Subscribe(OnNew);
+            OnOpenMenuItem.Subscribe(OnOpen);
+            OnSaveMenuItem.Subscribe(OnSave);
+            OnSaveAsMenuItem.Subscribe(OnSaveAs);
+            OnExitMenuItem.Subscribe(OnExit);
+            OnStartMenuItem.Subscribe(OnStart);
         }
 
         private static void SelectFilePath(ReactiveProperty<string> property)
@@ -182,6 +200,48 @@ namespace TanukiColiseum
                 return;
             }
             property.Value = dialog.SelectedPath;
+        }
+
+        public void OnNew()
+        {
+            model.CopyFrom(new MainModel());
+        }
+
+        public void OnOpen()
+        {
+            var dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            model.Load(dialog.FileName);
+            filePath = dialog.FileName;
+        }
+
+        public void OnSave()
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                model.Save(filePath);
+                return;
+            }
+            OnSaveAs();
+        }
+
+        public void OnSaveAs()
+        {
+            var dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            model.Save(dialog.FileName);
+            filePath = dialog.FileName;
+        }
+
+        public void OnExit()
+        {
+
         }
 
         private void OnStart()
@@ -228,9 +288,9 @@ namespace TanukiColiseum
 
             Task.Run(() =>
             {
-                StartButtonEnabled.Value = false;
+                StartMenuItemEnabled.Value = false;
                 coliseum.Run(options);
-                StartButtonEnabled.Value = true;
+                StartMenuItemEnabled.Value = true;
             });
         }
 

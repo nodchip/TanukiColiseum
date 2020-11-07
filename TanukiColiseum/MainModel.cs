@@ -128,6 +128,11 @@ namespace TanukiColiseum
                 model = (MainModel)serializer.ReadObject(reader);
             }
 
+            CopyFrom(model);
+        }
+
+        public void CopyFrom(MainModel model)
+        {
             Engine1FilePath.Value = model.Engine1FilePath.Value;
             Engine2FilePath.Value = model.Engine2FilePath.Value;
             Eval1FolderPath.Value = model.Eval1FolderPath.Value;

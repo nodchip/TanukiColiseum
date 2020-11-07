@@ -8,10 +8,10 @@
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TanukiColiseum"
-    Width="640"
-    Height="480"
-    d:DesignHeight="480"
-    d:DesignWidth="640"
+    Width="800"
+    Height="600"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
     mc:Ignorable="d">
 
     <mah:MetroWindow.Resources>
@@ -36,19 +36,35 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0">
+        <Menu Grid.Row="0">
+            <MenuItem Header="ファイル(_F)">
+                <MenuItem Command="{Binding OnNewMenuItem}" Header="新規(_N)" />
+                <MenuItem Command="{Binding OnOpenMenuItem}" Header="開く(_O)" />
+                <MenuItem Command="{Binding OnSaveMenuItem}" Header="上書き保存(_S)" />
+                <MenuItem Command="{Binding OnSaveAsMenuItem}" Header="名前を付けて保存(_A)" />
+                <Separator />
+                <MenuItem Command="{Binding OnExitMenuItem}" Header="終了(_X)" />
+            </MenuItem>
+            <MenuItem
+                Command="{Binding OnStartMenuItem}"
+                Header="測定開始"
+                IsEnabled="{Binding StartMenuItemEnabled}" />
+        </Menu>
+
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <GroupBox
@@ -66,8 +82,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="128" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -78,7 +94,7 @@
                     <TextBox
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="{Binding NumGames.Value}" />
+                        Text="{Binding NumGames.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="1"
@@ -88,7 +104,7 @@
                     <TextBox
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="{Binding NumConcurrentGames.Value}" />
+                        Text="{Binding NumConcurrentGames.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="2"
@@ -98,7 +114,7 @@
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{Binding HashMb.Value}" />
+                        Text="{Binding HashMb.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="3"
@@ -108,7 +124,7 @@
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="{Binding NumBookMoves.Value}" />
+                        Text="{Binding NumBookMoves.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="4"
@@ -127,7 +143,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding SfenFilePath.Value}" />
+                            Text="{Binding SfenFilePath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
@@ -144,7 +160,7 @@
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="1"
-                        Text="{Binding NumNumaNodes.Value}" />
+                        Text="{Binding NumNumaNodes.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="6"
@@ -154,7 +170,7 @@
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="1"
-                        Text="{Binding ProgressIntervalMs.Value}" />
+                        Text="{Binding ProgressIntervalMs.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </GroupBox>
 
@@ -179,8 +195,8 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="128" />
-                        <ColumnDefinition Width="128" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -209,7 +225,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding Engine1FilePath.Value}" />
+                            Text="{Binding Engine1FilePath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
@@ -229,7 +245,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding Engine2FilePath.Value}" />
+                            Text="{Binding Engine2FilePath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
@@ -255,7 +271,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding Eval1FolderPath.Value}" />
+                            Text="{Binding Eval1FolderPath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
@@ -275,7 +291,7 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding Eval2FolderPath.Value}" />
+                            Text="{Binding Eval2FolderPath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
@@ -292,11 +308,11 @@
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="{Binding NumBookMoves1.Value}" />
+                        Text="{Binding NumBookMoves1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="2"
-                        Text="{Binding NumBookMoves2.Value}" />
+                        Text="{Binding NumBookMoves2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="4"
@@ -306,11 +322,11 @@
                     <TextBox
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="{Binding BookFileName1.Value}" />
+                        Text="{Binding BookFileName1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="4"
                         Grid.Column="2"
-                        Text="{Binding BookFileName2.Value}" />
+                        Text="{Binding BookFileName2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="5"
@@ -320,12 +336,12 @@
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="1"
-                        Text="{Binding Nodes1.Value}"
+                        Text="{Binding Nodes1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、思考ノード数を指定しません" />
                     <TextBox
                         Grid.Row="5"
                         Grid.Column="2"
-                        Text="{Binding Nodes2.Value}"
+                        Text="{Binding Nodes2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、思考ノード数を指定しません" />
 
                     <TextBlock
@@ -336,12 +352,12 @@
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="1"
-                        Text="{Binding Time1.Value}"
+                        Text="{Binding Time1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、思考時間を指定しません" />
                     <TextBox
                         Grid.Row="6"
                         Grid.Column="2"
-                        Text="{Binding Time2.Value}"
+                        Text="{Binding Time2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、思考時間を指定しません" />
 
                     <TextBlock
@@ -352,11 +368,11 @@
                     <TextBox
                         Grid.Row="7"
                         Grid.Column="1"
-                        Text="{Binding NumThreads1.Value}" />
+                        Text="{Binding NumThreads1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="7"
                         Grid.Column="2"
-                        Text="{Binding NumThreads2.Value}" />
+                        Text="{Binding NumThreads2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="8"
@@ -366,11 +382,11 @@
                     <TextBox
                         Grid.Row="8"
                         Grid.Column="1"
-                        Text="{Binding BookEvalDiff1.Value}" />
+                        Text="{Binding BookEvalDiff1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="8"
                         Grid.Column="2"
-                        Text="{Binding BookEvalDiff2.Value}" />
+                        Text="{Binding BookEvalDiff2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="9"
@@ -380,11 +396,11 @@
                     <TextBox
                         Grid.Row="9"
                         Grid.Column="1"
-                        Text="{Binding ConsiderBookMoveCount1.Value}" />
+                        Text="{Binding ConsiderBookMoveCount1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="9"
                         Grid.Column="2"
-                        Text="{Binding ConsiderBookMoveCount2.Value}" />
+                        Text="{Binding ConsiderBookMoveCount2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Grid.Row="10"
@@ -394,54 +410,35 @@
                     <TextBox
                         Grid.Row="10"
                         Grid.Column="1"
-                        Text="{Binding IgnoreBookPly1.Value}" />
+                        Text="{Binding IgnoreBookPly1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="10"
                         Grid.Column="2"
-                        Text="{Binding IgnoreBookPly2.Value}" />
+                        Text="{Binding IgnoreBookPly2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </GroupBox>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <ProgressBar
-                    Grid.Row="0"
-                    Maximum="{Binding ProgressBarMaximum.Value}"
-                    Minimum="{Binding ProgressBarMinimum.Value}"
-                    Value="{Binding ProgressBarValue.Value}" />
-                <TextBox
-                    Grid.Row="1"
-                    VerticalContentAlignment="Top"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    Text="{Binding State.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-
-            <Button
-                Grid.Column="1"
-                Width="32"
-                Height="32"
-                Command="{Binding OnStartButton}"
-                IsEnabled="{Binding StartButtonEnabled.Value}">
-                開始
-            </Button>
+            <ProgressBar
+                Grid.Row="0"
+                Maximum="{Binding ProgressBarMaximum.Value}"
+                Minimum="{Binding ProgressBarMinimum.Value}"
+                Value="{Binding ProgressBarValue.Value}" />
+            <TextBox
+                Grid.Row="1"
+                VerticalContentAlignment="Top"
+                AcceptsReturn="True"
+                IsReadOnly="True"
+                Text="{Binding State.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </Grid>
 </mah:MetroWindow>

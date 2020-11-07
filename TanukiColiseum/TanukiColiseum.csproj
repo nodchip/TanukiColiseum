@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cli.cs" />
+    <Compile Include="CloseWindowAction.cs" />
     <Compile Include="Coliseum.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Game.cs" />
