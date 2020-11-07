@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace TanukiColiseum
 {
@@ -84,6 +85,14 @@ namespace TanukiColiseum
             model.IgnoreBookPly1.Value = IgnoreBookPly1;
             model.IgnoreBookPly2.Value = IgnoreBookPly2;
             return model;
+        }
+
+        public string ToHumanReadableString()
+        {
+            return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
+思考エンジン1 exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 思考時間(ms)={Time1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
+思考エンジン2 exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 思考時間(ms)={Time2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
+";
         }
     }
 }

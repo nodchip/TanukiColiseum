@@ -159,6 +159,8 @@ namespace TanukiColiseum
             Console.WriteLine($"engine1={options.Engine1FilePath} eval1={options.Eval1FolderPath}");
             Console.WriteLine($"engine2={options.Engine2FilePath} eval2={options.Eval2FolderPath}");
             OnStatusChanged(new Status(Status));
+            File.WriteAllText(Path.Combine(logFolderPath, "result.txt"),
+                options.ToHumanReadableString() + new Status(Status).ToHumanReadableString());
         }
 
         /// <summary>
