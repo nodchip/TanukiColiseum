@@ -6,3 +6,6 @@
 /TanukiColiseum/TanukiColiseum.csproj.user
 /TanukiColiseumTests/bin
 /TanukiColiseumTests/obj
+/log
+/TanukiColiseum.setting.xml
+*.bak
