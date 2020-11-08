@@ -68,6 +68,11 @@ namespace TanukiColiseum
             Directory.CreateDirectory(logFolderPath);
             var sfenFilePath = Path.Combine(logFolderPath, "sfen.txt");
 
+            // 各エンジンに渡すThreadIdOffsetの値を計算する際に使用するストライド
+            // CPUの論理コア数を超えるIDが設定される場合や、
+            // スレッド数がエンジン1とエンジン2で異なる場合が考えられるが、
+            // とりあえずこの計算式で計算することにする。
+            int threadIdStride = Math.Max(options.NumThreads1, options.NumThreads2);
             for (int gameIndex = 0; gameIndex < options.NumConcurrentGames; ++gameIndex)
             {
                 int numaNode = gameIndex * options.NumNumaNodes / options.NumConcurrentGames;
@@ -88,6 +93,7 @@ namespace TanukiColiseum
                     {"IgnoreBookPly", options.IgnoreBookPly1},
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
+                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()}
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
@@ -120,6 +126,7 @@ namespace TanukiColiseum
                     {"IgnoreBookPly", options.IgnoreBookPly2},
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
+                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()}
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
