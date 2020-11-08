@@ -5,7 +5,7 @@ using static TanukiColiseum.Coliseum;
 
 namespace TanukiColiseum
 {
-    class Game
+    public class Game
     {
         private int NumBookMoves;
         public List<string> Moves { get; } = new List<string>();
@@ -20,10 +20,10 @@ namespace TanukiColiseum
         private bool ChangeOpening = true;
         private int OpeningIndex = 0;
         private string sfenFilePath;
-        private event ErrorHandler OnError;
+        private event ErrorHandler ShowErrorMessage;
 
         public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, Engine engine1,
-            Engine engine2, int numBookMoves, string[] openings, string sfenFilePath, ErrorHandler OnError)
+            Engine engine2, int numBookMoves, string[] openings, string sfenFilePath, ErrorHandler ShowErrorMessage)
         {
             this.Nodes = new int[] { nodes1, nodes2 };
             this.Times = new int[] { time1, time2 };
@@ -32,7 +32,7 @@ namespace TanukiColiseum
             this.NumBookMoves = numBookMoves;
             this.Openings = openings;
             this.sfenFilePath = sfenFilePath;
-            this.OnError = OnError;
+            this.ShowErrorMessage = ShowErrorMessage;
         }
 
         public void OnNewGame()
@@ -66,7 +66,7 @@ namespace TanukiColiseum
             {
                 if (!engine.Isready() || !engine.Usinewgame())
                 {
-                    OnError($"エンジン({engine})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"エンジン({engine})が異常終了またはタイムアウトしました");
                 }
             }
         }
@@ -75,26 +75,26 @@ namespace TanukiColiseum
         {
             if (!Engines[Turn].Position(Moves))
             {
-                OnError($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
             }
 
             if (Nodes[Turn] != 0)
             {
                 if (!Engines[Turn].Go("nodes", Nodes[Turn]))
                 {
-                    OnError($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
                 }
             }
             else if (Times[Turn] != 0)
             {
                 if (!Engines[Turn].Go("byoyomi", Times[Turn]))
                 {
-                    OnError($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
                 }
             }
             else
             {
-                OnError("nodesかtimeのいずれかを指定してください。");
+                ShowErrorMessage("nodesかtimeのいずれかを指定してください。");
             }
         }
         public void OnMove(string move)

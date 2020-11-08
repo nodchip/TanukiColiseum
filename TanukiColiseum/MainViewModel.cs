@@ -289,8 +289,8 @@ namespace TanukiColiseum
             ProgressBarMaximum.Value = NumGames.Value;
 
             var coliseum = new Coliseum();
-            coliseum.OnStatusChanged += ShowResult;
-            coliseum.OnError += OnError;
+            coliseum.ShowStatus += ShowStatus;
+            coliseum.ShowErrorMessage += ShowErrorMessage;
 
             // logフォルダを作成する。
             if (!Directory.Exists(LogFolderName))
@@ -312,13 +312,13 @@ namespace TanukiColiseum
             });
         }
 
-        private void ShowResult(Status status)
+        private void ShowStatus(Options options, Status status, Engine engine1, Engine engine2)
         {
-            State.Value = status.ToHumanReadableString();
+            State.Value = Coliseum.CreateStatusMessage(options, status, engine1, engine2);
             ProgressBarValue.Value = status.NumFinishedGames;
         }
 
-        public void OnError(string errorMessage)
+        public void ShowErrorMessage(string errorMessage)
         {
             State.Value = errorMessage;
         }

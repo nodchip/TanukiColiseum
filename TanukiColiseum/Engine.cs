@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TanukiColiseum
 {
-    class Engine
+    public class Engine
     {
         private const int MaxMoves = 320;
         private static readonly TimeSpan ProcessWaitTime = TimeSpan.FromMinutes(1);

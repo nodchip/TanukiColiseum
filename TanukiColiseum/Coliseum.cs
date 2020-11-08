@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TanukiColiseum
 {
-    class Coliseum
+    public class Coliseum
     {
         private SemaphoreSlim GameSemaphoreSlim;
         private SemaphoreSlim FinishSemaphoreSlim = new SemaphoreSlim(0);
@@ -15,37 +16,42 @@ namespace TanukiColiseum
         private DateTime LastOutput = DateTime.Now;
         private int ProgressIntervalMs;
         private Status Status { get; } = new Status();
-        public delegate void StatusHandler(Status status);
+        public delegate void StatusHandler(Options options, Status status, Engine engine1, Engine engine2);
         public delegate void ErrorHandler(string errorMessage);
-        public event StatusHandler OnStatusChanged;
-        public event ErrorHandler OnError;
+        public event StatusHandler ShowStatus;
+        public event ErrorHandler ShowErrorMessage;
+        private Engine engine1;
+        private Engine engine2;
+        private Options options;
 
         public void Run(Options options, string logFolderPath)
         {
+            this.options = options;
+
             // 評価関数フォルダと思考エンジンの存在確認を行う
             if (!File.Exists(options.Engine1FilePath))
             {
-                OnError("思考エンジン1が見つかりませんでした。正しいexeファイルを指定してください。");
+                ShowErrorMessage("思考エンジン1が見つかりませんでした。正しいexeファイルを指定してください。");
                 return;
             }
             else if (!File.Exists(options.Engine2FilePath))
             {
-                OnError("思考エンジン2が見つかりませんでした。正しいexeファイルを指定してください。");
+                ShowErrorMessage("思考エンジン2が見つかりませんでした。正しいexeファイルを指定してください。");
                 return;
             }
             else if (!Directory.Exists(options.Eval1FolderPath))
             {
-                OnError("評価関数フォルダ1が見つかりませんでした。正しい評価関数フォルダを指定してください");
+                ShowErrorMessage("評価関数フォルダ1が見つかりませんでした。正しい評価関数フォルダを指定してください");
                 return;
             }
             else if (!Directory.Exists(options.Eval2FolderPath))
             {
-                OnError("評価関数フォルダ2が見つかりませんでした。正しい評価関数フォルダを指定してください");
+                ShowErrorMessage("評価関数フォルダ2が見つかりませんでした。正しい評価関数フォルダを指定してください");
                 return;
             }
             else if (!File.Exists(options.SfenFilePath))
             {
-                OnError("開始局面ファイルが見つかりませんでした。正しい開始局面ファイルを指定してください");
+                ShowErrorMessage("開始局面ファイルが見つかりませんでした。正しい開始局面ファイルを指定してください");
                 return;
             }
 
@@ -85,7 +91,7 @@ namespace TanukiColiseum
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
-                var engine1 = new Engine(options.Engine1FilePath, this, gameIndex * 2, gameIndex, 0, numaNode, overriddenOptions1);
+                engine1 = new Engine(options.Engine1FilePath, this, gameIndex * 2, gameIndex, 0, numaNode, overriddenOptions1);
                 // Windows 10 May 2019 Updateにおいて、
                 // 複数のプロセスが同時に大量のメモリを確保しようとしたときに
                 // フリーズする現象を確認した
@@ -93,7 +99,7 @@ namespace TanukiColiseum
                 // isreadyコマンド受信時にメモリが確保されることを想定する
                 if (!engine1.Usi() || !engine1.Isready())
                 {
-                    OnError($"エンジン1が異常終了またはタイムアウトしました gameIndex={gameIndex}");
+                    ShowErrorMessage($"エンジン1が異常終了またはタイムアウトしました gameIndex={gameIndex}");
                     return;
                 }
 
@@ -117,17 +123,17 @@ namespace TanukiColiseum
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
-                var engine2 = new Engine(options.Engine2FilePath, this, gameIndex * 2 + 1, gameIndex, 1, numaNode, overriddenOptions2);
+                engine2 = new Engine(options.Engine2FilePath, this, gameIndex * 2 + 1, gameIndex, 1, numaNode, overriddenOptions2);
                 if (!engine2.Usi() || !engine2.Isready())
                 {
-                    OnError($"エンジン2が異常終了またはタイムアウトしました gameIndex={gameIndex}");
+                    ShowErrorMessage($"エンジン2が異常終了またはタイムアウトしました gameIndex={gameIndex}");
                     return;
                 }
 
                 // ゲーム初期化
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
                 Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
-                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath, OnError));
+                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath, ShowErrorMessage));
             }
 
             Console.WriteLine("Initialized engines...");
@@ -162,9 +168,10 @@ namespace TanukiColiseum
 
             Console.WriteLine($"engine1={options.Engine1FilePath} eval1={options.Eval1FolderPath}");
             Console.WriteLine($"engine2={options.Engine2FilePath} eval2={options.Eval2FolderPath}");
-            OnStatusChanged(new Status(Status));
-            File.WriteAllText(Path.Combine(logFolderPath, "result.txt"),
-                options.ToHumanReadableString() + new Status(Status).ToHumanReadableString());
+            Debug.Assert(engine1 != null);
+            Debug.Assert(engine2 != null);
+            ShowStatus(options, Status, engine1, engine2);
+            File.WriteAllText(Path.Combine(logFolderPath, "result.txt"), CreateStatusMessage(options, Status, engine1, engine2));
         }
 
         /// <summary>
@@ -193,11 +200,17 @@ namespace TanukiColiseum
 
             if (LastOutput.AddMilliseconds(ProgressIntervalMs) <= DateTime.Now)
             {
-                OnStatusChanged(new Status(Status));
+                ShowStatus(options, Status, engine1, engine2);
                 LastOutput = DateTime.Now;
             }
             GameSemaphoreSlim.Release();
             FinishSemaphoreSlim.Release();
+        }
+
+        public static string CreateStatusMessage(Options options, Status status, Engine engine1, Engine engine2)
+        {
+            return options.ToHumanReadableString(engine1, engine2)
+                + new Status(status).ToHumanReadableString();
         }
     }
 }

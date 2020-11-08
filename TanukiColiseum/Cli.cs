@@ -14,20 +14,20 @@ namespace TanukiColiseum
             options.ToModel().Save(Path.Combine(logFolderPath, "setting.xml"));
 
             var coliseum = new Coliseum();
-            coliseum.OnStatusChanged += ShowResult;
-            coliseum.OnError += OnError;
+            coliseum.ShowStatus += ShowStatus;
+            coliseum.ShowErrorMessage += ShowErrorMessage;
             coliseum.Run(options, logFolderPath);
         }
 
-        private void ShowResult(Status status)
+        private void ShowStatus(Options options, Status status, Engine engine1, Engine engine2)
         {
-            Console.WriteLine(status.ToHumanReadableString());
+            Console.WriteLine(Coliseum.CreateStatusMessage(options, status, engine1, engine2));
             Console.Out.Flush();
         }
 
-        public void OnError(string errorMessage)
+        private void ShowErrorMessage(string statusMessage)
         {
-            Console.Out.WriteLine(errorMessage);
+            Console.WriteLine(statusMessage);
             Console.Out.Flush();
         }
     }
