@@ -86,14 +86,14 @@ namespace TanukiColiseum
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
                 var engine1 = new Engine(options.Engine1FilePath, this, gameIndex * 2, gameIndex, 0, numaNode, overriddenOptions1);
-                engine1.StartAsync().Wait(TimeSpan.FromMinutes(1));
                 // Windows 10 May 2019 Updateにおいて、
                 // 複数のプロセスが同時に大量のメモリを確保しようとしたときに
                 // フリーズする現象を確認した
                 // 原因がわかるまでは1プロセスずつメモリを確保するようにする
-                if (engine1.HasExited)
+                // isreadyコマンド受信時にメモリが確保されることを想定する
+                if (!engine1.Usi() || !engine1.Isready())
                 {
-                    OnError($"エンジン1が異常終了しました gameIndex={gameIndex}");
+                    OnError($"エンジン1が異常終了またはタイムアウトしました gameIndex={gameIndex}");
                     return;
                 }
 
@@ -118,17 +118,16 @@ namespace TanukiColiseum
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
                 var engine2 = new Engine(options.Engine2FilePath, this, gameIndex * 2 + 1, gameIndex, 1, numaNode, overriddenOptions2);
-                engine2.StartAsync().Wait(TimeSpan.FromMinutes(1));
-                if (engine2.HasExited)
+                if (!engine2.Usi() || !engine2.Isready())
                 {
-                    OnError($"エンジン2が異常終了しました gameIndex={gameIndex}");
+                    OnError($"エンジン2が異常終了またはタイムアウトしました gameIndex={gameIndex}");
                     return;
                 }
 
                 // ゲーム初期化
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
                 Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
-                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath));
+                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath, OnError));
             }
 
             Console.WriteLine("Initialized engines...");

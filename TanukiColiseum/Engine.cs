@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,13 +11,17 @@ namespace TanukiColiseum
     class Engine
     {
         private const int MaxMoves = 320;
+        private static readonly TimeSpan ProcessWaitTime = TimeSpan.FromMinutes(1);
         private Process Process = new Process();
         private Coliseum Coliseum;
-        private SemaphoreSlim ReadyokSemaphoreSlim = new SemaphoreSlim(0);
+        private SemaphoreSlim UsiokSemaphore = new SemaphoreSlim(0);
+        private SemaphoreSlim ReadyokSemaphore = new SemaphoreSlim(0);
         private int ProcessIndex;
         private int GameIndex;
         private int EngineIndex;
         private Dictionary<string, string> OverriddenOptions;
+        public string Name { get; set; }
+        public string Author { get; set; }
 
         public Engine(string fileName, Coliseum coliseum, int processIndex, int gameIndex, int engineIndex, int numaNode, Dictionary<string, string> overriddenOptions)
         {
@@ -37,23 +42,15 @@ namespace TanukiColiseum
             this.GameIndex = gameIndex;
             this.EngineIndex = engineIndex;
             this.OverriddenOptions = overriddenOptions;
-        }
 
-        /// <summary>
-        /// 思考エンジンを開始し、isreadyを送信し、readyokが返るのを待つ
-        /// </summary>
-        /// <returns></returns>
-        public async Task StartAsync()
-        {
             // 同期的に実行した場合、
             // BeginOutputReadLine()/BeginErrorReadLine()が呼び出されたあと
-            // 読み込みスレッドが動かない
-            // これを避けるため、ReadyokSemaphoreSlimを非同期的に待機する
+            // 読み込みスレッドが動かない。
+            // これを避けるため、Usi()やIsready()の内部でUsiAsync()やIsreadyAsync()を、
+            // 非同期的に呼びだしている。
             Process.Start();
             Process.BeginOutputReadLine();
             Process.BeginErrorReadLine();
-            Send("usi");
-            await ReadyokSemaphoreSlim.WaitAsync();
         }
 
         public void Finish()
@@ -67,9 +64,9 @@ namespace TanukiColiseum
         /// エンジンにコマンドを送信する
         /// </summary>
         /// <param name="command"></param>
-        public void Send(string command)
+        private void Send(string command)
         {
-            //Debug.WriteLine($"    > [{ProcessIndex}] {command}");
+            //Debug.WriteLine($"> [{ProcessIndex}] {command}");
             Process.StandardInput.WriteLine(command);
             Process.StandardInput.Flush();
         }
@@ -86,10 +83,14 @@ namespace TanukiColiseum
                 return;
             }
 
-            //Debug.WriteLine($"    < [{ProcessIndex}] {e.Data}");
+            //Debug.WriteLine($"< [{ProcessIndex}] {e.Data}");
 
             List<string> command = Util.Split(e.Data);
-            if (command.Contains("usiok"))
+            if (command.Contains("id"))
+            {
+                HandleId(command);
+            }
+            else if (command.Contains("usiok"))
             {
                 HandleUsiok(command);
             }
@@ -117,10 +118,34 @@ namespace TanukiColiseum
             Debug.WriteLine($"    ! [{ProcessIndex}] {e.Data}");
         }
 
+        private void HandleId(List<string> command)
+        {
+            if (command.Count < 2)
+            {
+                return;
+            }
+
+            switch (command[1])
+            {
+                case "name":
+                    Name = string.Join(" ", command.Skip(2));
+                    break;
+
+                case "author":
+                    Author = string.Join(" ", command.Skip(2));
+                    break;
+
+                default:
+                    throw new Exception($"Unknown attribute: command[1]={command[1]}");
+            }
+        }
+
         private void HandleUsiok(List<string> command)
         {
-            Send("isready");
+            // usiokを待機している関数を進行する
+            UsiokSemaphore.Release();
         }
+
         private void HandleOption(List<string> command)
         {
             int nameIndex = command.IndexOf("name");
@@ -142,8 +167,8 @@ namespace TanukiColiseum
 
         private void HandleReadyok(List<string> command)
         {
-            // readyokが返ってきたのでセマフォを開放してStart()関数から抜けさせる
-            ReadyokSemaphoreSlim.Release();
+            // readyokを待機している関数を進行する
+            ReadyokSemaphore.Release();
         }
 
         private void HandleBestmove(List<string> command)
@@ -188,9 +213,82 @@ namespace TanukiColiseum
             }
         }
 
-        public void Stop()
+        public bool Usi()
         {
+            if (HasExited)
+            {
+                return false;
+            }
+            return UsiAsync().Wait(ProcessWaitTime);
+        }
+
+        private async Task UsiAsync()
+        {
+            await SendAndReceive("usi", UsiokSemaphore);
+        }
+
+        public bool Isready()
+        {
+            if (HasExited)
+            {
+                return false;
+            }
+            return IsreadyAsync().Wait(ProcessWaitTime);
+        }
+
+        private async Task IsreadyAsync()
+        {
+            await SendAndReceive("isready", ReadyokSemaphore);
+        }
+
+        public bool Stop()
+        {
+            if (HasExited)
+            {
+                return false;
+            }
+
             Send("stop");
+            return true;
+        }
+
+        private async Task SendAndReceive(string commandToSend, SemaphoreSlim semaphore)
+        {
+            Send(commandToSend);
+            await semaphore.WaitAsync();
+        }
+
+        public bool Usinewgame()
+        {
+            if (HasExited)
+            {
+                return false;
+            }
+
+            Send("usinewgame");
+            return true;
+        }
+
+        public bool Position(List<string> moves)
+        {
+            if (HasExited)
+            {
+                return false;
+            }
+
+            Send(string.Join(" ", new[] { "position", "startpos", "moves" }.Concat(moves)));
+            return true;
+        }
+
+        public bool Go(string limitName, int limitValue)
+        {
+            if (HasExited)
+            {
+                return false;
+            }
+
+            Send($"go {limitName} {limitValue}");
+            return true;
         }
 
         public bool HasExited { get => Process.HasExited; }
