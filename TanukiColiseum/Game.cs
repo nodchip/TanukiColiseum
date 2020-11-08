@@ -21,6 +21,7 @@ namespace TanukiColiseum
         private int OpeningIndex = 0;
         private string sfenFilePath;
         private event ErrorHandler ShowErrorMessage;
+        private static object SfenFileLock = new object();
 
         public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, Engine engine1,
             Engine engine2, int numBookMoves, string[] openings, string sfenFilePath, ErrorHandler ShowErrorMessage)
@@ -106,7 +107,10 @@ namespace TanukiColiseum
         public void OnGameFinished()
         {
             var sfen = "startpos moves " + string.Join(" ", Moves) + "\n";
-            File.AppendAllText(sfenFilePath, sfen);
+            lock (SfenFileLock)
+            {
+                File.AppendAllText(sfenFilePath, sfen);
+            }
 
             InitialTurn ^= 1;
             Running = false;
