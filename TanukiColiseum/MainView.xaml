@@ -52,7 +52,7 @@
             <MenuItem
                 Command="{Binding OnStartMenuItem}"
                 Header="測定開始"
-                IsEnabled="{Binding StartMenuItemEnabled}" />
+                IsEnabled="{Binding StartMenuItemEnabled.Value}" />
         </Menu>
 
         <Grid Grid.Row="1">
