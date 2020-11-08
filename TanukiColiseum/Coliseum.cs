@@ -178,6 +178,7 @@ namespace TanukiColiseum
             Debug.Assert(engine1 != null);
             Debug.Assert(engine2 != null);
             ShowStatus(options, Status, engine1, engine2);
+            Directory.CreateDirectory(logFolderPath);
             File.WriteAllText(Path.Combine(logFolderPath, "result.txt"), CreateStatusMessage(options, Status, engine1, engine2));
         }
 

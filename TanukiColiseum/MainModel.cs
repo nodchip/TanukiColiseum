@@ -112,6 +112,7 @@ namespace TanukiColiseum
 
         public void Save(string filePath)
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             var serializer = new DataContractSerializer(typeof(MainModel));
             using (var writer = new FileStream(filePath, FileMode.Create))
             {

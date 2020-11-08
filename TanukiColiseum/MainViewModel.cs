@@ -293,11 +293,6 @@ namespace TanukiColiseum
             coliseum.ShowErrorMessage += ShowErrorMessage;
 
             // logフォルダを作成する。
-            if (!Directory.Exists(LogFolderName))
-            {
-                Directory.CreateDirectory(LogFolderName);
-            }
-
             string logFolderPath = Path.Combine(LogFolderName, Util.GetDateString());
             Directory.CreateDirectory(logFolderPath);
 
