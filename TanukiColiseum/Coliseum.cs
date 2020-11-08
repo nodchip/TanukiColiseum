@@ -43,6 +43,11 @@ namespace TanukiColiseum
                 OnError("評価関数フォルダ2が見つかりませんでした。正しい評価関数フォルダを指定してください");
                 return;
             }
+            else if (!File.Exists(options.SfenFilePath))
+            {
+                OnError("開始局面ファイルが見つかりませんでした。正しい開始局面ファイルを指定してください");
+                return;
+            }
 
             Status.NumGames = options.NumGames;
             Status.Nodes = new int[] { options.Nodes1, options.Nodes2 };
