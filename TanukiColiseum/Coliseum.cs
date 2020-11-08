@@ -93,7 +93,8 @@ namespace TanukiColiseum
                     {"IgnoreBookPly", options.IgnoreBookPly1},
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
-                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()}
+                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
+                    {"LargePageEnable", "false"},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
@@ -126,7 +127,8 @@ namespace TanukiColiseum
                     {"IgnoreBookPly", options.IgnoreBookPly2},
                     {"BookDepthLimit", "0"},
                     {"MaxMovesToDraw", "256"},
-                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()}
+                    {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
+                    {"LargePageEnable", "false"},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
