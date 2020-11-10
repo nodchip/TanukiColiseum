@@ -10,15 +10,31 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: warrenbuckley/Setup-Nuget@v1
+      with:
+        repository: warrenbuckley/Setup-Nuget
+        path: setup-nuget
+    - run: |
+        sed -i 's(\"@actions/core\": \"\^1.0.0\"(\"@actions/core\": \"^1.2.6\"(' package.json
+        cat package.json
+        npm install
+        npm build
+      working-directory: setup-nuget
+    - uses: ./setup-nuget
+    #- uses: warrenbuckley/Setup-Nuget@v1
+    - uses: actions/checkout@v2
+      with:
+        path: main
     - run: nuget restore TanukiColiseum.sln
-    - uses: warrenbuckley/Setup-MSBuild@v1
+      working-directory: main
+    - uses: microsoft/setup-msbuild@v1
     - run: msbuild /t:"restore;clean;rebuild" /p:Configuration=Release /p:Platform="Any CPU"
       timeout-minutes: 5
+      working-directory: main
     - run: |
         copy LICENSE TanukiColiseum\bin\Release\
         copy *.md TanukiColiseum\bin\Release\
         copy *.sfen TanukiColiseum\bin\Release\
+      working-directory: main
     - id: version
       run: |
         $REPOSITORY=$(echo ${{ github.repository }} | sed -e "s#.*/##")
@@ -29,16 +45,18 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
           name: ${{ steps.version.outputs.filename }}
-          path: TanukiColiseum\bin\Release\
+          path: main\TanukiColiseum\bin\Release\
     - name: make build zip/7z
       run: |
         7z a -tzip build.zip .\TanukiColiseum\bin\Release\*
         7z a -t7z build.7z .\TanukiColiseum\bin\Release\*
+      working-directory: main
     - name: Archive Size
       id: archive_size
       run: |
         echo "::set-output name=build_zip::$(&{$l=(Get-Item build.zip).Length;$s=0;while($l -gt 1024){$l/=1024;$s++};'{0:0.00}{1}B' -f $l,@('';'k';'M';'G';'T';'P')[$s]})"
         echo "::set-output name=build_7z::$(&{$l=(Get-Item build.7z).Length;$s=0;while($l -gt 1024){$l/=1024;$s++};'{0:0.00}{1}B' -f $l,@('';'k';'M';'G';'T';'P')[$s]})"
+      working-directory: main
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -58,7 +76,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: build.zip
+        asset_path: main/build.zip
         asset_name: ${{ steps.version.outputs.filename }}.zip
         asset_content_type: application/zip
     - name: Upload release asset build.7z
@@ -67,6 +85,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: build.7z
+        asset_path: main/build.7z
         asset_name: ${{ steps.version.outputs.filename }}.7z
         asset_content_type: application/octet-stream
