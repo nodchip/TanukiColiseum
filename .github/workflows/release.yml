@@ -1,0 +1,72 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: warrenbuckley/Setup-Nuget@v1
+    - run: nuget restore TanukiColiseum.sln
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - run: msbuild /t:"restore;clean;rebuild" /p:Configuration=Release /p:Platform="Any CPU"
+      timeout-minutes: 5
+    - run: |
+        copy LICENSE TanukiColiseum\bin\Release\
+        copy *.md TanukiColiseum\bin\Release\
+        copy *.sfen TanukiColiseum\bin\Release\
+    - id: version
+      run: |
+        $REPOSITORY=$(echo ${{ github.repository }} | sed -e "s#.*/##")
+        $VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
+        echo "::set-output name=repository::${REPOSITORY}"
+        echo "::set-output name=version::${VERSION}"
+        echo "::set-output name=filename::${REPOSITORY}.${VERSION}"
+    - uses: actions/upload-artifact@v2
+      with:
+          name: ${{ steps.version.outputs.filename }}
+          path: TanukiColiseum\bin\Release\
+    - name: make build zip/7z
+      run: |
+        7z a -tzip build.zip .\TanukiColiseum\bin\Release\*
+        7z a -t7z build.7z .\TanukiColiseum\bin\Release\*
+    - name: Archive Size
+      id: archive_size
+      run: |
+        echo "::set-output name=build_zip::$(&{$l=(Get-Item build.zip).Length;$s=0;while($l -gt 1024){$l/=1024;$s++};'{0:0.00}{1}B' -f $l,@('';'k';'M';'G';'T';'P')[$s]})"
+        echo "::set-output name=build_7z::$(&{$l=(Get-Item build.7z).Length;$s=0;while($l -gt 1024){$l/=1024;$s++};'{0:0.00}{1}B' -f $l,@('';'k';'M';'G';'T';'P')[$s]})"
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ steps.version.outputs.filename }}
+        body: |
+          - [${{ steps.version.outputs.filename }}.7z](https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.version }}/${{ steps.version.outputs.filename }}.7z) (${{ steps.archive_size.outputs.build_7z }})
+          - [${{ steps.version.outputs.filename }}.zip](https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.version }}/${{ steps.version.outputs.filename }}.zip) (${{ steps.archive_size.outputs.build_zip }})
+        draft: false
+        prerelease: true
+    - name: Upload release asset build.zip
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build.zip
+        asset_name: ${{ steps.version.outputs.filename }}.zip
+        asset_content_type: application/zip
+    - name: Upload release asset build.7z
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build.7z
+        asset_name: ${{ steps.version.outputs.filename }}.7z
+        asset_content_type: application/octet-stream
