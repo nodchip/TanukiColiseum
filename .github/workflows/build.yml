@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: warrenbuckley/Setup-Nuget@v1
+    - run: nuget restore TanukiColiseum.sln
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - run: msbuild /t:"restore;clean;rebuild" /p:Configuration=Release /p:Platform="Any CPU"
+      timeout-minutes: 5
+    - run: |
+        copy LICENSE TanukiColiseum\bin\Release\
+        copy *.md TanukiColiseum\bin\Release\
+        copy *.sfen TanukiColiseum\bin\Release\
+    - id: datetime
+      run: |
+        echo "::set-output name=str::$(Get-Date -Format yyyyMMdd.hhmmss)"
+    - uses: actions/upload-artifact@v2
+      with:
+          name: TanukiColiseum.${{ steps.datetime.outputs.str }}
+          path: TanukiColiseum\bin\Release\
