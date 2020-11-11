@@ -48,8 +48,8 @@ jobs:
           path: main\TanukiColiseum\bin\Release\
     - name: make build zip/7z
       run: |
-        7z a -tzip build.zip .\TanukiColiseum\bin\Release\*
-        7z a -t7z build.7z .\TanukiColiseum\bin\Release\*
+        7z a -tzip build.zip .\TanukiColiseum\bin\Release\* -xr!*.pdb -xr!*.xml
+        7z a -t7z build.7z .\TanukiColiseum\bin\Release\* -xr!*.pdb -xr!*.xml
       working-directory: main
     - name: Archive Size
       id: archive_size
