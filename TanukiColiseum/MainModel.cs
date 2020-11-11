@@ -112,7 +112,13 @@ namespace TanukiColiseum
 
         public void Save(string filePath)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            string folderPath = Path.GetDirectoryName(filePath);
+            // ファイル名だけが渡された場合、FolderPathが空になる。
+            // GUI画面から測定開始できない · Issue #11 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/11
+            if (folderPath.Length != 0)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
             var serializer = new DataContractSerializer(typeof(MainModel));
             using (var writer = new FileStream(filePath, FileMode.Create))
             {
