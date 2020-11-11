@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Xml;
 
 namespace TanukiColiseum
 {
@@ -132,7 +133,16 @@ namespace TanukiColiseum
             var serializer = new DataContractSerializer(typeof(MainModel));
             using (var reader = new FileStream(filePath, FileMode.Open))
             {
-                model = (MainModel)serializer.ReadObject(reader);
+                try
+                {
+                    model = (MainModel)serializer.ReadObject(reader);
+                }
+                catch (XmlException)
+                {
+                    // 設定ファイルがxmlとして読み込めなかった場合は、デフォルトの値をロードする。
+                    // 自動保存の設定ファイルが壊れているとGUIが起動できない · Issue #12 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/12
+                    model = new MainModel();
+                }
             }
 
             CopyFrom(model);
