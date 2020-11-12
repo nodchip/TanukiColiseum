@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Devices;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace TanukiColiseum
 {
@@ -68,6 +68,9 @@ namespace TanukiColiseum
             Directory.CreateDirectory(logFolderPath);
             var sfenFilePath = Path.Combine(logFolderPath, "sfen.txt");
 
+            var computerInfo = new ComputerInfo();
+            var previousAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
+
             // 各エンジンに渡すThreadIdOffsetの値を計算する際に使用するストライド
             // CPUの論理コア数を超えるIDが設定される場合や、
             // スレッド数がエンジン1とエンジン2で異なる場合が考えられるが、
@@ -75,6 +78,19 @@ namespace TanukiColiseum
             int threadIdStride = Math.Max(options.NumThreads1, options.NumThreads2);
             for (int gameIndex = 0; gameIndex < options.NumConcurrentGames; ++gameIndex)
             {
+                // 残り物理メモリサイズを調べ、エンジンの起動に必要なメモリが足りない場合、
+                // 警告を表示して終了する。
+                // 残り物理メモリ量 · Issue #13 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/13
+                var currentAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
+                var consumedMemoryPerGame = previousAvailablePhysicalMemory - currentAvailablePhysicalMemory;
+                if (consumedMemoryPerGame > currentAvailablePhysicalMemory)
+                {
+                    ShowErrorMessage("利用可能物理メモリが足りません。同時対局数やハッシュサイズを下げてください。");
+                    FinishEngines();
+                    return;
+                }
+                previousAvailablePhysicalMemory = currentAvailablePhysicalMemory;
+
                 int numaNode = gameIndex * options.NumNumaNodes / options.NumConcurrentGames;
 
                 // エンジン1初期化
@@ -167,6 +183,17 @@ namespace TanukiColiseum
                 FinishSemaphoreSlim.Wait();
             }
 
+            FinishEngines();
+
+            Debug.Assert(engine1 != null);
+            Debug.Assert(engine2 != null);
+            ShowStatus(options, Status, engine1, engine2);
+            Directory.CreateDirectory(logFolderPath);
+            File.WriteAllText(Path.Combine(logFolderPath, "result.txt"), CreateStatusMessage(options, Status, engine1, engine2));
+        }
+
+        private void FinishEngines()
+        {
             foreach (var game in Games)
             {
                 foreach (var engine in game.Engines)
@@ -174,12 +201,6 @@ namespace TanukiColiseum
                     engine.Finish();
                 }
             }
-
-            Debug.Assert(engine1 != null);
-            Debug.Assert(engine2 != null);
-            ShowStatus(options, Status, engine1, engine2);
-            Directory.CreateDirectory(logFolderPath);
-            File.WriteAllText(Path.Combine(logFolderPath, "result.txt"), CreateStatusMessage(options, Status, engine1, engine2));
         }
 
         /// <summary>
