@@ -9,18 +9,9 @@ jobs:
   release:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: nuget/setup-nuget@v1
       with:
-        repository: warrenbuckley/Setup-Nuget
-        path: setup-nuget
-    - run: |
-        sed -i 's(\"@actions/core\": \"\^1.0.0\"(\"@actions/core\": \"^1.2.6\"(' package.json
-        cat package.json
-        npm install
-        npm build
-      working-directory: setup-nuget
-    - uses: ./setup-nuget
-    #- uses: warrenbuckley/Setup-Nuget@v1
+        nuget-version: '5.x'
     - uses: actions/checkout@v2
       with:
         path: main
