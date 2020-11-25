@@ -67,6 +67,7 @@ namespace TanukiColiseum
 
             Directory.CreateDirectory(logFolderPath);
             var sfenFilePath = Path.Combine(logFolderPath, "sfen.txt");
+            var sqlite3FilePath = Path.Combine(logFolderPath, "result.sqlite3");
 
             var computerInfo = new ComputerInfo();
             var previousAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
@@ -158,7 +159,8 @@ namespace TanukiColiseum
                 // ゲーム初期化
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
                 Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
-                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath, ShowErrorMessage));
+                    options.Time2, engine1, engine2, options.NumBookMoves, openings, sfenFilePath,
+                    sqlite3FilePath, ShowErrorMessage));
             }
 
             Console.WriteLine("Initialized engines...");

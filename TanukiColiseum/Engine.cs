@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static TanukiColiseum.Game;
 
 namespace TanukiColiseum
 {
@@ -22,6 +23,7 @@ namespace TanukiColiseum
         private Dictionary<string, string> OverriddenOptions;
         public string Name { get; set; }
         public string Author { get; set; }
+        private List<string> lastInfoCommand;
 
         public Engine(string fileName, Coliseum coliseum, int processIndex, int gameIndex, int engineIndex, int numaNode, Dictionary<string, string> overriddenOptions)
         {
@@ -106,6 +108,10 @@ namespace TanukiColiseum
             {
                 HandleBestmove(command);
             }
+            else if (command.Contains("info"))
+            {
+                HandleInfo(command);
+            }
         }
 
         /// <summary>
@@ -180,11 +186,13 @@ namespace TanukiColiseum
                 int blackWhiteWin;
                 bool draw = false;
                 bool declaration = false;
+                Game.Result result;
                 if (command[1] == "resign")
                 {
                     // 相手側の勝数を上げる
                     engineWin = game.Turn ^ 1;
                     blackWhiteWin = (game.Moves.Count + 1) & 1;
+                    result = Game.Result.Lose;
                 }
                 else if (command[1] == "win")
                 {
@@ -192,6 +200,7 @@ namespace TanukiColiseum
                     engineWin = game.Turn;
                     blackWhiteWin = game.Moves.Count & 1;
                     declaration = true;
+                    result = Game.Result.Win;
                 }
                 else
                 {
@@ -199,18 +208,60 @@ namespace TanukiColiseum
                     engineWin = 0;
                     blackWhiteWin = 0;
                     draw = true;
+                    result = Game.Result.Draw;
                 }
 
                 // 次の対局を開始する
                 // 先にGame.OnGameFinished()を読んでゲームの状態を停止状態に移行する
-                game.OnGameFinished();
+                game.OnGameFinished(result);
                 Coliseum.OnGameFinished(engineWin, blackWhiteWin, draw, declaration, game.InitialTurn);
             }
             else
             {
-                game.OnMove(command[1]);
+                Debug.Assert(lastInfoCommand != null);
+                var move = new Move();
+
+                int index = lastInfoCommand.IndexOf("depth");
+                if (index != -1)
+                {
+                    move.Depth = int.Parse(lastInfoCommand[index + 1]);
+                }
+
+                move.Best = command[1];
+                if (command.Count == 4)
+                {
+                    move.Next = command[3];
+                }
+                else
+                {
+                    move.Next = "none";
+                }
+
+                index = lastInfoCommand.IndexOf("score");
+                if (index != -1)
+                {
+                    if (lastInfoCommand[index + 1] == "cp")
+                    {
+                        move.Value = int.Parse(lastInfoCommand[index + 2]);
+                    }
+                    else
+                    {
+                        Debug.Assert(lastInfoCommand[index + 1] == "mate");
+                        int mate = int.Parse(lastInfoCommand[index + 2]);
+                        move.Value = mate >= 0 ? 32000 - mate : -32000 - mate;
+                    }
+                }
+
+                game.OnMove(move);
+
+                lastInfoCommand = null;
                 game.Go();
             }
+        }
+
+        public void HandleInfo(List<string> command)
+        {
+            lastInfoCommand = command;
         }
 
         public bool Usi()
