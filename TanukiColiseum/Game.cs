@@ -75,6 +75,11 @@ namespace TanukiColiseum
             Moves.Clear();
             foreach (var move in Util.Split(Openings[OpeningIndex]))
             {
+                if (Moves.Count >= NumBookMoves)
+                {
+                    break;
+                }
+
                 if (move == "startpos" || move == "moves")
                 {
                     continue;
@@ -86,11 +91,6 @@ namespace TanukiColiseum
                     Next = "none",
                     Book = 1,
                 });
-
-                if (Moves.Count >= NumBookMoves)
-                {
-                    break;
-                }
             }
 
             Turn = InitialTurn;
