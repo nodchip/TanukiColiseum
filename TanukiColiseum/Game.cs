@@ -146,7 +146,7 @@ namespace TanukiColiseum
         public void OnGameFinished(Result result)
         {
             // sfenファイルへの書き込み
-            var sfen = "startpos moves " + string.Join(" ", Moves) + "\n";
+            var sfen = "startpos moves " + string.Join(" ", Moves.Select(x => x.Best)) + "\n";
             lock (WriteResultLock)
             {
                 File.AppendAllText(sfenFilePath, sfen);
