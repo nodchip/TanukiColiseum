@@ -343,5 +343,10 @@ namespace TanukiColiseum
         }
 
         public bool HasExited { get => Process.HasExited; }
+
+        public override string ToString()
+        {
+            return $"ProcessIndex={ProcessIndex} GameIndex={GameIndex} EngineIndex={EngineIndex}";
+        }
     }
 }

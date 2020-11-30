@@ -99,9 +99,14 @@ namespace TanukiColiseum
 
             foreach (var engine in Engines)
             {
-                if (!engine.Isready() || !engine.Usinewgame())
+                if (!engine.Isready())
                 {
-                    ShowErrorMessage($"エンジン({engine})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"isreadyコマンドの送信に失敗しました。エンジン({engine})が異常終了またはタイムアウトしました。");
+                }
+
+                if (!engine.Usinewgame())
+                {
+                    ShowErrorMessage($"usinewgameコマンドの送信に失敗しました。エンジン({engine})が異常終了またはタイムアウトしました。");
                 }
             }
         }
@@ -110,21 +115,21 @@ namespace TanukiColiseum
         {
             if (!Engines[Turn].Position(Moves.Select(x => x.Best).ToList()))
             {
-                ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                ShowErrorMessage($"positionコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
             }
 
             if (Nodes[Turn] != 0)
             {
                 if (!Engines[Turn].Go("nodes", Nodes[Turn]))
                 {
-                    ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"go nodesコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
                 }
             }
             else if (Times[Turn] != 0)
             {
                 if (!Engines[Turn].Go("byoyomi", Times[Turn]))
                 {
-                    ShowErrorMessage($"エンジン({Engines[Turn]})が異常終了またはタイムアウトしました");
+                    ShowErrorMessage($"go byoyomiコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
                 }
             }
             else
