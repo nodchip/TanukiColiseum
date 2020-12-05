@@ -331,14 +331,23 @@ namespace TanukiColiseum
             return true;
         }
 
-        public bool Go(string limitName, int limitValue)
+        public bool Go(Dictionary<string, int> nameAndValues)
         {
             if (HasExited)
             {
                 return false;
             }
 
-            Send($"go {limitName} {limitValue}");
+            var command = new List<string> { "go" };
+            foreach (var nameAndValue in nameAndValues)
+            {
+                command.Add(nameAndValue.Key);
+                command.Add(nameAndValue.Value.ToString());
+            }
+
+            var commandString = string.Join(" ", command);
+            Send(commandString);
+            //Trace.WriteLine(commandString);
             return true;
         }
 

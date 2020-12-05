@@ -66,18 +66,46 @@ namespace TanukiColiseum
         public ReactiveProperty<int> Nodes2 { get; set; } = new ReactiveProperty<int>(0);
 
         /// <summary>
-        /// 思考エンジン1に渡す思考時間。
-        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// 思考エンジン1に渡す持ち時間。
+        /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
         [DataMember]
-        public ReactiveProperty<int> Time1 { get; set; } = new ReactiveProperty<int>(1000);
+        public ReactiveProperty<int> Time1 { get; set; } = new ReactiveProperty<int>(0);
 
         /// <summary>
-        /// 思考エンジン2に渡す思考時間。
-        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// 思考エンジン2に渡す持ち時間。
+        /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
         [DataMember]
-        public ReactiveProperty<int> Time2 { get; set; } = new ReactiveProperty<int>(1000);
+        public ReactiveProperty<int> Time2 { get; set; } = new ReactiveProperty<int>(0);
+
+        /// <summary>
+        /// 思考エンジン1に渡す秒読み時間。
+        /// <para>0が渡された場合、秒読み時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Byoyomi1 { get; set; } = new ReactiveProperty<int>(1000);
+
+        /// <summary>
+        /// 思考エンジン2に渡す秒読み時間。
+        /// <para>0が渡された場合、秒読み時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Byoyomi2 { get; set; } = new ReactiveProperty<int>(1000);
+
+        /// <summary>
+        /// 思考エンジン1に渡す加算時間。
+        /// <para>0が渡された場合、加算時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Inc1 { get; set; } = new ReactiveProperty<int>(0);
+
+        /// <summary>
+        /// 思考エンジン2に渡す加算時間。
+        /// <para>0が渡された場合、加算時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Inc2 { get; set; } = new ReactiveProperty<int>(0);
 
         [DataMember]
         public ReactiveProperty<int> NumNumaNodes { get; set; } = new ReactiveProperty<int>(1);
@@ -145,6 +173,27 @@ namespace TanukiColiseum
                 }
             }
 
+            // 過去のデータ形式において保存されなかった値の担保
+            if (model.Byoyomi1 == null)
+            {
+                model.Byoyomi1 = new ReactiveProperty<int>(1000);
+            }
+
+            if (model.Byoyomi2 == null)
+            {
+                model.Byoyomi2 = new ReactiveProperty<int>(1000);
+            }
+
+            if (model.Inc1 == null)
+            {
+                model.Inc1 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.Inc2 == null)
+            {
+                model.Inc2 = new ReactiveProperty<int>(0);
+            }
+
             CopyFrom(model);
         }
 
@@ -167,6 +216,10 @@ namespace TanukiColiseum
             Nodes2.Value = model.Nodes2.Value;
             Time1.Value = model.Time1.Value;
             Time2.Value = model.Time2.Value;
+            Byoyomi1.Value = model.Byoyomi1.Value;
+            Byoyomi2.Value = model.Byoyomi2.Value;
+            Inc1.Value = model.Inc1.Value;
+            Inc2.Value = model.Inc2.Value;
             NumNumaNodes.Value = model.NumNumaNodes.Value;
             ProgressIntervalMs.Value = model.ProgressIntervalMs.Value;
             NumThreads1.Value = model.NumThreads1.Value;

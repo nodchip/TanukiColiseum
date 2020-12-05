@@ -39,6 +39,8 @@ namespace TanukiColiseum
         private Random Random = new Random();
         private int[] Nodes;
         private int[] Times;
+        private int[] Byoyomis;
+        private int[] Incs;
         private string[] Openings;
         private bool ChangeOpening = true;
         private int OpeningIndex = 0;
@@ -47,13 +49,19 @@ namespace TanukiColiseum
         private event ErrorHandler ShowErrorMessage;
         private static object WriteResultLock = new object();
         private static int globalGameId = 0;
+        private DateTime goDateTime;
 
-        public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, Engine engine1,
-            Engine engine2, int numBookMoves, string[] openings, string sfenFilePath,
-            string sqlite3FilePath, ErrorHandler ShowErrorMessage)
+        public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, int byoyomi1,
+            int byoyomi2, int inc1, int inc2, Engine engine1, Engine engine2, int numBookMoves,
+            string[] openings, string sfenFilePath, string sqlite3FilePath,
+            ErrorHandler ShowErrorMessage)
         {
+            // アンコメントアウトする
+            //this.InitialTurn = initialTurn;
             this.Nodes = new int[] { nodes1, nodes2 };
             this.Times = new int[] { time1, time2 };
+            this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
+            this.Incs = new int[] { inc1, inc2 };
             this.Engines.Add(engine1);
             this.Engines.Add(engine2);
             this.NumBookMoves = numBookMoves;
@@ -118,28 +126,33 @@ namespace TanukiColiseum
                 ShowErrorMessage($"positionコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
             }
 
-            if (Nodes[Turn] != 0)
-            {
-                if (!Engines[Turn].Go("nodes", Nodes[Turn]))
-                {
-                    ShowErrorMessage($"go nodesコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
-                }
-            }
-            else if (Times[Turn] != 0)
-            {
-                if (!Engines[Turn].Go("byoyomi", Times[Turn]))
-                {
-                    ShowErrorMessage($"go byoyomiコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
-                }
-            }
-            else
-            {
-                ShowErrorMessage("nodesかtimeのいずれかを指定してください。");
-            }
+            var nameAndValues = new Dictionary<string, int> {
+                { "btime", Times[InitialTurn] },
+                { "wtime", Times[InitialTurn ^ 1] },
+                { "byoyomi", Byoyomis[Turn] },
+                { "binc", Incs[InitialTurn] },
+                { "winc", Incs[InitialTurn ^ 1] },
+                { "nodes", Nodes[Turn] },
+            };
+
+            Engines[Turn].Go(nameAndValues);
+
+            goDateTime = DateTime.Now;
         }
 
+        /// <summary>
+        /// 指し手が指されたときに呼ばれる
+        /// </summary>
+        /// <param name="move"></param>
         public void OnMove(Move move)
         {
+            // 持ち時間から思考時間を引く
+            var bestmoveDateTime = DateTime.Now;
+            var thinkingTime = bestmoveDateTime - goDateTime;
+            Times[Turn] += Incs[Turn];
+            Times[Turn] -= (int)thinkingTime.TotalMilliseconds;
+            Times[Turn] = Math.Max(Times[Turn], 0);
+
             Moves.Add(move);
             Turn ^= 1;
         }

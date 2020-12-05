@@ -60,18 +60,46 @@ namespace TanukiColiseum
         public ReactiveProperty<int> Nodes2 { get; }
 
         /// <summary>
-        /// 思考エンジン1に渡す思考時間。
-        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// 思考エンジン1に渡す持ち時間。
+        /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
         [RangeAttribute(0, int.MaxValue)]
         public ReactiveProperty<int> Time1 { get; }
 
         /// <summary>
-        /// 思考エンジン2に渡す思考時間。
-        /// <para>0が渡された場合、思考時間を指定しない。</para>
+        /// 思考エンジン2に渡す持ち時間。
+        /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
         [RangeAttribute(0, int.MaxValue)]
         public ReactiveProperty<int> Time2 { get; }
+
+        /// <summary>
+        /// 思考エンジン1に渡す秒読み時間。
+        /// <para>0が渡された場合、秒読み時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Byoyomi1 { get; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す秒読み時間。
+        /// <para>0が渡された場合、秒読み時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Byoyomi2 { get; }
+
+        /// <summary>
+        /// 思考エンジン1に渡す加算時間。
+        /// <para>0が渡された場合、加算時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Inc1 { get; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す加算時間。
+        /// <para>0が渡された場合、加算時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Inc2 { get; }
 
         [RangeAttribute(1, int.MaxValue)]
         public ReactiveProperty<int> NumNumaNodes { get; }
@@ -161,6 +189,10 @@ namespace TanukiColiseum
             Nodes2 = model.Nodes2.ToReactivePropertyAsSynchronized(x => x.Value);
             Time1 = model.Time1.ToReactivePropertyAsSynchronized(x => x.Value);
             Time2 = model.Time2.ToReactivePropertyAsSynchronized(x => x.Value);
+            Byoyomi1 = model.Byoyomi1.ToReactivePropertyAsSynchronized(x => x.Value);
+            Byoyomi2 = model.Byoyomi2.ToReactivePropertyAsSynchronized(x => x.Value);
+            Inc1 = model.Inc1.ToReactivePropertyAsSynchronized(x => x.Value);
+            Inc2 = model.Inc2.ToReactivePropertyAsSynchronized(x => x.Value);
             NumNumaNodes = model.NumNumaNodes.ToReactivePropertyAsSynchronized(x => x.Value);
             ProgressIntervalMs = model.ProgressIntervalMs.ToReactivePropertyAsSynchronized(x => x.Value);
             NumThreads1 = model.NumThreads1.ToReactivePropertyAsSynchronized(x => x.Value);
@@ -271,6 +303,10 @@ namespace TanukiColiseum
                 Nodes2 = Nodes2.Value,
                 Time1 = Time1.Value,
                 Time2 = Time2.Value,
+                Byoyomi1 = Byoyomi1.Value,
+                Byoyomi2 = Byoyomi2.Value,
+                Inc1 = Inc1.Value,
+                Inc2 = Inc2.Value,
                 NumNumaNodes = NumNumaNodes.Value,
                 ProgressIntervalMs = ProgressIntervalMs.Value,
                 NumThreads1 = NumThreads1.Value,
