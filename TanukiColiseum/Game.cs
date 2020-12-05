@@ -56,8 +56,7 @@ namespace TanukiColiseum
             string[] openings, string sfenFilePath, string sqlite3FilePath,
             ErrorHandler ShowErrorMessage)
         {
-            // アンコメントアウトする
-            //this.InitialTurn = initialTurn;
+            this.InitialTurn = initialTurn;
             this.Nodes = new int[] { nodes1, nodes2 };
             this.Times = new int[] { time1, time2 };
             this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
