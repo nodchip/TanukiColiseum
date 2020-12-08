@@ -101,6 +101,20 @@ namespace TanukiColiseum
         [RangeAttribute(0, int.MaxValue)]
         public ReactiveProperty<int> Inc2 { get; }
 
+        /// <summary>
+        /// 思考エンジン1に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Rtime1 { get; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> Rtime2 { get; }
+
         [RangeAttribute(1, int.MaxValue)]
         public ReactiveProperty<int> NumNumaNodes { get; }
 
@@ -193,6 +207,8 @@ namespace TanukiColiseum
             Byoyomi2 = model.Byoyomi2.ToReactivePropertyAsSynchronized(x => x.Value);
             Inc1 = model.Inc1.ToReactivePropertyAsSynchronized(x => x.Value);
             Inc2 = model.Inc2.ToReactivePropertyAsSynchronized(x => x.Value);
+            Rtime1 = model.Rtime1.ToReactivePropertyAsSynchronized(x => x.Value);
+            Rtime2 = model.Rtime2.ToReactivePropertyAsSynchronized(x => x.Value);
             NumNumaNodes = model.NumNumaNodes.ToReactivePropertyAsSynchronized(x => x.Value);
             ProgressIntervalMs = model.ProgressIntervalMs.ToReactivePropertyAsSynchronized(x => x.Value);
             NumThreads1 = model.NumThreads1.ToReactivePropertyAsSynchronized(x => x.Value);
@@ -307,6 +323,8 @@ namespace TanukiColiseum
                 Byoyomi2 = Byoyomi2.Value,
                 Inc1 = Inc1.Value,
                 Inc2 = Inc2.Value,
+                Rtime1 = Rtime1.Value,
+                Rtime2 = Rtime2.Value,
                 NumNumaNodes = NumNumaNodes.Value,
                 ProgressIntervalMs = ProgressIntervalMs.Value,
                 NumThreads1 = NumThreads1.Value,

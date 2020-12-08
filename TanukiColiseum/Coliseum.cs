@@ -160,8 +160,8 @@ namespace TanukiColiseum
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
                 Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
                     options.Time2, options.Byoyomi1, options.Byoyomi2, options.Inc1, options.Inc2,
-                    engine1, engine2, options.NumBookMoves, openings, sfenFilePath, sqlite3FilePath,
-                    ShowErrorMessage));
+                    options.Rtime1, options.Rtime2, engine1, engine2, options.NumBookMoves,
+                    openings, sfenFilePath, sqlite3FilePath, ShowErrorMessage));
             }
 
             Console.WriteLine("Initialized engines...");

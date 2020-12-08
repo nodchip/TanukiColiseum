@@ -107,6 +107,19 @@ namespace TanukiColiseum
         [DataMember]
         public ReactiveProperty<int> Inc2 { get; set; } = new ReactiveProperty<int>(0);
 
+        /// <summary>
+        /// 思考エンジン1に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Rtime1 { get; set; } = new ReactiveProperty<int>(0);
+
+        /// <summary>
+        /// 思考エンジン2に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> Rtime2 { get; set; } = new ReactiveProperty<int>(0);
         [DataMember]
         public ReactiveProperty<int> NumNumaNodes { get; set; } = new ReactiveProperty<int>(1);
 
@@ -194,6 +207,16 @@ namespace TanukiColiseum
                 model.Inc2 = new ReactiveProperty<int>(0);
             }
 
+            if (model.Rtime1 == null)
+            {
+                model.Rtime1 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.Rtime2 == null)
+            {
+                model.Rtime2 = new ReactiveProperty<int>(0);
+            }
+
             CopyFrom(model);
         }
 
@@ -220,6 +243,8 @@ namespace TanukiColiseum
             Byoyomi2.Value = model.Byoyomi2.Value;
             Inc1.Value = model.Inc1.Value;
             Inc2.Value = model.Inc2.Value;
+            Rtime1.Value = model.Rtime1.Value;
+            Rtime2.Value = model.Rtime2.Value;
             NumNumaNodes.Value = model.NumNumaNodes.Value;
             ProgressIntervalMs.Value = model.ProgressIntervalMs.Value;
             NumThreads1.Value = model.NumThreads1.Value;

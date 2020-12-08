@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using static TanukiColiseum.Coliseum;
 using System.Linq;
+using System.Diagnostics;
 
 namespace TanukiColiseum
 {
@@ -41,6 +42,7 @@ namespace TanukiColiseum
         private int[] Times;
         private int[] Byoyomis;
         private int[] Incs;
+        private int[] Rtime;
         private string[] Openings;
         private bool ChangeOpening = true;
         private int OpeningIndex = 0;
@@ -52,8 +54,8 @@ namespace TanukiColiseum
         private DateTime goDateTime;
 
         public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, int byoyomi1,
-            int byoyomi2, int inc1, int inc2, Engine engine1, Engine engine2, int numBookMoves,
-            string[] openings, string sfenFilePath, string sqlite3FilePath,
+            int byoyomi2, int inc1, int inc2, int rtime1, int rtime2, Engine engine1, Engine engine2,
+            int numBookMoves, string[] openings, string sfenFilePath, string sqlite3FilePath,
             ErrorHandler ShowErrorMessage)
         {
             this.InitialTurn = initialTurn;
@@ -61,6 +63,7 @@ namespace TanukiColiseum
             this.Times = new int[] { time1, time2 };
             this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
             this.Incs = new int[] { inc1, inc2 };
+            this.Rtime = new int[] { rtime1, rtime2 };
             this.Engines.Add(engine1);
             this.Engines.Add(engine2);
             this.NumBookMoves = numBookMoves;
@@ -132,6 +135,7 @@ namespace TanukiColiseum
                 { "binc", Incs[InitialTurn] },
                 { "winc", Incs[InitialTurn ^ 1] },
                 { "nodes", Nodes[Turn] },
+                { "rtime", Rtime[Turn] },
             };
 
             Engines[Turn].Go(nameAndValues);

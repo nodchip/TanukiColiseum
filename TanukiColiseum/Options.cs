@@ -67,6 +67,18 @@ namespace TanukiColiseum
         /// </summary>
         public int Inc2 { get; set; }
 
+        /// <summary>
+        /// 思考エンジン1に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        public int Rtime1 { get; set; }
+
+        /// <summary>
+        /// 思考エンジン2に渡す乱数付き思考時間。
+        /// <para>0が渡された場合、乱数付き思考時間を指定しない。</para>
+        /// </summary>
+        public int Rtime2 { get; set; }
+
         public int NumNumaNodes { get; set; }
         public int ProgressIntervalMs { get; set; }
         public int NumThreads1 { get; set; }
@@ -103,6 +115,8 @@ namespace TanukiColiseum
             model.Byoyomi2.Value = Byoyomi2;
             model.Inc1.Value = Inc1;
             model.Inc2.Value = Inc2;
+            model.Rtime1.Value = Rtime1;
+            model.Rtime2.Value = Rtime2;
             model.NumNumaNodes.Value = NumNumaNodes;
             model.ProgressIntervalMs.Value = ProgressIntervalMs;
             model.NumThreads1.Value = NumThreads1;
@@ -119,8 +133,8 @@ namespace TanukiColiseum
         public string ToHumanReadableString(Engine engine1, Engine engine2)
         {
             return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
-思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
-思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
+思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
+思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
 ";
         }
     }
