@@ -32,6 +32,30 @@ namespace TanukiColiseum
         public int Nodes2 { get; set; }
 
         /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        public int NodesRandomPercent1 { get; set; }
+
+        /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        public int NodesRandomPercent2 { get; set; }
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        public bool NodesRandomEveryMove1 { get; set; }
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        public bool NodesRandomEveryMove2 { get; set; }
+
+        /// <summary>
         /// 思考エンジン1に渡す持ち時間。
         /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
@@ -109,6 +133,10 @@ namespace TanukiColiseum
             model.SfenFilePath.Value = SfenFilePath;
             model.Nodes1.Value = Nodes1;
             model.Nodes2.Value = Nodes2;
+            model.NodesRandomPercent1.Value = NodesRandomPercent1;
+            model.NodesRandomPercent2.Value = NodesRandomPercent2;
+            model.NodesRandomEveryMove1.Value = NodesRandomEveryMove1;
+            model.NodesRandomEveryMove2.Value = NodesRandomEveryMove2;
             model.Time1.Value = Time1;
             model.Time2.Value = Time2;
             model.Byoyomi1.Value = Byoyomi1;
@@ -133,8 +161,8 @@ namespace TanukiColiseum
         public string ToHumanReadableString(Engine engine1, Engine engine2)
         {
             return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
-思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
-思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
+思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 思考ノード数に加える乱数(%)={NodesRandomPercent1} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
+思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 思考ノード数に加える乱数(%)={NodesRandomPercent2} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
 ";
         }
     }

@@ -60,6 +60,32 @@ namespace TanukiColiseum
         public ReactiveProperty<int> Nodes2 { get; }
 
         /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        [RangeAttribute(0, 100)]
+        public ReactiveProperty<int> NodesRandomPercent1 { get; }
+
+        /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        [RangeAttribute(0, 100)]
+        public ReactiveProperty<int> NodesRandomPercent2 { get; }
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        public ReactiveProperty<bool> NodesRandomEveryMove1 { get; }
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        public ReactiveProperty<bool> NodesRandomEveryMove2 { get; }
+
+        /// <summary>
         /// 思考エンジン1に渡す持ち時間。
         /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
@@ -201,6 +227,10 @@ namespace TanukiColiseum
             SfenFilePath = model.SfenFilePath.ToReactivePropertyAsSynchronized(x => x.Value);
             Nodes1 = model.Nodes1.ToReactivePropertyAsSynchronized(x => x.Value);
             Nodes2 = model.Nodes2.ToReactivePropertyAsSynchronized(x => x.Value);
+            NodesRandomPercent1 = model.NodesRandomPercent1.ToReactivePropertyAsSynchronized(x => x.Value);
+            NodesRandomPercent2 = model.NodesRandomPercent2.ToReactivePropertyAsSynchronized(x => x.Value);
+            NodesRandomEveryMove1 = model.NodesRandomEveryMove1.ToReactivePropertyAsSynchronized(x => x.Value);
+            NodesRandomEveryMove2 = model.NodesRandomEveryMove2.ToReactivePropertyAsSynchronized(x => x.Value);
             Time1 = model.Time1.ToReactivePropertyAsSynchronized(x => x.Value);
             Time2 = model.Time2.ToReactivePropertyAsSynchronized(x => x.Value);
             Byoyomi1 = model.Byoyomi1.ToReactivePropertyAsSynchronized(x => x.Value);
@@ -317,6 +347,10 @@ namespace TanukiColiseum
                 SfenFilePath = SfenFilePath.Value,
                 Nodes1 = Nodes1.Value,
                 Nodes2 = Nodes2.Value,
+                NodesRandomPercent1 = NodesRandomPercent1.Value,
+                NodesRandomPercent2 = NodesRandomPercent2.Value,
+                NodesRandomEveryMove1 = NodesRandomEveryMove1.Value,
+                NodesRandomEveryMove2 = NodesRandomEveryMove2.Value,
                 Time1 = Time1.Value,
                 Time2 = Time2.Value,
                 Byoyomi1 = Byoyomi1.Value,

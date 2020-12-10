@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace TanukiColiseum
 {
@@ -17,6 +15,10 @@ namespace TanukiColiseum
             int hashMb,
             int nodes1,
             int nodes2,
+            int nodesRandomPercent1,
+            int nodesRandomPercent2,
+            bool nodesRandomEveryMove1,
+            bool nodesRandomEveryMove2,
             int time1,
             int time2,
             int byoyomi1,
@@ -60,6 +62,10 @@ namespace TanukiColiseum
                 SfenFilePath = sfenFilePath,
                 Nodes1 = nodes1,
                 Nodes2 = nodes2,
+                NodesRandomPercent1 = nodesRandomPercent1,
+                NodesRandomPercent2 = nodesRandomPercent2,
+                NodesRandomEveryMove1 = nodesRandomEveryMove1,
+                NodesRandomEveryMove2 = nodesRandomEveryMove2,
                 Time1 = time1,
                 Time2 = time2,
                 Byoyomi1 = byoyomi1,

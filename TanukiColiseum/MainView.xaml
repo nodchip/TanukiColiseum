@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TanukiColiseum"
     Width="800"
-    Height="610"
-    d:DesignHeight="610"
+    Height="650"
+    d:DesignHeight="650"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
@@ -61,7 +61,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <GroupBox
@@ -177,6 +177,8 @@
                 Header="思考エンジン設定">
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -348,119 +350,151 @@
                         Grid.Row="6"
                         Grid.Column="0"
                         VerticalAlignment="Center"
-                        Text="持ち時間(ms)" />
+                        Text="思考ノード数に加える乱数(%)" />
                     <TextBox
                         Grid.Row="6"
+                        Grid.Column="1"
+                        Text="{Binding NodesRandomPercent1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="0を指定した場合、思考ノード数に乱数を加えません" />
+                    <TextBox
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        Text="{Binding NodesRandomPercent2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="0を指定した場合、思考ノード数に乱数を加えません" />
+
+                    <TextBlock
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="思考ノード数の乱数を1手毎に変化させる" />
+                    <CheckBox
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        IsChecked="{Binding NodesRandomEveryMove1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="チェックを入れない場合、1局を通して同じ値を加えます" />
+                    <CheckBox
+                        Grid.Row="7"
+                        Grid.Column="2"
+                        IsChecked="{Binding NodesRandomEveryMove2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="チェックを入れない場合、1局を通して同じ値を加えます" />
+
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="持ち時間(ms)" />
+                    <TextBox
+                        Grid.Row="8"
                         Grid.Column="1"
                         Text="{Binding Time1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、持ち時間を指定しません" />
                     <TextBox
-                        Grid.Row="6"
+                        Grid.Row="8"
                         Grid.Column="2"
                         Text="{Binding Time2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、持ち時間を指定しません" />
 
                     <TextBlock
-                        Grid.Row="7"
+                        Grid.Row="9"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="秒読み時間(ms)" />
                     <TextBox
-                        Grid.Row="7"
+                        Grid.Row="9"
                         Grid.Column="1"
                         Text="{Binding Byoyomi1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、秒読み時間を指定しません" />
                     <TextBox
-                        Grid.Row="7"
+                        Grid.Row="9"
                         Grid.Column="2"
                         Text="{Binding Byoyomi2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、秒読み時間を指定しません" />
 
                     <TextBlock
-                        Grid.Row="8"
+                        Grid.Row="10"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="加算時間(ms)" />
                     <TextBox
-                        Grid.Row="8"
+                        Grid.Row="10"
                         Grid.Column="1"
                         Text="{Binding Inc1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、加算時間を指定しません" />
                     <TextBox
-                        Grid.Row="8"
+                        Grid.Row="10"
                         Grid.Column="2"
                         Text="{Binding Inc2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、加算時間を指定しません" />
 
                     <TextBlock
-                        Grid.Row="9"
+                        Grid.Row="11"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="乱数付き思考時間(ms)" />
                     <TextBox
-                        Grid.Row="9"
+                        Grid.Row="11"
                         Grid.Column="1"
                         Text="{Binding Rtime1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、乱数付き思考時間を指定しません" />
                     <TextBox
-                        Grid.Row="9"
+                        Grid.Row="11"
                         Grid.Column="2"
                         Text="{Binding Rtime2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="0を指定した場合、乱数付き思考時間を指定しません" />
 
                     <TextBlock
-                        Grid.Row="10"
+                        Grid.Row="12"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="スレッド数" />
                     <TextBox
-                        Grid.Row="10"
+                        Grid.Row="12"
                         Grid.Column="1"
                         Text="{Binding NumThreads1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
-                        Grid.Row="10"
+                        Grid.Row="12"
                         Grid.Column="2"
                         Text="{Binding NumThreads2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
-                        Grid.Row="11"
+                        Grid.Row="13"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="BookEvalDiff" />
                     <TextBox
-                        Grid.Row="11"
+                        Grid.Row="13"
                         Grid.Column="1"
                         Text="{Binding BookEvalDiff1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
-                        Grid.Row="11"
+                        Grid.Row="13"
                         Grid.Column="2"
                         Text="{Binding BookEvalDiff2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
-                        Grid.Row="12"
+                        Grid.Row="14"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="定跡の採択率を考慮する" />
                     <TextBox
-                        Grid.Row="12"
+                        Grid.Row="14"
                         Grid.Column="1"
                         Text="{Binding ConsiderBookMoveCount1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
-                        Grid.Row="12"
+                        Grid.Row="14"
                         Grid.Column="2"
                         Text="{Binding ConsiderBookMoveCount2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
-                        Grid.Row="13"
+                        Grid.Row="15"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="定跡の手数を無視する" />
                     <TextBox
-                        Grid.Row="13"
+                        Grid.Row="15"
                         Grid.Column="1"
                         Text="{Binding IgnoreBookPly1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
-                        Grid.Row="13"
+                        Grid.Row="15"
                         Grid.Column="2"
                         Text="{Binding IgnoreBookPly2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>

@@ -39,6 +39,9 @@ namespace TanukiColiseum
         public List<Engine> Engines { get; } = new List<Engine>();
         private Random Random = new Random();
         private int[] Nodes;
+        private int[] NodesRandomPercent;
+        private bool[] NodesRandomEveryMove;
+        private int[] NodesForThisGame;
         private int[] Times;
         private int[] Byoyomis;
         private int[] Incs;
@@ -53,13 +56,17 @@ namespace TanukiColiseum
         private static int globalGameId = 0;
         private DateTime goDateTime;
 
-        public Game(int initialTurn, int nodes1, int nodes2, int time1, int time2, int byoyomi1,
-            int byoyomi2, int inc1, int inc2, int rtime1, int rtime2, Engine engine1, Engine engine2,
-            int numBookMoves, string[] openings, string sfenFilePath, string sqlite3FilePath,
-            ErrorHandler ShowErrorMessage)
+        public Game(int initialTurn, int nodes1, int nodes2, int nodesRandomPercent1,
+            int nodesRandomPercent2, bool nodesRandomEveryMove1, bool nodesRandomEveryMove2,
+            int time1, int time2, int byoyomi1, int byoyomi2, int inc1, int inc2, int rtime1,
+            int rtime2, Engine engine1, Engine engine2, int numBookMoves, string[] openings,
+            string sfenFilePath, string sqlite3FilePath, ErrorHandler ShowErrorMessage)
         {
             this.InitialTurn = initialTurn;
             this.Nodes = new int[] { nodes1, nodes2 };
+            this.NodesRandomPercent = new int[] { nodesRandomPercent1, nodesRandomPercent2 };
+            this.NodesRandomEveryMove = new bool[] { nodesRandomEveryMove1, nodesRandomEveryMove2 };
+            this.NodesForThisGame = new int[2];
             this.Times = new int[] { time1, time2 };
             this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
             this.Incs = new int[] { inc1, inc2 };
@@ -119,6 +126,27 @@ namespace TanukiColiseum
                     ShowErrorMessage($"usinewgameコマンドの送信に失敗しました。エンジン({engine})が異常終了またはタイムアウトしました。");
                 }
             }
+
+            for (int engineIndex = 0; engineIndex < 2; ++engineIndex)
+            {
+                NodesForThisGame[engineIndex] = Nodes[engineIndex];
+                if (NodesRandomPercent[engineIndex] != 0 && !NodesRandomEveryMove[engineIndex])
+                {
+                    var nodesRandom = NodesRandomPercent[engineIndex] * 0.01;
+                    var delta = NodesForThisGame[engineIndex] * ((Random.NextDouble() * nodesRandom * 2.0) - nodesRandom);
+                    NodesForThisGame[engineIndex] += (int)delta;
+                }
+            }
+
+            // エンジン1とエンジン2の設定が、両方とも1局を通して乱数が同じで、
+            // その他の思考ノード数のパラメーターが等しい場合、思考ノード数を同じにする。
+            if (!NodesRandomEveryMove[0] &&
+                !NodesRandomEveryMove[1] &&
+                Nodes[0] == Nodes[1] &&
+                NodesRandomPercent[0] == NodesRandomPercent[1])
+            {
+                NodesForThisGame[1] = NodesForThisGame[0];
+            }
         }
 
         public void Go()
@@ -128,13 +156,21 @@ namespace TanukiColiseum
                 ShowErrorMessage($"positionコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
             }
 
+            int nodes = NodesForThisGame[Turn];
+            if (NodesRandomPercent[Turn] != 0 && NodesRandomEveryMove[Turn])
+            {
+                var nodesRandom = NodesRandomPercent[Turn] * 0.01;
+                var delta = nodes * ((Random.NextDouble() * nodesRandom * 2.0) - nodesRandom);
+                nodes += (int)delta;
+            }
+
             var nameAndValues = new Dictionary<string, int> {
                 { "btime", Times[InitialTurn] },
                 { "wtime", Times[InitialTurn ^ 1] },
                 { "byoyomi", Byoyomis[Turn] },
                 { "binc", Incs[InitialTurn] },
                 { "winc", Incs[InitialTurn ^ 1] },
-                { "nodes", Nodes[Turn] },
+                { "nodes", nodes },
                 { "rtime", Rtime[Turn] },
             };
 

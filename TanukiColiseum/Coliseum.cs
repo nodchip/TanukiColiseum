@@ -158,7 +158,9 @@ namespace TanukiColiseum
 
                 // ゲーム初期化
                 // 偶数番目はengine1が先手、奇数番目はengine2が先手
-                Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2, options.Time1,
+                Games.Add(new Game(gameIndex & 1, options.Nodes1, options.Nodes2,
+                    options.NodesRandomPercent1, options.NodesRandomPercent2,
+                    options.NodesRandomEveryMove1, options.NodesRandomEveryMove2, options.Time1,
                     options.Time2, options.Byoyomi1, options.Byoyomi2, options.Inc1, options.Inc2,
                     options.Rtime1, options.Rtime2, engine1, engine2, options.NumBookMoves,
                     openings, sfenFilePath, sqlite3FilePath, ShowErrorMessage));

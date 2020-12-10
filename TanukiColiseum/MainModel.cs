@@ -66,6 +66,34 @@ namespace TanukiColiseum
         public ReactiveProperty<int> Nodes2 { get; set; } = new ReactiveProperty<int>(0);
 
         /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> NodesRandomPercent1 { get; set; } = new ReactiveProperty<int>(0);
+
+        /// <summary>
+        /// 思考ノード数に加える乱数(%)。
+        /// <para>0が渡されたとき、思考ノード数に乱数を加えない</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<int> NodesRandomPercent2 { get; set; } = new ReactiveProperty<int>(0);
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<bool> NodesRandomEveryMove1 { get; set; } = new ReactiveProperty<bool>(true);
+
+        /// <summary>
+        /// 思考ノード数の乱数を1手毎に変化させる。
+        /// <para>falseの場合、1局を通して同じ値を加える</para>
+        /// </summary>
+        [DataMember]
+        public ReactiveProperty<bool> NodesRandomEveryMove2 { get; set; } = new ReactiveProperty<bool>(true);
+
+        /// <summary>
         /// 思考エンジン1に渡す持ち時間。
         /// <para>0が渡された場合、持ち時間を指定しない。</para>
         /// </summary>
@@ -217,6 +245,26 @@ namespace TanukiColiseum
                 model.Rtime2 = new ReactiveProperty<int>(0);
             }
 
+            if (model.NodesRandomPercent1 == null)
+            {
+                model.NodesRandomPercent1 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.NodesRandomPercent2 == null)
+            {
+                model.NodesRandomPercent2 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.NodesRandomEveryMove1 == null)
+            {
+                model.NodesRandomEveryMove1 = new ReactiveProperty<bool>(true);
+            }
+
+            if (model.NodesRandomEveryMove2 == null)
+            {
+                model.NodesRandomEveryMove2 = new ReactiveProperty<bool>(true);
+            }
+
             CopyFrom(model);
         }
 
@@ -237,6 +285,10 @@ namespace TanukiColiseum
             SfenFilePath.Value = model.SfenFilePath.Value;
             Nodes1.Value = model.Nodes1.Value;
             Nodes2.Value = model.Nodes2.Value;
+            NodesRandomPercent1.Value = model.NodesRandomPercent1.Value;
+            NodesRandomPercent2.Value = model.NodesRandomPercent2.Value;
+            NodesRandomEveryMove1.Value = model.NodesRandomEveryMove1.Value;
+            NodesRandomEveryMove2.Value = model.NodesRandomEveryMove2.Value;
             Time1.Value = model.Time1.Value;
             Time2.Value = model.Time2.Value;
             Byoyomi1.Value = model.Byoyomi1.Value;
