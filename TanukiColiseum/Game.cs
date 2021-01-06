@@ -230,6 +230,7 @@ namespace TanukiColiseum
                 using (var connection = new SQLiteConnection(builder.ToString()))
                 {
                     connection.Open();
+                    SQLiteTransaction transaction = connection.BeginTransaction();
                     using (var command = connection.CreateCommand())
                     {
                         command.CommandText = @"
@@ -300,6 +301,8 @@ VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
                             command.ExecuteNonQuery();
                         }
                     }
+
+                    transaction.Commit();
                 }
             }
 
