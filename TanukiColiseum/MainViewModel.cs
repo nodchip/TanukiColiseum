@@ -43,6 +43,12 @@ namespace TanukiColiseum
         [RangeAttribute(0, int.MaxValue)]
         public ReactiveProperty<int> NumBookMoves { get; }
 
+        /// <summary>
+        /// 最大手数。この手数を超えて対局が続く場合は引き分けとなる。
+        /// </summary>
+        [RangeAttribute(0, int.MaxValue)]
+        public ReactiveProperty<int> MaxMovesToDraw { get; }
+
         public ReactiveProperty<string> SfenFilePath { get; }
 
         /// <summary>
@@ -224,6 +230,7 @@ namespace TanukiColiseum
             BookFileName1 = model.BookFileName1.ToReactivePropertyAsSynchronized(x => x.Value);
             BookFileName2 = model.BookFileName2.ToReactivePropertyAsSynchronized(x => x.Value);
             NumBookMoves = model.NumBookMoves.ToReactivePropertyAsSynchronized(x => x.Value);
+            MaxMovesToDraw = model.MaxMovesToDraw.ToReactivePropertyAsSynchronized(x => x.Value);
             SfenFilePath = model.SfenFilePath.ToReactivePropertyAsSynchronized(x => x.Value);
             Nodes1 = model.Nodes1.ToReactivePropertyAsSynchronized(x => x.Value);
             Nodes2 = model.Nodes2.ToReactivePropertyAsSynchronized(x => x.Value);
@@ -344,6 +351,7 @@ namespace TanukiColiseum
                 BookFileName1 = BookFileName1.Value,
                 BookFileName2 = BookFileName2.Value,
                 NumBookMoves = NumBookMoves.Value,
+                MaxMovesToDraw = MaxMovesToDraw.Value,
                 SfenFilePath = SfenFilePath.Value,
                 Nodes1 = Nodes1.Value,
                 Nodes2 = Nodes2.Value,

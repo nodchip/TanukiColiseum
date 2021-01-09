@@ -32,6 +32,7 @@ namespace TanukiColiseum
         }
 
         private int NumBookMoves;
+        private int MaxMovesToDraw;
         public List<Move> Moves { get; } = new List<Move>();
         public int Turn { get; private set; }
         public int InitialTurn { get; private set; }
@@ -55,12 +56,14 @@ namespace TanukiColiseum
         private static object WriteResultLock = new object();
         private static int globalGameId = 0;
         private DateTime goDateTime;
+        private Coliseum coliseum;
 
         public Game(int initialTurn, int nodes1, int nodes2, int nodesRandomPercent1,
             int nodesRandomPercent2, bool nodesRandomEveryMove1, bool nodesRandomEveryMove2,
             int time1, int time2, int byoyomi1, int byoyomi2, int inc1, int inc2, int rtime1,
-            int rtime2, Engine engine1, Engine engine2, int numBookMoves, string[] openings,
-            string sfenFilePath, string sqlite3FilePath, ErrorHandler ShowErrorMessage)
+            int rtime2, Engine engine1, Engine engine2, int numBookMoves, int maxMovesToDraw,
+            string[] openings, string sfenFilePath, string sqlite3FilePath,
+            ErrorHandler ShowErrorMessage, Coliseum coliseum)
         {
             this.InitialTurn = initialTurn;
             this.Nodes = new int[] { nodes1, nodes2 };
@@ -74,10 +77,12 @@ namespace TanukiColiseum
             this.Engines.Add(engine1);
             this.Engines.Add(engine2);
             this.NumBookMoves = numBookMoves;
+            this.MaxMovesToDraw = maxMovesToDraw;
             this.Openings = openings;
             this.sfenFilePath = sfenFilePath;
             this.sqlite3FilePath = sqlite3FilePath;
             this.ShowErrorMessage = ShowErrorMessage;
+            this.coliseum = coliseum;
         }
 
         public void OnNewGame()
@@ -194,10 +199,29 @@ namespace TanukiColiseum
 
             Moves.Add(move);
             Turn ^= 1;
+
+            if (Moves.Count >= MaxMovesToDraw)
+            {
+                // 引き分け
+                int engineWin = 0;
+                int blackWhiteWin = 0;
+                bool draw = true;
+                Game.Result result = Game.Result.Draw;
+                bool declaration = false;
+
+                // 次の対局を開始する
+                // 先にGame.OnGameFinished()を読んでゲームの状態を停止状態に移行する
+                OnGameFinished(result);
+                coliseum.OnGameFinished(engineWin, blackWhiteWin, draw, declaration, InitialTurn);
+            }
+            else
+            {
+                Go();
+            }
         }
 
         /// <summary>
-        /// 宗教した場合に呼ばれる
+        /// 終局した場合に呼ばれる
         /// </summary>
         /// <param name="win"></param>
         public void OnGameFinished(Result result)

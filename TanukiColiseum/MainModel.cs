@@ -49,6 +49,9 @@ namespace TanukiColiseum
         public ReactiveProperty<int> NumBookMoves { get; set; } = new ReactiveProperty<int>(24);
 
         [DataMember]
+        public ReactiveProperty<int> MaxMovesToDraw { get; set; } = new ReactiveProperty<int>(320);
+
+        [DataMember]
         public ReactiveProperty<string> SfenFilePath { get; set; } = new ReactiveProperty<string>("records2016_10818.sfen");
 
         /// <summary>
@@ -265,6 +268,11 @@ namespace TanukiColiseum
                 model.NodesRandomEveryMove2 = new ReactiveProperty<bool>(true);
             }
 
+            if (model.MaxMovesToDraw == null)
+            {
+                model.MaxMovesToDraw = new ReactiveProperty<int>(320);
+            }
+
             CopyFrom(model);
         }
 
@@ -282,6 +290,7 @@ namespace TanukiColiseum
             BookFileName1.Value = model.BookFileName1.Value;
             BookFileName2.Value = model.BookFileName2.Value;
             NumBookMoves.Value = model.NumBookMoves.Value;
+            MaxMovesToDraw.Value = model.MaxMovesToDraw.Value;
             SfenFilePath.Value = model.SfenFilePath.Value;
             Nodes1.Value = model.Nodes1.Value;
             Nodes2.Value = model.Nodes2.Value;

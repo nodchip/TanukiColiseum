@@ -11,7 +11,6 @@ namespace TanukiColiseum
 {
     public class Engine
     {
-        private const int MaxMoves = 320;
         private static readonly TimeSpan ProcessWaitTime = TimeSpan.FromMinutes(1);
         private Process Process = new Process();
         private Coliseum Coliseum;
@@ -180,7 +179,7 @@ namespace TanukiColiseum
         private void HandleBestmove(List<string> command)
         {
             var game = Coliseum.Games[GameIndex];
-            if (command[1] == "resign" || command[1] == "win" || game.Moves.Count >= MaxMoves)
+            if (command[1] == "resign" || command[1] == "win")
             {
                 int engineWin;
                 int blackWhiteWin;
@@ -252,10 +251,9 @@ namespace TanukiColiseum
                     }
                 }
 
-                game.OnMove(move);
-
                 lastInfoCommand = null;
-                game.Go();
+
+                game.OnMove(move);
             }
         }
 

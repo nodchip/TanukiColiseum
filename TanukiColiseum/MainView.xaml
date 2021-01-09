@@ -77,6 +77,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -127,8 +128,18 @@
                         Grid.Row="4"
                         Grid.Column="0"
                         VerticalAlignment="Center"
+                        Text="最大手数" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="{Binding MaxMovesToDraw.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
                         Text="開始局面ファイルパス" />
-                    <Grid Grid.Row="4" Grid.Column="1">
+                    <Grid Grid.Row="5" Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -150,22 +161,22 @@
                     </Grid>
 
                     <TextBlock
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="NUMAノード数" />
                     <TextBox
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.Column="1"
                         Text="{Binding NumNumaNodes.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Text="表示更新間隔(ms)" />
                     <TextBox
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Grid.Column="1"
                         Text="{Binding ProgressIntervalMs.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>

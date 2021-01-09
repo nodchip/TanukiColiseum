@@ -17,6 +17,12 @@ namespace TanukiColiseum
         public string BookFileName1 { get; set; }
         public string BookFileName2 { get; set; }
         public int NumBookMoves { get; set; }
+
+        /// <summary>
+        /// 最大手数。この手数を超えて対局が続く場合は引き分けとなる。
+        /// </summary>
+        public int MaxMovesToDraw { get; set; }
+
         public string SfenFilePath { get; set; }
 
         /// <summary>
@@ -130,6 +136,7 @@ namespace TanukiColiseum
             model.BookFileName1.Value = BookFileName1;
             model.BookFileName2.Value = BookFileName2;
             model.NumBookMoves.Value = NumBookMoves;
+            model.MaxMovesToDraw.Value = MaxMovesToDraw;
             model.SfenFilePath.Value = SfenFilePath;
             model.Nodes1.Value = Nodes1;
             model.Nodes2.Value = Nodes2;
@@ -160,7 +167,7 @@ namespace TanukiColiseum
 
         public string ToHumanReadableString(Engine engine1, Engine engine2)
         {
-            return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
+            return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 最大手数={MaxMovesToDraw} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
 思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 思考ノード数に加える乱数(%)={NodesRandomPercent1} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1}
 思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 思考ノード数に加える乱数(%)={NodesRandomPercent2} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2}
 ";

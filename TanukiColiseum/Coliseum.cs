@@ -109,7 +109,7 @@ namespace TanukiColiseum
                     {"ConsiderBookMoveCount", options.ConsiderBookMoveCount1},
                     {"IgnoreBookPly", options.IgnoreBookPly1},
                     {"BookDepthLimit", "0"},
-                    {"MaxMovesToDraw", "256"},
+                    {"MaxMovesToDraw", options.MaxMovesToDraw.ToString()},
                     {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
                     {"LargePageEnable", "false"},
                 };
@@ -143,7 +143,7 @@ namespace TanukiColiseum
                     {"ConsiderBookMoveCount", options.ConsiderBookMoveCount2},
                     {"IgnoreBookPly", options.IgnoreBookPly2},
                     {"BookDepthLimit", "0"},
-                    {"MaxMovesToDraw", "256"},
+                    {"MaxMovesToDraw", options.MaxMovesToDraw.ToString()},
                     {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
                     {"LargePageEnable", "false"},
                 };
@@ -163,7 +163,8 @@ namespace TanukiColiseum
                     options.NodesRandomEveryMove1, options.NodesRandomEveryMove2, options.Time1,
                     options.Time2, options.Byoyomi1, options.Byoyomi2, options.Inc1, options.Inc2,
                     options.Rtime1, options.Rtime2, engine1, engine2, options.NumBookMoves,
-                    openings, sfenFilePath, sqlite3FilePath, ShowErrorMessage));
+                    options.MaxMovesToDraw, openings, sfenFilePath, sqlite3FilePath,
+                    ShowErrorMessage, this));
             }
 
             Console.WriteLine("Initialized engines...");
