@@ -57,6 +57,7 @@ namespace TanukiColiseum
         private static int globalGameId = 0;
         private DateTime goDateTime;
         private Coliseum coliseum;
+        private Dictionary<string, int> hashToCount = new Dictionary<string, int>();
 
         public Game(int initialTurn, int nodes1, int nodes2, int nodesRandomPercent1,
             int nodesRandomPercent2, bool nodesRandomEveryMove1, bool nodesRandomEveryMove2,
@@ -152,6 +153,9 @@ namespace TanukiColiseum
             {
                 NodesForThisGame[1] = NodesForThisGame[0];
             }
+
+            // 千日手判定用のデータをクリアする
+            hashToCount.Clear();
         }
 
         public void Go()
@@ -159,6 +163,32 @@ namespace TanukiColiseum
             if (!Engines[Turn].Position(Moves.Select(x => x.Best).ToList()))
             {
                 ShowErrorMessage($"positionコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
+            }
+
+            if (!Engines[Turn].Key())
+            {
+                ShowErrorMessage($"keyコマンドの送信に失敗しました。エンジン({Engines[Turn]})が異常終了またはタイムアウトしました。");
+            }
+
+            string hash = Engines[Turn].Hash;
+            if (!hashToCount.ContainsKey(hash))
+            {
+                hashToCount[hash] = 0;
+            }
+            if (++hashToCount[hash] == 4)
+            {
+                // 引き分け
+                int engineWin = 0;
+                int blackWhiteWin = 0;
+                bool draw = true;
+                Game.Result result = Game.Result.Draw;
+                bool declaration = false;
+
+                // 次の対局を開始する
+                // 先にGame.OnGameFinished()を読んでゲームの状態を停止状態に移行する
+                OnGameFinished(result);
+                coliseum.OnGameFinished(engineWin, blackWhiteWin, draw, declaration, InitialTurn);
+                return;
             }
 
             int nodes = NodesForThisGame[Turn];

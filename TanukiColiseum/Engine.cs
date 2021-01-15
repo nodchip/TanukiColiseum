@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static TanukiColiseum.Game;
@@ -16,12 +17,14 @@ namespace TanukiColiseum
         private Coliseum Coliseum;
         private SemaphoreSlim UsiokSemaphore = new SemaphoreSlim(0);
         private SemaphoreSlim ReadyokSemaphore = new SemaphoreSlim(0);
+        private SemaphoreSlim HashSemaphore = new SemaphoreSlim(0);
         private int ProcessIndex;
         private int GameIndex;
         private int EngineIndex;
         private Dictionary<string, string> OverriddenOptions;
         public string Name { get; set; }
         public string Author { get; set; }
+        public string Hash { get; set; }
         private List<string> lastInfoCommand;
 
         public Engine(string fileName, Coliseum coliseum, int processIndex, int gameIndex, int engineIndex, int numaNode, Dictionary<string, string> overriddenOptions)
@@ -87,7 +90,11 @@ namespace TanukiColiseum
             //Debug.WriteLine($"< [{ProcessIndex}] {e.Data}");
 
             List<string> command = Util.Split(e.Data);
-            if (command.Contains("id"))
+            if (Regex.IsMatch(e.Data, "^[0-9a-f]{1,16}$"))
+            {
+                HandleHash(command);
+            }
+            else if (command.Contains("id"))
             {
                 HandleId(command);
             }
@@ -121,6 +128,12 @@ namespace TanukiColiseum
         private void HandleStderr(object sender, DataReceivedEventArgs e)
         {
             Debug.WriteLine($"    ! [{ProcessIndex}] {e.Data}");
+        }
+
+        private void HandleHash(List<string> command)
+        {
+            Hash = command[0];
+            HashSemaphore.Release();
         }
 
         private void HandleId(List<string> command)
@@ -319,6 +332,16 @@ namespace TanukiColiseum
             Send(commandString);
             //Trace.WriteLine(commandString);
             return true;
+        }
+
+        public bool Key()
+        {
+            return KeyAsync().Wait(ProcessWaitTime);
+        }
+
+        private async Task KeyAsync()
+        {
+            await SendAndReceive("key", HashSemaphore);
         }
 
         public override string ToString()
