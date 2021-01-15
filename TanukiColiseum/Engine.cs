@@ -264,10 +264,6 @@ namespace TanukiColiseum
 
         public bool Usi()
         {
-            if (HasExited)
-            {
-                return false;
-            }
             return UsiAsync().Wait(ProcessWaitTime);
         }
 
@@ -278,10 +274,6 @@ namespace TanukiColiseum
 
         public bool Isready()
         {
-            if (HasExited)
-            {
-                return false;
-            }
             return IsreadyAsync().Wait(ProcessWaitTime);
         }
 
@@ -292,11 +284,6 @@ namespace TanukiColiseum
 
         public bool Stop()
         {
-            if (HasExited)
-            {
-                return false;
-            }
-
             Send("stop");
             return true;
         }
@@ -309,33 +296,18 @@ namespace TanukiColiseum
 
         public bool Usinewgame()
         {
-            if (HasExited)
-            {
-                return false;
-            }
-
             Send("usinewgame");
             return true;
         }
 
         public bool Position(List<string> moves)
         {
-            if (HasExited)
-            {
-                return false;
-            }
-
             Send(string.Join(" ", new[] { "position", "startpos", "moves" }.Concat(moves)));
             return true;
         }
 
         public bool Go(Dictionary<string, int> nameAndValues)
         {
-            if (HasExited)
-            {
-                return false;
-            }
-
             var command = new List<string> { "go" };
             foreach (var nameAndValue in nameAndValues)
             {
@@ -348,8 +320,6 @@ namespace TanukiColiseum
             //Trace.WriteLine(commandString);
             return true;
         }
-
-        public bool HasExited { get => Process.HasExited; }
 
         public override string ToString()
         {
