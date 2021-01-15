@@ -258,9 +258,26 @@ namespace TanukiColiseum
                     }
                     else
                     {
+                        // 将棋所：USIプロトコルとは http://shogidokoro.starfree.jp/usi.html
+                        // mate時の評価値のパースのバグを修正する · Issue #21 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/21
                         Debug.Assert(lastInfoCommand[index + 1] == "mate");
-                        int mate = int.Parse(lastInfoCommand[index + 2]);
-                        move.Value = mate >= 0 ? 32000 - mate : -32000 - mate;
+                        var mateString = lastInfoCommand[index + 2];
+                        if (mateString == "+")
+                        {
+                            move.Value = 32000;
+                        }
+                        else if (mateString == "-")
+                        {
+                            move.Value = -32000;
+                        }
+                        else if (mateString.StartsWith("-"))
+                        {
+                            move.Value = -32000 - int.Parse(mateString);
+                        }
+                        else
+                        {
+                            move.Value = 32000 - int.Parse(mateString);
+                        }
                     }
                 }
 
