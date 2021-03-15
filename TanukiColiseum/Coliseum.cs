@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.Devices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -69,8 +68,9 @@ namespace TanukiColiseum
             var sfenFilePath = Path.Combine(logFolderPath, "sfen.txt");
             var sqlite3FilePath = Path.Combine(logFolderPath, "result.sqlite3");
 
-            var computerInfo = new ComputerInfo();
-            var previousAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
+            var previousAvailablePhysicalMemory = GetAvailablePhysicalMemory();
+            Console.WriteLine($"Initial available physical memory={previousAvailablePhysicalMemory}");
+            Console.Out.Flush();
 
             // 各エンジンに渡すThreadIdOffsetの値を計算する際に使用するストライド
             // CPUの論理コア数を超えるIDが設定される場合や、
@@ -82,7 +82,10 @@ namespace TanukiColiseum
                 // 残り物理メモリサイズを調べ、エンジンの起動に必要なメモリが足りない場合、
                 // 警告を表示して終了する。
                 // 残り物理メモリ量 · Issue #13 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/13
-                var currentAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
+                var currentAvailablePhysicalMemory = GetAvailablePhysicalMemory();
+                Console.WriteLine($"Current available physical memory={currentAvailablePhysicalMemory}");
+                Console.Out.Flush();
+
                 var consumedMemoryPerGame = previousAvailablePhysicalMemory - currentAvailablePhysicalMemory;
                 if (consumedMemoryPerGame > currentAvailablePhysicalMemory)
                 {
@@ -246,6 +249,38 @@ namespace TanukiColiseum
         {
             return options.ToHumanReadableString(engine1, engine2)
                 + new Status(status).ToHumanReadableString();
+        }
+
+        private static long GetAvailablePhysicalMemory()
+        {
+            string command = @"free";
+
+            ProcessStartInfo psInfo = new ProcessStartInfo();
+
+            psInfo.FileName = command; // 実行するファイル
+            psInfo.CreateNoWindow = true; // コンソール・ウィンドウを開かない
+            psInfo.UseShellExecute = false; // シェル機能を使用しない
+
+            psInfo.RedirectStandardOutput = true; // 標準出力をリダイレクト
+
+            // アプリの実行開始
+            using (var p = Process.Start(psInfo))
+            {
+                var reader = p.StandardOutput;
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (!line.StartsWith("Mem:"))
+                    {
+                        continue;
+                    }
+
+                    var split = line.Split();
+                    return long.Parse(split[3]);
+                }
+            }
+
+            return 0;
         }
     }
 }
