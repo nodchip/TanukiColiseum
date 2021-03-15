@@ -29,12 +29,11 @@ namespace TanukiColiseum
 
         public Engine(string fileName, Coliseum coliseum, int processIndex, int gameIndex, int engineIndex, int numaNode, Dictionary<string, string> overriddenOptions)
         {
-            this.Process.StartInfo.FileName = "cmd.exe";
+            this.Process.StartInfo.FileName = fileName;
             if (Path.IsPathRooted(fileName))
             {
                 this.Process.StartInfo.WorkingDirectory = Path.GetDirectoryName(fileName);
             }
-            this.Process.StartInfo.Arguments = $"/c start /B /WAIT /NODE {numaNode} {fileName}";
             this.Process.StartInfo.UseShellExecute = false;
             this.Process.StartInfo.RedirectStandardInput = true;
             this.Process.StartInfo.RedirectStandardOutput = true;

@@ -275,7 +275,14 @@ namespace TanukiColiseum
                         continue;
                     }
 
-                    var split = line.Split();
+                    //Console.WriteLine(line);
+                    //Console.Out.Flush();
+
+                    var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    //Console.WriteLine(split[3]);
+                    //Console.Out.Flush();
+
                     return long.Parse(split[3]);
                 }
             }
