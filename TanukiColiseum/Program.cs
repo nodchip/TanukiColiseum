@@ -16,23 +16,8 @@ namespace TanukiColiseum
 			}
 			var parsed = (Parsed<Options>)result;
 			var options = parsed.Value;
-			if (options.Gui)
-			{
-				var thread = new Thread(() =>
-				{
-					var application = new Application();
-					application.Run(new MainView());
-				});
-				thread.SetApartmentState(System.Threading.ApartmentState.STA);
-				thread.IsBackground = true; //メインスレッドが終了した場合に、動作中のスレッドも終了させる場合
-				thread.Start();
-				thread.Join();
-			}
-			else
-			{
-				var cli = new Cli();
-				cli.Run(options);
-			}
+			var cli = new Cli();
+			cli.Run(options);
 		}
 	}
 }
