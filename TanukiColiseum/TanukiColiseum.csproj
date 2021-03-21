@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.props" Condition="Exists('..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -51,9 +52,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine, Version=2.8.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommandLineParser.2.8.0\lib\net461\CommandLine.dll</HintPath>
-    </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.3.2\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
@@ -75,6 +73,15 @@
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CommandLine, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CommandLine.2.0.0-beta1.20427.1\lib\netstandard2.0\System.CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CommandLine.DragonFruit, Version=0.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\lib\netstandard2.0\System.CommandLine.DragonFruit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CommandLine.Rendering, Version=0.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CommandLine.Rendering.0.3.0-alpha.20427.1\lib\netstandard2.0\System.CommandLine.Rendering.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -165,8 +172,11 @@
     <PropertyGroup>
       <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.props'))" />
+    <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.targets'))" />
     <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.targets" Condition="Exists('..\packages\System.CommandLine.DragonFruit.0.3.0-alpha.20427.1\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
