@@ -112,6 +112,7 @@ namespace TanukiColiseum
                     {"MaxMovesToDraw", options.MaxMovesToDraw.ToString()},
                     {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
                     {"LargePageEnable", "false"},
+                    {"BookOnTheFly", "true"},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
@@ -146,6 +147,7 @@ namespace TanukiColiseum
                     {"MaxMovesToDraw", options.MaxMovesToDraw.ToString()},
                     {"ThreadIdOffset", (gameIndex * threadIdStride).ToString()},
                     {"LargePageEnable", "false"},
+                    {"BookOnTheFly", "true"},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
