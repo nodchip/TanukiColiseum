@@ -44,6 +44,8 @@ namespace TanukiColiseum
             string considerBookMoveCount2 = "false",
             string ignoreBookPly1 = "false",
             string ignoreBookPly2 = "false",
+            int evalScalePercentage1 = 100,
+            int evalScalePercentage2 = 100,
             bool gui = true)
         {
             var options = new Options
@@ -86,6 +88,8 @@ namespace TanukiColiseum
                 ConsiderBookMoveCount2 = considerBookMoveCount2,
                 IgnoreBookPly1 = ignoreBookPly1,
                 IgnoreBookPly2 = ignoreBookPly2,
+                EvalScalePercentage1 = evalScalePercentage1,
+                EvalScalePercentage2 = evalScalePercentage2,
                 Gui = gui,
             };
 

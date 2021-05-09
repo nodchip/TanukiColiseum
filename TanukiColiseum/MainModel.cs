@@ -181,6 +181,12 @@ namespace TanukiColiseum
         [DataMember]
         public ReactiveProperty<string> IgnoreBookPly2 { get; set; } = new ReactiveProperty<string>("false");
 
+        [DataMember]
+        public ReactiveProperty<int> EvalScalePercentage1 { get; set; } = new ReactiveProperty<int>(100);
+
+        [DataMember]
+        public ReactiveProperty<int> EvalScalePercentage2 { get; set; } = new ReactiveProperty<int>(100);
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Save(string filePath)
@@ -273,6 +279,16 @@ namespace TanukiColiseum
                 model.MaxMovesToDraw = new ReactiveProperty<int>(320);
             }
 
+            if (model.EvalScalePercentage1 == null)
+            {
+                model.EvalScalePercentage1 = new ReactiveProperty<int>(100);
+            }
+
+            if (model.EvalScalePercentage2 == null)
+            {
+                model.EvalScalePercentage2 = new ReactiveProperty<int>(100);
+            }
+
             CopyFrom(model);
         }
 
@@ -316,6 +332,8 @@ namespace TanukiColiseum
             ConsiderBookMoveCount2.Value = model.ConsiderBookMoveCount2.Value;
             IgnoreBookPly1.Value = model.IgnoreBookPly1.Value;
             IgnoreBookPly2.Value = model.IgnoreBookPly2.Value;
+            EvalScalePercentage1.Value = model.EvalScalePercentage1.Value;
+            EvalScalePercentage2.Value = model.EvalScalePercentage2.Value;
         }
     }
 }
