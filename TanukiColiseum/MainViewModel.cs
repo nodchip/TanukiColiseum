@@ -173,6 +173,10 @@ namespace TanukiColiseum
 
         public ReactiveProperty<string> IgnoreBookPly2 { get; }
 
+        public ReactiveProperty<int> SlowMover1 { get; }
+
+        public ReactiveProperty<int> SlowMover2 { get; }
+
         public ReactiveProperty<bool> StartMenuItemEnabled { get; } = new ReactiveProperty<bool>(true);
 
         public ReactiveProperty<string> State { get; } = new ReactiveProperty<string>("");
@@ -256,6 +260,8 @@ namespace TanukiColiseum
             ConsiderBookMoveCount2 = model.ConsiderBookMoveCount2.ToReactivePropertyAsSynchronized(x => x.Value);
             IgnoreBookPly1 = model.IgnoreBookPly1.ToReactivePropertyAsSynchronized(x => x.Value);
             IgnoreBookPly2 = model.IgnoreBookPly2.ToReactivePropertyAsSynchronized(x => x.Value);
+            SlowMover1 = model.SlowMover1.ToReactivePropertyAsSynchronized(x => x.Value);
+            SlowMover2 = model.SlowMover2.ToReactivePropertyAsSynchronized(x => x.Value);
 
             OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
             OnEngine1FilePathButton.Subscribe(() => SelectFilePath(Engine1FilePath));
@@ -377,6 +383,8 @@ namespace TanukiColiseum
                 ConsiderBookMoveCount2 = ConsiderBookMoveCount2.Value,
                 IgnoreBookPly1 = IgnoreBookPly1.Value,
                 IgnoreBookPly2 = IgnoreBookPly2.Value,
+                SlowMover1 = SlowMover1.Value,
+                SlowMover2 = SlowMover2.Value,
                 Gui = true,
             };
 

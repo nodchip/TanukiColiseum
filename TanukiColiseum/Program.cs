@@ -44,6 +44,8 @@ namespace TanukiColiseum
             string considerBookMoveCount2 = "false",
             string ignoreBookPly1 = "false",
             string ignoreBookPly2 = "false",
+            int slowMover1 = 100,
+            int slowMover2 = 100,
             bool gui = true)
         {
             var options = new Options
@@ -86,6 +88,8 @@ namespace TanukiColiseum
                 ConsiderBookMoveCount2 = considerBookMoveCount2,
                 IgnoreBookPly1 = ignoreBookPly1,
                 IgnoreBookPly2 = ignoreBookPly2,
+                SlowMover1 = slowMover1,
+                SlowMover2 = slowMover2,
                 Gui = gui,
             };
 

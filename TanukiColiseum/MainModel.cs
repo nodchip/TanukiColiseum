@@ -181,6 +181,12 @@ namespace TanukiColiseum
         [DataMember]
         public ReactiveProperty<string> IgnoreBookPly2 { get; set; } = new ReactiveProperty<string>("false");
 
+        [DataMember]
+        public ReactiveProperty<int> SlowMover1 { get; set; } = new ReactiveProperty<int>(100);
+
+        [DataMember]
+        public ReactiveProperty<int> SlowMover2 { get; set; } = new ReactiveProperty<int>(100);
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Save(string filePath)
@@ -273,7 +279,15 @@ namespace TanukiColiseum
                 model.MaxMovesToDraw = new ReactiveProperty<int>(320);
             }
 
-            CopyFrom(model);
+            if (model.SlowMover1 == null)
+            {
+                model.SlowMover1 = new ReactiveProperty<int>(100);
+            }
+
+            if (model.SlowMover2 == null)
+            {
+                model.SlowMover2 = new ReactiveProperty<int>(100);
+            }
         }
 
         public void CopyFrom(MainModel model)
@@ -316,6 +330,8 @@ namespace TanukiColiseum
             ConsiderBookMoveCount2.Value = model.ConsiderBookMoveCount2.Value;
             IgnoreBookPly1.Value = model.IgnoreBookPly1.Value;
             IgnoreBookPly2.Value = model.IgnoreBookPly2.Value;
+            SlowMover1.Value = model.SlowMover1.Value;
+            SlowMover2.Value = model.SlowMover2.Value;
         }
     }
 }
