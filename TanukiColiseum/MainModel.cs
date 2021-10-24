@@ -186,6 +186,11 @@ namespace TanukiColiseum
 
         [DataMember]
         public ReactiveProperty<int> SlowMover2 { get; set; } = new ReactiveProperty<int>(100);
+        [DataMember]
+        public ReactiveProperty<int> Contempt1 { get; set; } = new ReactiveProperty<int>(2);
+
+        [DataMember]
+        public ReactiveProperty<int> Contempt2 { get; set; } = new ReactiveProperty<int>(2);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -288,6 +293,16 @@ namespace TanukiColiseum
             {
                 model.SlowMover2 = new ReactiveProperty<int>(100);
             }
+
+            if (model.Contempt1 == null)
+            {
+                model.Contempt1 = new ReactiveProperty<int>(2);
+            }
+
+            if (model.Contempt2 == null)
+            {
+                model.Contempt2 = new ReactiveProperty<int>(2);
+            }
         }
 
         public void CopyFrom(MainModel model)
@@ -332,6 +347,8 @@ namespace TanukiColiseum
             IgnoreBookPly2.Value = model.IgnoreBookPly2.Value;
             SlowMover1.Value = model.SlowMover1.Value;
             SlowMover2.Value = model.SlowMover2.Value;
+            Contempt1.Value = model.Contempt1.Value;
+            Contempt2.Value = model.Contempt2.Value;
         }
     }
 }
