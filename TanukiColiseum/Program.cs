@@ -46,8 +46,8 @@ namespace TanukiColiseum
             string ignoreBookPly2 = "false",
             int slowMover1 = 100,
             int slowMover2 = 100,
-            int contempt1 = 2,
-            int contempt2 = 2,
+            int drawValue1 = -2,
+            int drawValue2 = -2,
             bool gui = true)
         {
             var options = new Options
@@ -92,8 +92,8 @@ namespace TanukiColiseum
                 IgnoreBookPly2 = ignoreBookPly2,
                 SlowMover1 = slowMover1,
                 SlowMover2 = slowMover2,
-                Contempt1 = contempt1,
-                Contempt2 = contempt2,
+                DrawValue1 = drawValue1,
+                DrawValue2 = drawValue2,
                 Gui = gui,
             };
 

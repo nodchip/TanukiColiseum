@@ -528,15 +528,15 @@
 						Grid.Row="17"
 						Grid.Column="0"
 						VerticalAlignment="Center"
-						Text="Contempt" />
+						Text="DrawValue" />
 					<TextBox
 						Grid.Row="17"
 						Grid.Column="1"
-						Text="{Binding Contempt1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						Text="{Binding DrawValue1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 					<TextBox
 						Grid.Row="17"
 						Grid.Column="2"
-						Text="{Binding Contempt2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						Text="{Binding DrawValue2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</GroupBox>
 		</Grid>
