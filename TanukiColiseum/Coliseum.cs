@@ -114,7 +114,8 @@ namespace TanukiColiseum
                     {"LargePageEnable", "false"},
                     {"BookOnTheFly", "true"},
                     {"SlowMover", options.SlowMover1.ToString()},
-                    {"DrawValue", options.DrawValue1.ToString()},
+                    {"DrawValueBlack", options.DrawValue1.ToString()},
+                    {"DrawValueWhite", options.DrawValue1.ToString()},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
@@ -151,7 +152,8 @@ namespace TanukiColiseum
                     {"LargePageEnable", "false"},
                     {"BookOnTheFly", "true"},
                     {"SlowMover", options.SlowMover2.ToString()},
-                    {"DrawValue", options.DrawValue2.ToString()},
+                    {"DrawValueBlack", options.DrawValue2.ToString()},
+                    {"DrawValueWhite", options.DrawValue2.ToString()},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();
