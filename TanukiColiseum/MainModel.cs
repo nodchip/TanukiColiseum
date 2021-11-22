@@ -191,6 +191,16 @@ namespace TanukiColiseum
 
         [DataMember]
         public ReactiveProperty<int> DrawValue2 { get; set; } = new ReactiveProperty<int>(-2);
+        [DataMember]
+        public ReactiveProperty<int> BookEvalBlackLimit1 { get; set; } = new ReactiveProperty<int>(0);
+
+        [DataMember]
+        public ReactiveProperty<int> BookEvalBlackLimit2 { get; set; } = new ReactiveProperty<int>(0);
+        [DataMember]
+        public ReactiveProperty<int> BookEvalWhiteLimit1 { get; set; } = new ReactiveProperty<int>(-140);
+
+        [DataMember]
+        public ReactiveProperty<int> BookEvalWhiteLimit2 { get; set; } = new ReactiveProperty<int>(-140);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -303,6 +313,26 @@ namespace TanukiColiseum
             {
                 model.DrawValue2 = new ReactiveProperty<int>(-2);
             }
+
+            if (model.BookEvalBlackLimit1 == null)
+            {
+                model.BookEvalBlackLimit1 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.BookEvalBlackLimit2 == null)
+            {
+                model.BookEvalBlackLimit2 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.BookEvalWhiteLimit1 == null)
+            {
+                model.BookEvalWhiteLimit1 = new ReactiveProperty<int>(-140);
+            }
+
+            if (model.BookEvalWhiteLimit2 == null)
+            {
+                model.BookEvalWhiteLimit2 = new ReactiveProperty<int>(-140);
+            }
         }
 
         public void CopyFrom(MainModel model)
@@ -349,6 +379,10 @@ namespace TanukiColiseum
             SlowMover2.Value = model.SlowMover2.Value;
             DrawValue1.Value = model.DrawValue1.Value;
             DrawValue2.Value = model.DrawValue2.Value;
+            BookEvalBlackLimit1.Value = model.BookEvalBlackLimit1.Value;
+            BookEvalBlackLimit2.Value = model.BookEvalBlackLimit2.Value;
+            BookEvalWhiteLimit1.Value = model.BookEvalWhiteLimit1.Value;
+            BookEvalWhiteLimit2.Value = model.BookEvalWhiteLimit2.Value;
         }
     }
 }

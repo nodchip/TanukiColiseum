@@ -48,6 +48,10 @@ namespace TanukiColiseum
             int slowMover2 = 100,
             int drawValue1 = -2,
             int drawValue2 = -2,
+            int bookEvalBlackLimit1 = 0,
+            int bookEvalBlackLimit2 = 0,
+            int bookEvalWhiteLimit1 = -140,
+            int bookEvalWhiteLimit2 = -140,
             bool gui = true)
         {
             var options = new Options
@@ -94,6 +98,10 @@ namespace TanukiColiseum
                 SlowMover2 = slowMover2,
                 DrawValue1 = drawValue1,
                 DrawValue2 = drawValue2,
+                BookEvalBlackLimit1 = bookEvalBlackLimit1,
+                BookEvalBlackLimit2 = bookEvalBlackLimit2,
+                BookEvalWhiteLimit1 = bookEvalWhiteLimit1,
+                BookEvalWhiteLimit2 = bookEvalWhiteLimit2,
                 Gui = gui,
             };
 

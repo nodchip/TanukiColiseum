@@ -206,6 +206,8 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -537,6 +539,34 @@
 						Grid.Row="17"
 						Grid.Column="2"
 						Text="{Binding DrawValue2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock
+						Grid.Row="18"
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						Text="BookEvalBlackLimit" />
+					<TextBox
+						Grid.Row="18"
+						Grid.Column="1"
+						Text="{Binding BookEvalBlackLimit1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<TextBox
+						Grid.Row="18"
+						Grid.Column="2"
+						Text="{Binding BookEvalBlackLimit2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock
+						Grid.Row="19"
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						Text="BookEvalWhiteLimit" />
+					<TextBox
+						Grid.Row="19"
+						Grid.Column="1"
+						Text="{Binding BookEvalWhiteLimit1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<TextBox
+						Grid.Row="19"
+						Grid.Column="2"
+						Text="{Binding BookEvalWhiteLimit2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</GroupBox>
 		</Grid>

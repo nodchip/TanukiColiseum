@@ -116,6 +116,8 @@ namespace TanukiColiseum
                     {"SlowMover", options.SlowMover1.ToString()},
                     {"DrawValueBlack", options.DrawValue1.ToString()},
                     {"DrawValueWhite", options.DrawValue1.ToString()},
+                    {"BookEvalBlackLimit", options.BookEvalBlackLimit1.ToString()},
+                    {"BookEvalWhiteLimit", options.BookEvalWhiteLimit1.ToString()},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
                 Console.Out.Flush();
@@ -154,6 +156,8 @@ namespace TanukiColiseum
                     {"SlowMover", options.SlowMover2.ToString()},
                     {"DrawValueBlack", options.DrawValue2.ToString()},
                     {"DrawValueWhite", options.DrawValue2.ToString()},
+                    {"BookEvalBlackLimit", options.BookEvalBlackLimit2.ToString()},
+                    {"BookEvalWhiteLimit", options.BookEvalWhiteLimit2.ToString()},
                 };
                 Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
                 Console.Out.Flush();

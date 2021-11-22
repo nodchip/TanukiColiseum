@@ -181,6 +181,14 @@ namespace TanukiColiseum
 
         public ReactiveProperty<int> DrawValue2 { get; }
 
+        public ReactiveProperty<int> BookEvalBlackLimit1 { get; }
+
+        public ReactiveProperty<int> BookEvalBlackLimit2 { get; }
+
+        public ReactiveProperty<int> BookEvalWhiteLimit1 { get; }
+
+        public ReactiveProperty<int> BookEvalWhiteLimit2 { get; }
+
         public ReactiveProperty<bool> StartMenuItemEnabled { get; } = new ReactiveProperty<bool>(true);
 
         public ReactiveProperty<string> State { get; } = new ReactiveProperty<string>("");
@@ -268,6 +276,10 @@ namespace TanukiColiseum
             SlowMover2 = model.SlowMover2.ToReactivePropertyAsSynchronized(x => x.Value);
             DrawValue1 = model.DrawValue1.ToReactivePropertyAsSynchronized(x => x.Value);
             DrawValue2 = model.DrawValue2.ToReactivePropertyAsSynchronized(x => x.Value);
+            BookEvalBlackLimit1 = model.BookEvalBlackLimit1.ToReactivePropertyAsSynchronized(x => x.Value);
+            BookEvalBlackLimit2 = model.BookEvalBlackLimit2.ToReactivePropertyAsSynchronized(x => x.Value);
+            BookEvalWhiteLimit1 = model.BookEvalWhiteLimit1.ToReactivePropertyAsSynchronized(x => x.Value);
+            BookEvalWhiteLimit2 = model.BookEvalWhiteLimit2.ToReactivePropertyAsSynchronized(x => x.Value);
 
             OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
             OnEngine1FilePathButton.Subscribe(() => SelectFilePath(Engine1FilePath));
@@ -393,6 +405,10 @@ namespace TanukiColiseum
                 SlowMover2 = SlowMover2.Value,
                 DrawValue1 = DrawValue1.Value,
                 DrawValue2 = DrawValue2.Value,
+                BookEvalBlackLimit1 = BookEvalBlackLimit1.Value,
+                BookEvalBlackLimit2 = BookEvalBlackLimit2.Value,
+                BookEvalWhiteLimit1 = BookEvalWhiteLimit1.Value,
+                BookEvalWhiteLimit2 = BookEvalWhiteLimit2.Value,
                 Gui = true,
             };
 
