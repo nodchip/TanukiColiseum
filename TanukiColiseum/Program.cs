@@ -54,6 +54,9 @@ namespace TanukiColiseum
             int bookEvalWhiteLimit2 = -140,
             bool gui = true)
         {
+            RocketTanuki.Position.Initialize();
+            RocketTanuki.Types.Initialize();
+
             var options = new Options
             {
                 Engine1FilePath = engine1FilePath,

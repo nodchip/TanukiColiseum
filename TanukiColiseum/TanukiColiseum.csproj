@@ -141,6 +141,10 @@
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RocketTanuki\Move.cs" />
+    <Compile Include="RocketTanuki\Position.cs" />
+    <Compile Include="RocketTanuki\Types.cs" />
+    <Compile Include="RocketTanuki\Zobrist.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="SaveSettingFileBehavior.cs" />
