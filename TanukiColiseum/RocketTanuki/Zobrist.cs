@@ -33,14 +33,15 @@ namespace RocketTanuki
                 HandPiece[handPieceIndex] = GetRandomValue(random);
             }
 
-            Side = GetRandomValue(random);
+            Side = 1;
         }
 
         private static long GetRandomValue(Random random)
         {
-            var buf = new byte[8];
-            random.NextBytes(buf);
-            return BitConverter.ToInt64(buf, 0);
+			var buf = new byte[8];
+			random.NextBytes(buf);
+            // 最下位のビットを落とさないと、Sideと被り、意図しない計算結果となる。
+			return BitConverter.ToInt64(buf, 0) & 0xffffffffffffe;
         }
     }
 }
