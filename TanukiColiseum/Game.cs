@@ -19,7 +19,8 @@ namespace TanukiColiseum
 		private int[] NodesRandomPercent;
 		private bool[] NodesRandomEveryMove;
 		private int[] NodesForThisGame;
-		private int[] Times;
+		private int[] InitialTimes;
+		private int[] CurrentTimes;
 		private int[] Byoyomis;
 		private int[] Incs;
 		private int[] Rtime;
@@ -43,7 +44,8 @@ namespace TanukiColiseum
 			this.NodesRandomPercent = new int[] { nodesRandomPercent1, nodesRandomPercent2 };
 			this.NodesRandomEveryMove = new bool[] { nodesRandomEveryMove1, nodesRandomEveryMove2 };
 			this.NodesForThisGame = new int[2];
-			this.Times = new int[] { time1, time2 };
+			this.InitialTimes = new int[] { time1, time2 };
+			this.CurrentTimes = new int[] { time1, time2 };
 			this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
 			this.Incs = new int[] { inc1, inc2 };
 			this.Rtime = new int[] { rtime1, rtime2 };
@@ -103,6 +105,8 @@ namespace TanukiColiseum
 
 			for (int engineIndex = 0; engineIndex < 2; ++engineIndex)
 			{
+				CurrentTimes[engineIndex] = InitialTimes[engineIndex];
+
 				NodesForThisGame[engineIndex] = Nodes[engineIndex];
 				if (NodesRandomPercent[engineIndex] != 0 && !NodesRandomEveryMove[engineIndex])
 				{
@@ -153,8 +157,8 @@ namespace TanukiColiseum
 				}
 
 				var nameAndValues = new Dictionary<string, int> {
-					{ "btime", Times[InitialTurn] },
-					{ "wtime", Times[InitialTurn ^ 1] },
+					{ "btime", CurrentTimes[InitialTurn] },
+					{ "wtime", CurrentTimes[InitialTurn ^ 1] },
 					{ "byoyomi", Byoyomis[Turn] },
 					{ "binc", Incs[InitialTurn] },
 					{ "winc", Incs[InitialTurn ^ 1] },
@@ -169,9 +173,9 @@ namespace TanukiColiseum
 				// 持ち時間から思考時間を引く
 				var bestmoveDateTime = DateTime.Now;
 				var thinkingTime = bestmoveDateTime - goDateTime;
-				Times[Turn] += Incs[Turn];
-				Times[Turn] -= (int)thinkingTime.TotalMilliseconds;
-				Times[Turn] = Math.Max(Times[Turn], 0);
+				CurrentTimes[Turn] += Incs[Turn];
+				CurrentTimes[Turn] -= (int)thinkingTime.TotalMilliseconds;
+				CurrentTimes[Turn] = Math.Max(CurrentTimes[Turn], 0);
 
 				Moves.Add(move);
 
