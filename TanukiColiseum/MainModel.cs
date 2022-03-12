@@ -333,6 +333,8 @@ namespace TanukiColiseum
             {
                 model.BookEvalWhiteLimit2 = new ReactiveProperty<int>(-140);
             }
+
+            CopyFrom(model);
         }
 
         public void CopyFrom(MainModel model)
