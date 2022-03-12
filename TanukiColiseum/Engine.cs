@@ -68,6 +68,8 @@ namespace TanukiColiseum
 		{
 			//Debug.WriteLine($"> [{ProcessIndex}] {command}");
 
+			// 前のI/Oが終わる前に呼び出される場合があるため、ロックを取る。
+			// マルチスレッドで高速なC#を書くためのロック戦略 - Qiita https://qiita.com/tadokoro/items/28b3623a5ec58517d431
 			await sendAsyncSemaphore.WaitAsync().ConfigureAwait(false);
 			try
 			{
