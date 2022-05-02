@@ -119,6 +119,7 @@ namespace TanukiColiseum
 					{"DrawValueWhite", options.DrawValue1.ToString()},
 					{"BookEvalBlackLimit", options.BookEvalBlackLimit1.ToString()},
 					{"BookEvalWhiteLimit", options.BookEvalWhiteLimit1.ToString()},
+					{"FV_SCALE", options.FVScale1.ToString()},
 				};
 				Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=1 Engine1FilePath={options.Engine1FilePath}");
 				Console.Out.Flush();
@@ -159,6 +160,7 @@ namespace TanukiColiseum
 					{"DrawValueWhite", options.DrawValue2.ToString()},
 					{"BookEvalBlackLimit", options.BookEvalBlackLimit2.ToString()},
 					{"BookEvalWhiteLimit", options.BookEvalWhiteLimit2.ToString()},
+					{"FV_SCALE", options.FVScale2.ToString()},
 				};
 				Console.WriteLine($"Starting an engine process. gameIndex={gameIndex} engine=2 Engine2FilePath={options.Engine2FilePath}");
 				Console.Out.Flush();

@@ -202,6 +202,12 @@ namespace TanukiColiseum
         [DataMember]
         public ReactiveProperty<int> BookEvalWhiteLimit2 { get; set; } = new ReactiveProperty<int>(-140);
 
+        [DataMember]
+        public ReactiveProperty<int> FVScale1 { get; set; } = new ReactiveProperty<int>(16);
+
+        [DataMember]
+        public ReactiveProperty<int> FVScale2 { get; set; } = new ReactiveProperty<int>(16);
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Save(string filePath)
@@ -334,6 +340,16 @@ namespace TanukiColiseum
                 model.BookEvalWhiteLimit2 = new ReactiveProperty<int>(-140);
             }
 
+            if (model.FVScale1 == null)
+            {
+                model.FVScale1 = new ReactiveProperty<int>(16);
+            }
+
+            if (model.FVScale2 == null)
+            {
+                model.FVScale2 = new ReactiveProperty<int>(16);
+            }
+
             CopyFrom(model);
         }
 
@@ -385,6 +401,8 @@ namespace TanukiColiseum
             BookEvalBlackLimit2.Value = model.BookEvalBlackLimit2.Value;
             BookEvalWhiteLimit1.Value = model.BookEvalWhiteLimit1.Value;
             BookEvalWhiteLimit2.Value = model.BookEvalWhiteLimit2.Value;
+            FVScale1.Value = model.FVScale1.Value;
+            FVScale2.Value = model.FVScale2.Value;
         }
     }
 }

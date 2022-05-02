@@ -52,6 +52,8 @@ namespace TanukiColiseum
 			int bookEvalBlackLimit2 = 0,
 			int bookEvalWhiteLimit1 = -140,
 			int bookEvalWhiteLimit2 = -140,
+			int fvScale1 = 16,
+			int fvScale2 = 16,
 			bool gui = true)
 		{
 			RocketTanuki.Position.Initialize();
@@ -105,6 +107,8 @@ namespace TanukiColiseum
 				BookEvalBlackLimit2 = bookEvalBlackLimit2,
 				BookEvalWhiteLimit1 = bookEvalWhiteLimit1,
 				BookEvalWhiteLimit2 = bookEvalWhiteLimit2,
+				FVScale1 = fvScale1,
+				FVScale2 = fvScale2,
 				Gui = gui,
 			};
 
