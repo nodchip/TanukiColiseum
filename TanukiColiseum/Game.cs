@@ -24,6 +24,7 @@ namespace TanukiColiseum
 		private int[] Byoyomis;
 		private int[] Incs;
 		private int[] Rtime;
+		private int[] Depths;
 		private string[] Openings;
 		private bool ChangeOpening = true;
 		private int OpeningIndex = 0;
@@ -35,8 +36,8 @@ namespace TanukiColiseum
 		public Game(int initialTurn, int nodes1, int nodes2, int nodesRandomPercent1,
 			int nodesRandomPercent2, bool nodesRandomEveryMove1, bool nodesRandomEveryMove2,
 			int time1, int time2, int byoyomi1, int byoyomi2, int inc1, int inc2, int rtime1,
-			int rtime2, Engine engine1, Engine engine2, int numBookMoves, int maxMovesToDraw,
-			string[] openings, ErrorHandler ShowErrorMessage)
+			int rtime2, int depth1, int depth2, Engine engine1, Engine engine2, int numBookMoves,
+			int maxMovesToDraw, string[] openings, ErrorHandler ShowErrorMessage)
 		{
 			// StartAsync()の最初に反転させるため、あらかじめ反転させておく。
 			this.InitialTurn = initialTurn ^ 1;
@@ -49,6 +50,7 @@ namespace TanukiColiseum
 			this.Byoyomis = new int[] { byoyomi1, byoyomi2 };
 			this.Incs = new int[] { inc1, inc2 };
 			this.Rtime = new int[] { rtime1, rtime2 };
+			this.Depths = new int[] { depth1, depth2 };
 			this.Engines.Add(engine1);
 			this.Engines.Add(engine2);
 			this.NumBookMoves = numBookMoves;
@@ -165,6 +167,10 @@ namespace TanukiColiseum
 					{ "nodes", nodes },
 					{ "rtime", Rtime[Turn] },
 				};
+				if (Depths[Turn] > 0)
+				{
+					nameAndValues["depth"] = Depths[Turn];
+				}
 
 				goDateTime = DateTime.Now;
 

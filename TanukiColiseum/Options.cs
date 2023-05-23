@@ -129,6 +129,8 @@ namespace TanukiColiseum
         public int BookEvalWhiteLimit2 { get; set; }
         public int FVScale1 { get; set; }
         public int FVScale2 { get; set; }
+        public int Depth1 { get; set; }
+        public int Depth2 { get; set; }
         public bool Gui { get; set; }
 
         public MainModel ToModel()
@@ -182,14 +184,16 @@ namespace TanukiColiseum
             model.BookEvalWhiteLimit2.Value = BookEvalWhiteLimit2;
             model.FVScale1.Value = FVScale1;
             model.FVScale2.Value = FVScale2;
+            model.Depth1.Value = Depth1;
+            model.Depth2.Value = Depth2;
             return model;
         }
 
         public string ToHumanReadableString(Engine engine1, Engine engine2)
         {
             return $@"対局数={NumGames} 同時対局数={NumConcurrentGames} ハッシュサイズ={HashMb} 開始手数={NumBookMoves} 最大手数={MaxMovesToDraw} 開始局面ファイル={SfenFilePath} NUMAノード数={NumNumaNodes} 表示更新間隔(ms)={ProgressIntervalMs}
-思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 思考ノード数に加える乱数(%)={NodesRandomPercent1} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1} SlowMover={SlowMover1} DrawValue={DrawValue1} BookEvalBlackLimit={BookEvalBlackLimit1} BookEvalWhiteLimit={BookEvalWhiteLimit1} FVScale1={FVScale1}
-思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 思考ノード数に加える乱数(%)={NodesRandomPercent2} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2} SlowMover={SlowMover2} DrawValue={DrawValue2} BookEvalBlackLimit={BookEvalBlackLimit2} BookEvalWhiteLimit={BookEvalWhiteLimit2} FVScale2={FVScale2}
+思考エンジン1 name={engine1.Name} author={engine1.Author} exeファイル={Engine1FilePath} 評価関数フォルダパス={Eval1FolderPath} 定跡手数={NumBookMoves1} 定跡ファイル名={BookFileName1} 思考ノード数={Nodes1} 思考ノード数に加える乱数(%)={NodesRandomPercent1} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove1} 持ち時間(ms)={Time1} 秒読み時間(ms)={Byoyomi1} 加算時間(ms)={Inc1} 乱数付き思考時間(ms)={Rtime1} スレッド数={NumThreads1} BookEvalDiff={BookEvalDiff1} 定跡の採択率を考慮する={ConsiderBookMoveCount1} 定跡の手数を無視する={IgnoreBookPly1} SlowMover={SlowMover1} DrawValue={DrawValue1} BookEvalBlackLimit={BookEvalBlackLimit1} BookEvalWhiteLimit={BookEvalWhiteLimit1} FVScale1={FVScale1} Depth1={Depth1}
+思考エンジン2 name={engine2.Name} author={engine2.Author} exeファイル={Engine2FilePath} 評価関数フォルダパス={Eval2FolderPath} 定跡手数={NumBookMoves2} 定跡ファイル名={BookFileName2} 思考ノード数={Nodes2} 思考ノード数に加える乱数(%)={NodesRandomPercent2} 思考ノード数の乱数を1手毎に変化させる={NodesRandomEveryMove2} 持ち時間(ms)={Time2} 秒読み時間(ms)={Byoyomi2} 加算時間(ms)={Inc2} 乱数付き思考時間(ms)={Rtime2} スレッド数={NumThreads2} BookEvalDiff={BookEvalDiff2} 定跡の採択率を考慮する={ConsiderBookMoveCount2} 定跡の手数を無視する={IgnoreBookPly2} SlowMover={SlowMover2} DrawValue={DrawValue2} BookEvalBlackLimit={BookEvalBlackLimit2} BookEvalWhiteLimit={BookEvalWhiteLimit2} FVScale2={FVScale2} Depth2={Depth2}
 ";
         }
     }

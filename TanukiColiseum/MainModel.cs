@@ -208,6 +208,12 @@ namespace TanukiColiseum
         [DataMember]
         public ReactiveProperty<int> FVScale2 { get; set; } = new ReactiveProperty<int>(16);
 
+        [DataMember]
+        public ReactiveProperty<int> Depth1 { get; set; } = new ReactiveProperty<int>(0);
+
+        [DataMember]
+        public ReactiveProperty<int> Depth2 { get; set; } = new ReactiveProperty<int>(0);
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Save(string filePath)
@@ -350,6 +356,16 @@ namespace TanukiColiseum
                 model.FVScale2 = new ReactiveProperty<int>(16);
             }
 
+            if (model.Depth1 == null)
+            {
+                model.Depth1 = new ReactiveProperty<int>(0);
+            }
+
+            if (model.Depth2 == null)
+            {
+                model.Depth2 = new ReactiveProperty<int>(0);
+            }
+
             CopyFrom(model);
         }
 
@@ -403,6 +419,8 @@ namespace TanukiColiseum
             BookEvalWhiteLimit2.Value = model.BookEvalWhiteLimit2.Value;
             FVScale1.Value = model.FVScale1.Value;
             FVScale2.Value = model.FVScale2.Value;
+            Depth1.Value = model.Depth1.Value;
+            Depth2.Value = model.Depth2.Value;
         }
     }
 }

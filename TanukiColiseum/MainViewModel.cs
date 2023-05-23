@@ -192,6 +192,10 @@ namespace TanukiColiseum
 
 		public ReactiveProperty<int> FVScale2 { get; }
 
+		public ReactiveProperty<int> Depth1 { get; }
+
+		public ReactiveProperty<int> Depth2 { get; }
+
 		public ReactiveProperty<bool> StartMenuItemEnabled { get; } = new ReactiveProperty<bool>(true);
 
 		public ReactiveProperty<string> State { get; } = new ReactiveProperty<string>("");
@@ -285,6 +289,8 @@ namespace TanukiColiseum
 			BookEvalWhiteLimit2 = model.BookEvalWhiteLimit2.ToReactivePropertyAsSynchronized(x => x.Value);
 			FVScale1 = model.FVScale1.ToReactivePropertyAsSynchronized(x => x.Value);
 			FVScale2 = model.FVScale2.ToReactivePropertyAsSynchronized(x => x.Value);
+			Depth1 = model.Depth1.ToReactivePropertyAsSynchronized(x => x.Value);
+			Depth2 = model.Depth2.ToReactivePropertyAsSynchronized(x => x.Value);
 
 			OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
 			OnEngine1FilePathButton.Subscribe(() => SelectFilePath(Engine1FilePath));
@@ -416,6 +422,8 @@ namespace TanukiColiseum
 				BookEvalWhiteLimit2 = BookEvalWhiteLimit2.Value,
 				FVScale1 = FVScale1.Value,
 				FVScale2 = FVScale2.Value,
+				Depth1 = Depth1.Value,
+				Depth2 = Depth2.Value,
 				Gui = true,
 			};
 

@@ -209,6 +209,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -582,6 +583,20 @@
 						Grid.Row="20"
 						Grid.Column="2"
 						Text="{Binding FVScale2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock
+						Grid.Row="21"
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						Text="探索深さ" />
+					<TextBox
+						Grid.Row="21"
+						Grid.Column="1"
+						Text="{Binding Depth1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<TextBox
+						Grid.Row="21"
+						Grid.Column="2"
+						Text="{Binding Depth2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</GroupBox>
 		</Grid>

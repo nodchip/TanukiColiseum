@@ -177,8 +177,8 @@ namespace TanukiColiseum
 					options.NodesRandomPercent1, options.NodesRandomPercent2,
 					options.NodesRandomEveryMove1, options.NodesRandomEveryMove2, options.Time1,
 					options.Time2, options.Byoyomi1, options.Byoyomi2, options.Inc1, options.Inc2,
-					options.Rtime1, options.Rtime2, engine1, engine2, options.NumBookMoves,
-					options.MaxMovesToDraw, openings, ShowErrorMessage));
+					options.Rtime1, options.Rtime2, options.Depth1, options.Depth2, engine1, engine2,
+					options.NumBookMoves, options.MaxMovesToDraw, openings, ShowErrorMessage));
 			}
 
 			Console.WriteLine("Initialized engines...");
