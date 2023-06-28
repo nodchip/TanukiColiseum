@@ -292,108 +292,108 @@ namespace TanukiColiseum
 				LastOutput = DateTime.Now;
 			}
 
-//			// sfenファイルへの書き込み
-//			var sfen = "startpos moves " + string.Join(" ", game.Moves.Select(x => x.Best)) + "\n";
-//			File.AppendAllText(sfenFilePath, sfen);
+			// sfenファイルへの書き込み
+			var sfen = "startpos moves " + string.Join(" ", game.Moves.Select(x => x.Best)) + "\n";
+			File.AppendAllText(sfenFilePath, sfen);
 
-//			// sqlite3ファイルへの書き込み
-//			int gameId = Interlocked.Increment(ref globalGameId);
-//			int winner;
-//			if (game.Moves.Last().Resign)
-//			{
-//				winner = game.Turn ^ 1;
-//			}
-//			else if (game.Moves.Last().Win)
-//			{
-//				winner = game.Turn;
-//			}
-//			else if (game.Moves.Last().Draw)
-//			{
-//				winner = 2;
-//			}
-//			else
-//			{
-//				throw new Exception("Invalid last move.");
-//			}
+			// sqlite3ファイルへの書き込み
+			int gameId = Interlocked.Increment(ref globalGameId);
+			int winner;
+			if (game.Moves.Last().Resign)
+			{
+				winner = game.Turn ^ 1;
+			}
+			else if (game.Moves.Last().Win)
+			{
+				winner = game.Turn;
+			}
+			else if (game.Moves.Last().Draw)
+			{
+				winner = 2;
+			}
+			else
+			{
+				throw new Exception("Invalid last move.");
+			}
 
-//			var builder = new SQLiteConnectionStringBuilder { DataSource = sqlite3FilePath };
-//			using (var connection = new SQLiteConnection(builder.ToString()))
-//			{
-//				connection.Open();
-//				SQLiteTransaction transaction = connection.BeginTransaction();
-//				using (var command = connection.CreateCommand())
-//				{
-//					command.CommandText = @"
-//CREATE TABLE IF NOT EXISTS game (
-//    id INTEGER PRIMARY KEY ASC,
-//    winner INTEGER
-//);
-//";
-//					command.ExecuteNonQuery();
-//				}
+			var builder = new SQLiteConnectionStringBuilder { DataSource = sqlite3FilePath };
+			using (var connection = new SQLiteConnection(builder.ToString()))
+			{
+				connection.Open();
+				SQLiteTransaction transaction = connection.BeginTransaction();
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText = @"
+CREATE TABLE IF NOT EXISTS game (
+    id INTEGER PRIMARY KEY ASC,
+    winner INTEGER
+);
+";
+					command.ExecuteNonQuery();
+				}
 
-//				using (var command = connection.CreateCommand())
-//				{
-//					command.CommandText =
-//@"CREATE TABLE IF NOT EXISTS move (
-//    game_id INTEGER,
-//    play INTEGER,
-//    best TEXT,
-//    next TEXT,
-//    value INTEGER,
-//    depth INTEGER,
-//    book INTEGER
-//);
-//";
-//					command.ExecuteNonQuery();
-//				}
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText =
+@"CREATE TABLE IF NOT EXISTS move (
+    game_id INTEGER,
+    play INTEGER,
+    best TEXT,
+    next TEXT,
+    value INTEGER,
+    depth INTEGER,
+    book INTEGER
+);
+";
+					command.ExecuteNonQuery();
+				}
 
-//				using (var command = connection.CreateCommand())
-//				{
-//					command.CommandText =
-//@"CREATE INDEX IF NOT EXISTS move_game_id_index ON move (
-//    game_id
-//);
-//";
-//					command.ExecuteNonQuery();
-//				}
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText =
+@"CREATE INDEX IF NOT EXISTS move_game_id_index ON move (
+    game_id
+);
+";
+					command.ExecuteNonQuery();
+				}
 
-//				using (var command = connection.CreateCommand())
-//				{
-//					command.CommandText =
-//@"
-//    INSERT INTO game (id, winner)
-//    VALUES ($id, $winner)
-//";
-//					command.Parameters.AddWithValue("$id", gameId);
-//					command.Parameters.AddWithValue("$winner", winner);
-//					command.ExecuteNonQuery();
-//				}
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText =
+@"
+    INSERT INTO game (id, winner)
+    VALUES ($id, $winner)
+";
+					command.Parameters.AddWithValue("$id", gameId);
+					command.Parameters.AddWithValue("$winner", winner);
+					command.ExecuteNonQuery();
+				}
 
-//				for (int play = 0; play < game.Moves.Count; ++play)
-//				{
-//					var move = game.Moves[play];
+				for (int play = 0; play < game.Moves.Count; ++play)
+				{
+					var move = game.Moves[play];
 
-//					using (var command = connection.CreateCommand())
-//					{
-//						command.CommandText =
-//@"
-//INSERT INTO move (game_id, play, best, next, value, depth, book)
-//VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
-//";
-//						command.Parameters.AddWithValue("$game_id", gameId);
-//						command.Parameters.AddWithValue("$play", play);
-//						command.Parameters.AddWithValue("$best", move.Best);
-//						command.Parameters.AddWithValue("$next", move.Next);
-//						command.Parameters.AddWithValue("$value", move.Value);
-//						command.Parameters.AddWithValue("$depth", move.Depth);
-//						command.Parameters.AddWithValue("$book", move.Book);
-//						command.ExecuteNonQuery();
-//					}
-//				}
+					using (var command = connection.CreateCommand())
+					{
+						command.CommandText =
+@"
+INSERT INTO move (game_id, play, best, next, value, depth, book)
+VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
+";
+						command.Parameters.AddWithValue("$game_id", gameId);
+						command.Parameters.AddWithValue("$play", play);
+						command.Parameters.AddWithValue("$best", move.Best);
+						command.Parameters.AddWithValue("$next", move.Next);
+						command.Parameters.AddWithValue("$value", move.Value);
+						command.Parameters.AddWithValue("$depth", move.Depth);
+						command.Parameters.AddWithValue("$book", move.Book);
+						command.ExecuteNonQuery();
+					}
+				}
 
-//				transaction.Commit();
-//			}
+				transaction.Commit();
+			}
 		}
 
 		public static string CreateStatusMessage(Options options, Status status, Engine engine1, Engine engine2)
