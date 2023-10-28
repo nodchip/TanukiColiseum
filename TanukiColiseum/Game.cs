@@ -90,7 +90,17 @@ namespace TanukiColiseum
 					Next = "none",
 					Book = 1,
 				});
-				position.DoMove(RocketTanuki.Move.FromUsiString(position, move));
+
+				// Unhandled exception: System.Reflection.TargetInvocationException: 呼び出しのターゲットが例外をスローしました。 ---> System.AggregateException: 1 つ以上のエラーが発生しました。 ---> System.IndexOutOfRangeException: インデックスが配列の境界外です。
+				try
+				{
+					position.DoMove(RocketTanuki.Move.FromUsiString(position, move));
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw new Exception("開始局面に進めている最中にエラーが発生しました。", e);
+				}
 			}
 
 			Turn = InitialTurn;
