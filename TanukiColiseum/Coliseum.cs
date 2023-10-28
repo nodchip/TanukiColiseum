@@ -61,6 +61,7 @@ namespace TanukiColiseum
 
 			// 開始局面集を読み込む
 			string[] openings = File.ReadAllLines(options.SfenFilePath);
+			ValidateOpenings(openings);
 
 			Console.WriteLine("Initializing engines...");
 			Console.Out.Flush();
@@ -400,6 +401,28 @@ VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
 		{
 			return options.ToHumanReadableString(engine1, engine2)
 				+ new Status(status).ToHumanReadableString();
+		}
+
+		/// <summary>
+		/// 開始局面集の書式を検証する。
+		/// </summary>
+		/// <param name="openings"></param>
+		private void ValidateOpenings(string[] openings)
+		{
+			foreach (var opening in openings)
+			{
+				RocketTanuki.Position position = new RocketTanuki.Position();
+				position.Set(RocketTanuki.Position.StartposSfen);
+				foreach (var move in Util.Split(opening))
+				{
+					if (move == "startpos" || move == "moves")
+					{
+						continue;
+					}
+
+					position.DoMove(RocketTanuki.Move.FromUsiString(position, move));
+				}
+			}
 		}
 	}
 }
