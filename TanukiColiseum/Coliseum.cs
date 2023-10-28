@@ -420,7 +420,15 @@ VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
 						continue;
 					}
 
-					position.DoMove(RocketTanuki.Move.FromUsiString(position, move));
+					try
+					{
+						position.DoMove(RocketTanuki.Move.FromUsiString(position, move));
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+						throw new Exception($"不正な開始局面が見つかりました。 opening={opening} move={move}", e);
+					}
 				}
 			}
 		}
