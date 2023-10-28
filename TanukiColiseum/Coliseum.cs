@@ -409,6 +409,7 @@ VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
 		/// <param name="openings"></param>
 		private void ValidateOpenings(string[] openings)
 		{
+			int lineNumber = 1;
 			foreach (var opening in openings)
 			{
 				RocketTanuki.Position position = new RocketTanuki.Position();
@@ -427,9 +428,11 @@ VALUES ($game_id, $play, $best, $next, $value, $depth, $book)
 					catch (Exception e)
 					{
 						Console.WriteLine(e);
-						throw new Exception($"不正な開始局面が見つかりました。 opening={opening} move={move}", e);
+						throw new Exception($"不正な開始局面が見つかりました。 opening={opening} move={move} lineNumber={lineNumber}", e);
 					}
 				}
+
+				++lineNumber;
 			}
 		}
 	}

@@ -99,7 +99,7 @@ namespace TanukiColiseum
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
-					throw new Exception($"不正な開始局面が見つかりました。 Openings[OpeningIndex]={Openings[OpeningIndex]} move={move}", e);
+					throw new Exception($"不正な開始局面が見つかりました。 Openings[OpeningIndex]={Openings[OpeningIndex]} move={move} OpeningIndex={OpeningIndex}", e);
 				}
 			}
 
