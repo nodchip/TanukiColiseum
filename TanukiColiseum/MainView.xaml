@@ -210,6 +210,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -597,6 +598,20 @@
 						Grid.Row="21"
 						Grid.Column="2"
 						Text="{Binding Depth2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock
+						Grid.Row="22"
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						Text="最小思考時間" />
+					<TextBox
+						Grid.Row="22"
+						Grid.Column="1"
+						Text="{Binding MinimumThinkingTime1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<TextBox
+						Grid.Row="22"
+						Grid.Column="2"
+						Text="{Binding MinimumThinkingTime2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</GroupBox>
 		</Grid>
