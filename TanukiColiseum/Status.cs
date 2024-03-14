@@ -77,6 +77,8 @@ namespace TanukiColiseum
             int engine1DeclarationWinWhite = DeclarationWin[0, 1];
             int engine2DeclarationWinBlack = DeclarationWin[1, 0];
             int engine2DeclarationWinWhite = DeclarationWin[1, 1];
+            int engine1DeclarationWin = engine1DeclarationWinBlack + engine1DeclarationWinWhite;
+            int engine2DeclarationWin = engine2DeclarationWinBlack + engine2DeclarationWinWhite;
 
             double winRate = (engine1Win + numDraw * 0.5) / numFinishedGames;
             double rating = 0.0;
@@ -90,13 +92,13 @@ namespace TanukiColiseum
                 confidenceInterval = 1.96 * 400.0 / Math.Log(10.0) * S / (winRate * (1.0 - winRate));
             }
 
-            return $@"対局数{numFinishedGames} 先手勝ち{blackWin}({blackWinRatio:0.0}%) 後手勝ち{whiteWin}({whiteWinRatio:0.0}%) 引き分け{numDraw}
+            return $@"numFinishedGames={numFinishedGames} blackWin={blackWin}({blackWinRatio:0.0}%) whiteWin={whiteWin}({whiteWinRatio:0.0}%) numDraw={numDraw}
 {engine1}
-勝ち{engine1Win}({engine1WinRatio:0.0}% R{rating:0.0} +-{confidenceInterval:0.0}) 先手勝ち{engine1BlackWin}({engine1BlackWinRatio:0.0}%) 後手勝ち{engine1WhiteWin}({engine1WhiteWinRatio:0.0}%)
-宣言勝ち{engine1DeclarationWinBlack + engine1DeclarationWinWhite} 先手宣言勝ち{engine1DeclarationWinBlack} 後手宣言勝ち{engine1DeclarationWinWhite} 先手引き分け{engine1DrawBlack} 後手引き分け{engine2DrawBlack}
+engine1Win={engine1Win}({engine1WinRatio:0.0}% R{rating:0.0} +-{confidenceInterval:0.0}) engine1BlackWin={engine1BlackWin}({engine1BlackWinRatio:0.0}%) engine1WhiteWin={engine1WhiteWin}({engine1WhiteWinRatio:0.0}%)
+engine1DeclarationWin={engine1DeclarationWin} engine1DeclarationWinBlack={engine1DeclarationWinBlack} engine1DeclarationWinWhite={engine1DeclarationWinWhite} engine1DrawBlack={engine1DrawBlack} engine2DrawBlack={engine2DrawBlack}
 {engine2}
-勝ち{engine2Win}({engine2WinRatio:0.0}%) 先手勝ち{engine2BlackWin}({engine2BlackWinRatio:0.0}%) 後手勝ち{engine2WhiteWin}({engine2WhiteWinRatio:0.0}%)
-宣言勝ち{engine2DeclarationWinBlack + engine2DeclarationWinWhite} 先手宣言勝ち{engine2DeclarationWinBlack} 後手宣言勝ち{engine2DeclarationWinWhite} 先手引き分け{engine2DrawBlack} 後手引き分け{engine1DrawBlack}
+engine2Win={engine2Win}({engine2WinRatio:0.0}%) engine2BlackWin={engine2BlackWin}({engine2BlackWinRatio:0.0}%) engine2WhiteWin={engine2WhiteWin}({engine2WhiteWinRatio:0.0}%)
+engine2DeclarationWin={engine2DeclarationWin} engine2DeclarationWinBlack={engine2DeclarationWinBlack} engine2DeclarationWinWhite={engine2DeclarationWinWhite} engine2DrawBlack={engine2DrawBlack} engine1DrawBlack={engine1DrawBlack}
 {engine1Win},{numDraw},{engine2Win}
 ";
         }
