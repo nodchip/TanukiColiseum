@@ -231,7 +231,7 @@
 						Grid.Row="1"
 						Grid.Column="0"
 						VerticalAlignment="Center"
-						Text="exeファイルパス" />
+						Text="実行ファイルパス(.exe or .bat)" />
 					<Grid Grid.Row="1" Grid.Column="1">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
