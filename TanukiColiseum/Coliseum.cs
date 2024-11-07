@@ -28,7 +28,8 @@ namespace TanukiColiseum
 		{
 			this.options = options;
 
-			// 評価関数フォルダと思考エンジンの存在確認を行う
+			// 評価関数フォルダと思考エンジンの存在確認を行う。
+			// ただし、思考エンジンが batファイルの場合、sshを使っている可能性があるため評価関数フォルダの存在確認を行わない。
 			if (!File.Exists(options.Engine1FilePath))
 			{
 				ShowErrorMessage("思考エンジン1が見つかりませんでした。正しいexeファイルを指定してください。");
@@ -39,12 +40,12 @@ namespace TanukiColiseum
 				ShowErrorMessage("思考エンジン2が見つかりませんでした。正しいexeファイルを指定してください。");
 				return;
 			}
-			else if (!Directory.Exists(options.Eval1FolderPath))
+			else if (Path.GetExtension(options.Engine1FilePath) == ".exe" && !Directory.Exists(options.Eval1FolderPath))
 			{
 				ShowErrorMessage("評価関数フォルダ1が見つかりませんでした。正しい評価関数フォルダを指定してください");
 				return;
 			}
-			else if (!Directory.Exists(options.Eval2FolderPath))
+			else if (Path.GetExtension(options.Engine2FilePath) == ".exe" && !Directory.Exists(options.Eval2FolderPath))
 			{
 				ShowErrorMessage("評価関数フォルダ2が見つかりませんでした。正しい評価関数フォルダを指定してください");
 				return;
