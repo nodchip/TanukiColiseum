@@ -87,7 +87,7 @@ namespace TanukiColiseum
 				// 残り物理メモリ量 · Issue #13 · nodchip/TanukiColiseum https://github.com/nodchip/TanukiColiseum/issues/13
 				var currentAvailablePhysicalMemory = computerInfo.AvailablePhysicalMemory;
 				var consumedMemoryPerGame = previousAvailablePhysicalMemory - currentAvailablePhysicalMemory;
-				if (consumedMemoryPerGame > currentAvailablePhysicalMemory)
+				if (previousAvailablePhysicalMemory >= currentAvailablePhysicalMemory && consumedMemoryPerGame > currentAvailablePhysicalMemory)
 				{
 					ShowErrorMessage("利用可能物理メモリが足りません。同時対局数やハッシュサイズを下げてください。");
 					await FinishEnginesAsync(games);
