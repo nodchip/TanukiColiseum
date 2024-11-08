@@ -32,7 +32,7 @@ jobs:
     - id: datetime
       run: |
         echo "::set-output name=str::$(Get-Date -Format yyyyMMdd.hhmmss)"
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
           name: TanukiColiseum.${{ steps.datetime.outputs.str }}
           path: main\TanukiColiseum\bin\Release\
