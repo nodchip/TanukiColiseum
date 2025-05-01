@@ -200,6 +200,10 @@ namespace TanukiColiseum
 
 		public ReactiveProperty<int> MinimumThinkingTime2 { get; }
 
+		public ReactiveProperty<string> Ponder1 { get; }
+
+		public ReactiveProperty<string> Ponder2 { get; }
+
 		public ReactiveProperty<bool> StartMenuItemEnabled { get; } = new ReactiveProperty<bool>(true);
 
 		public ReactiveProperty<string> State { get; } = new ReactiveProperty<string>("");
@@ -297,6 +301,8 @@ namespace TanukiColiseum
 			Depth2 = model.Depth2.ToReactivePropertyAsSynchronized(x => x.Value);
 			MinimumThinkingTime1 = model.MinimumThinkingTime1.ToReactivePropertyAsSynchronized(x => x.Value);
 			MinimumThinkingTime2 = model.MinimumThinkingTime2.ToReactivePropertyAsSynchronized(x => x.Value);
+			Ponder1 = model.Ponder1.ToReactivePropertyAsSynchronized(x => x.Value);
+			Ponder2 = model.Ponder2.ToReactivePropertyAsSynchronized(x => x.Value);
 
 			OnSfenFilePathButton.Subscribe(() => SelectFilePath(SfenFilePath));
 			OnEngine1FilePathButton.Subscribe(() => SelectFilePath(Engine1FilePath));
@@ -432,6 +438,8 @@ namespace TanukiColiseum
 				Depth2 = Depth2.Value,
 				MinimumThinkingTime1 = MinimumThinkingTime1.Value,
 				MinimumThinkingTime2 = MinimumThinkingTime2.Value,
+				Ponder1 = Ponder1.Value,
+				Ponder2 = Ponder2.Value,
 				Gui = true,
 			};
 

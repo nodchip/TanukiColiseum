@@ -211,6 +211,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -612,6 +613,20 @@
 						Grid.Row="22"
 						Grid.Column="2"
 						Text="{Binding MinimumThinkingTime2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock
+						Grid.Row="23"
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						Text="Ponder" />
+					<TextBox
+						Grid.Row="23"
+						Grid.Column="1"
+						Text="{Binding Ponder1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<TextBox
+						Grid.Row="23"
+						Grid.Column="2"
+						Text="{Binding Ponder2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</Grid>
 			</GroupBox>
 		</Grid>

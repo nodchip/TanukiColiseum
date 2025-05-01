@@ -220,6 +220,12 @@ namespace TanukiColiseum
 		[DataMember]
 		public ReactiveProperty<int> MinimumThinkingTime2 { get; set; } = new ReactiveProperty<int>(0);
 
+		[DataMember]
+		public ReactiveProperty<string> Ponder1 { get; set; } = new ReactiveProperty<string>("false");
+
+		[DataMember]
+		public ReactiveProperty<string> Ponder2 { get; set; } = new ReactiveProperty<string>("false");
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void Save(string filePath)
@@ -382,6 +388,16 @@ namespace TanukiColiseum
 				model.MinimumThinkingTime2 = new ReactiveProperty<int>(0);
 			}
 
+			if (model.Ponder1 == null)
+			{
+				model.Ponder1 = new ReactiveProperty<string>("false");
+			}
+
+			if (model.Ponder2 == null)
+			{
+				model.Ponder2 = new ReactiveProperty<string>("false");
+			}
+
 			CopyFrom(model);
 		}
 
@@ -439,6 +455,8 @@ namespace TanukiColiseum
 			Depth2.Value = model.Depth2.Value;
 			MinimumThinkingTime1.Value = model.MinimumThinkingTime1.Value;
 			MinimumThinkingTime2.Value = model.MinimumThinkingTime2.Value;
+			Ponder1.Value = model.Ponder1.Value;
+			Ponder2.Value = model.Ponder2.Value;
 		}
 	}
 }

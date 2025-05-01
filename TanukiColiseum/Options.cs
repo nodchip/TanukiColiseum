@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace TanukiColiseum
+﻿namespace TanukiColiseum
 {
 	public class Options
 	{
@@ -133,6 +130,8 @@ namespace TanukiColiseum
 		public int Depth2 { get; set; }
 		public int MinimumThinkingTime1 { get; set; }
 		public int MinimumThinkingTime2 { get; set; }
+		public string Ponder1 { get; set; }
+		public string Ponder2 { get; set; }
 		public bool Gui { get; set; }
 
 		public MainModel ToModel()
@@ -190,6 +189,8 @@ namespace TanukiColiseum
 			model.Depth2.Value = Depth2;
 			model.MinimumThinkingTime1.Value = MinimumThinkingTime1;
 			model.MinimumThinkingTime2.Value = MinimumThinkingTime2;
+			model.Ponder1.Value = Ponder1;
+			model.Ponder2.Value = Ponder2;
 			return model;
 		}
 
@@ -221,6 +222,7 @@ BookEvalWhiteLimit	{BookEvalWhiteLimit1}	{BookEvalWhiteLimit2}
 FVScale	{FVScale1}	{FVScale2}
 Depth={Depth1}	{Depth2}
 MinimumThinkingTime	{MinimumThinkingTime1}	{MinimumThinkingTime2}
+Ponder	{Ponder1}	{Ponder2}
 ";
 		}
 	}

@@ -58,6 +58,8 @@ namespace TanukiColiseum
 			int depth2 = 0,
 			int minimumThinkingTime1 = 1000,
 			int minimumThinkingTime2 = 1000,
+			string ponder1 = "false",
+			string ponder2 = "false",
 			bool gui = true)
 		{
 			RocketTanuki.Position.Initialize();
@@ -117,6 +119,8 @@ namespace TanukiColiseum
 				Depth2 = depth2,
 				MinimumThinkingTime1 = minimumThinkingTime1,
 				MinimumThinkingTime2 = minimumThinkingTime2,
+				Ponder1 = ponder1,
+				Ponder2 = ponder2,
 				Gui = gui,
 			};
 
